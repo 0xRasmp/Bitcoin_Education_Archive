@@ -1,8 +1,9 @@
 // =============================================
-// Bitcoin Education Archive - Firebase Config
+// Bitcoin Education Archive - Firebase Config   
+//  python -m http.server 8080 --bind 127.0.0.1
 // =============================================
 
-const USE_STAGING = true; // Change this to true to switch to Staging
+const USE_STAGING = false; // Change this to true to switch to Staging
 
 const PROD_CONFIG = {
   apiKey: "AIzaSyDLwucmRxjoJp2KMBTi2ujf0mlVkgLHyKk",
