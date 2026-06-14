@@ -272,54 +272,50 @@ window.showOnboardingWizard = function() {
 
         if (state.step === 0) {
             // ---- STEP 1: Welcome + Level Pick ----
-            html += '<div style="font-size:4rem;margin-bottom:8px;">🦌</div>' +
+            html += '<div style="display:flex;justify-content:center;margin-bottom:12px;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>' +
                 '<h1 style="color:#fff;font-size:1.5rem;font-weight:900;margin:0 0 6px;">Welcome to Bitcoin Education</h1>' +
                 '<p style="color:#94a3b8;font-size:0.92rem;line-height:1.5;margin:0 0 6px;">146 channels of organized Bitcoin knowledge. Read channels, earn XP, stack bitcoin, &amp; level up. 7 embedded mini-apps make learning about Bitcoin fun and interactive.</p>' +
                 '<p style="color:#475569;font-size:0.8rem;margin:0 0 20px;">Free forever. No account needed. No ads.</p>' +
 
-                // How it works
-                '<div style="display:flex;gap:10px;margin-bottom:20px;text-align:center;">' +
-                    '<div style="flex:1;padding:12px 8px;background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.15);border-radius:12px;">' +
-                        '<div style="font-size:1.3rem;">📖</div>' +
-                        '<div style="color:#f97316;font-size:0.7rem;font-weight:800;margin-top:4px;">READ</div>' +
-                        '<div style="color:#64748b;font-size:0.65rem;margin-top:2px;">Tap a channel</div>' +
-                    '</div>' +
-                    '<div style="flex:1;padding:12px 8px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:12px;">' +
-                        '<div style="font-size:1.3rem;">⭐</div>' +
-                        '<div style="color:#22c55e;font-size:0.7rem;font-weight:800;margin-top:4px;">EARN</div>' +
-                        '<div style="color:#64748b;font-size:0.65rem;margin-top:2px;">Get XP & badges</div>' +
-                    '</div>' +
-                    '<div style="flex:1;padding:12px 8px;background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.15);border-radius:12px;">' +
-                        '<div style="font-size:1.3rem;">🏆</div>' +
-                        '<div style="color:#6366f1;font-size:0.7rem;font-weight:800;margin-top:4px;">LEVEL UP</div>' +
-                        '<div style="color:#64748b;font-size:0.65rem;margin-top:2px;">Climb the ranks</div>' +
-                    '</div>' +
+                // How it works — identical neutral cards, accent on hover only
+                (function() {
+                    var cards = [
+                        { svg: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>', label: 'READ', sub: 'Tap a channel' },
+                        { svg: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>', label: 'EARN', sub: 'Get XP & badges' },
+                        { svg: '<circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>', label: 'LEVEL UP', sub: 'Climb the ranks' }
+                    ];
+                    var row = '<div style="display:flex;gap:10px;margin-bottom:20px;text-align:center;">';
+                    cards.forEach(function(c) {
+                        row += '<div style="flex:1;padding:14px 8px;background:none;border:1px solid var(--border);border-radius:12px;color:var(--text-muted);transition:border-color 0.18s,color 0.18s;" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text-muted)\'">' +
+                            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + c.svg + '</svg>' +
+                            '<div style="font-size:0.7rem;font-weight:800;margin-top:6px;letter-spacing:0.5px;">' + c.label + '</div>' +
+                            '<div style="color:var(--text-faint);font-size:0.65rem;margin-top:2px;">' + c.sub + '</div>' +
+                        '</div>';
+                    });
+                    return row + '</div>';
+                })() +
+
+                // Earn Real Bitcoin — quiet bordered row, accent as 2px left border only
+                '<div style="background:var(--card-bg);border:1px solid var(--border);border-left:2px solid var(--accent);border-radius:12px;padding:14px 16px;margin-bottom:20px;">' +
+                    '<div style="color:var(--heading);font-size:0.85rem;font-weight:800;">Earn Real Bitcoin</div>' +
+                    '<div style="color:#94a3b8;font-size:0.72rem;line-height:1.5;margin-top:2px;">Your XP converts to real sats. Read, learn, and claim Bitcoin directly to your Lightning wallet. 1,000 XP = 100 sats.</div>' +
                 '</div>' +
 
-                // Earn Real Sats callout
-                '<div style="background:linear-gradient(135deg,rgba(247,147,26,0.1),rgba(234,179,8,0.05));border:1px solid rgba(247,147,26,0.3);border-radius:14px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:center;gap:12px;">' +
-                    '<div style="font-size:1.8rem;flex-shrink:0;">⚡</div>' +
-                    '<div>' +
-                        '<div style="color:#f7931a;font-size:0.85rem;font-weight:800;">Earn Real Bitcoin</div>' +
-                        '<div style="color:#94a3b8;font-size:0.72rem;line-height:1.5;margin-top:2px;">Your XP converts to real sats. Read, learn, and claim Bitcoin directly to your Lightning wallet. 1,000 XP = 100 sats.</div>' +
-                    '</div>' +
-                '</div>' +
-
-                '<div style="font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:1.5px;font-weight:800;margin-bottom:10px;">🐇 How deep down the rabbit hole are you?</div>';
+                '<div style="font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:1.5px;font-weight:800;margin-bottom:10px;">How deep down the rabbit hole are you?</div>';
 
             var levels = [
-                { value: 'beginner', emoji: '🌱', label: 'New to Bitcoin', desc: "Guided intro, buying guide, simplified experience" },
-                { value: 'intermediate', emoji: '📘', label: 'I know some Bitcoin', desc: "Deeper topics, learning trails, dashboard & tools" },
-                { value: 'advanced', emoji: '🔥', label: "I'm a Bitcoiner", desc: "Full access — Scholar Cert, Global Chat, IRL Meetups" }
+                { value: 'beginner', icon: '<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/>', label: 'New to Bitcoin', desc: "Guided intro, buying guide, simplified experience" },
+                { value: 'intermediate', icon: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>', label: 'I know some Bitcoin', desc: "Deeper topics, learning trails, dashboard & tools" },
+                { value: 'advanced', icon: '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>', label: "I'm a Bitcoiner", desc: "Full access — Scholar Cert, Global Chat, IRL Meetups" }
             ];
 
-            levels.forEach(function(lv) {
+            levels.forEach(function(lv, idx) {
                 var sel = state.level === lv.value;
-                html += '<button onclick="window._obSelectLevel(\'' + lv.value + '\')" style="display:flex;align-items:center;gap:14px;padding:14px 18px;background:' + (sel ? 'rgba(249,115,22,0.1)' : 'rgba(255,255,255,0.03)') + ';border:2px solid ' + (sel ? '#f97316' : '#1e293b') + ';border-radius:14px;cursor:pointer;width:100%;text-align:left;color:#e2e8f0;font-family:inherit;margin-bottom:8px;transition:all 0.2s;">' +
-                    '<span style="font-size:1.5rem;flex-shrink:0;">' + lv.emoji + '</span>' +
+                html += '<button onclick="window._obSelectLevel(\'' + lv.value + '\')" style="display:flex;align-items:center;gap:14px;padding:15px 10px;background:none;border:none;border-top:1px solid var(--border);' + (idx === levels.length - 1 ? 'border-bottom:1px solid var(--border);' : '') + 'border-left:2px solid ' + (sel ? 'var(--accent)' : 'transparent') + ';cursor:pointer;width:100%;text-align:left;color:' + (sel ? 'var(--accent)' : '#e2e8f0') + ';font-family:inherit;transition:color 0.18s,border-color 0.18s;">' +
+                    '<span style="flex-shrink:0;display:flex;color:' + (sel ? 'var(--accent)' : 'var(--text-muted)') + ';"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">' + lv.icon + '</svg></span>' +
                     '<div style="flex:1;"><div style="font-weight:700;font-size:0.95rem;">' + lv.label + '</div>' +
                     '<div style="color:#64748b;font-size:0.78rem;margin-top:2px;">' + lv.desc + '</div></div>' +
-                    (sel ? '<span style="color:#f97316;font-size:1.2rem;">✓</span>' : '') +
+                    (sel ? '<span style="color:var(--accent);font-size:1.1rem;">✓</span>' : '') +
                 '</button>';
             });
 
@@ -343,8 +339,8 @@ window.showOnboardingWizard = function() {
             // Continue button
             var canContinue = !!state.level;
             html += '<div style="margin-top:14px;">' +
-                '<button id="onboardingCTA" onclick="window._obAdvance()" ' + (canContinue ? '' : 'disabled') + ' style="width:100%;padding:16px 0;background:' + (canContinue ? 'linear-gradient(135deg,#f97316,#ea580c)' : '#1e293b') + ';color:' + (canContinue ? '#fff' : '#475569') + ';border:none;border-radius:14px;font-size:1.05rem;font-weight:800;cursor:' + (canContinue ? 'pointer' : 'default') + ';font-family:inherit;transition:all 0.3s;box-shadow:' + (canContinue ? '0 8px 30px rgba(249,115,22,0.3)' : 'none') + ';">Continue</button>' +
-                '<button onclick="window._obSignIn()" style="width:100%;margin-top:10px;padding:13px 0;background:none;border:1.5px solid #334155;border-radius:12px;color:#94a3b8;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:inherit;">🔐 Already have an account? Sign in</button>' +
+                '<button id="onboardingCTA" onclick="window._obAdvance()" ' + (canContinue ? '' : 'disabled') + ' style="width:100%;padding:16px 0;background:' + (canContinue ? 'var(--accent)' : '#1e293b') + ';color:' + (canContinue ? '#000' : '#475569') + ';border:none;border-radius:10px;font-size:1.05rem;font-weight:800;cursor:' + (canContinue ? 'pointer' : 'default') + ';font-family:inherit;transition:opacity 0.2s;">Continue</button>' +
+                '<button onclick="window._obSignIn()" style="width:100%;margin-top:10px;padding:13px 0;background:none;border:1.5px solid #334155;border-radius:12px;color:#94a3b8;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:inherit;">Already have an account? Sign in</button>' +
                 '<button onclick="window._obSkip()" style="width:100%;margin-top:8px;padding:10px 0;background:none;border:none;color:#475569;font-size:0.78rem;cursor:pointer;font-family:inherit;">Skip — I\'ll explore on my own</button>' +
             '</div>';
 

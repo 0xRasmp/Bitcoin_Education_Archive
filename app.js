@@ -62,10 +62,7 @@
         const isDark = document.body.getAttribute('data-theme') !== 'light';
         document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
         localStorage.setItem('theme', isDark ? 'light' : 'dark');
-        const icon = document.getElementById('themeBtn');
-        if (icon) icon.textContent = isDark ? '☀️' : '🌙';
-        const mIcon = document.getElementById('mobileThemeBtn');
-        if (mIcon) mIcon.textContent = isDark ? '☀️' : '🌙';
+        /* theme icon driven by CSS body[data-theme="light"] selector — no textContent update needed */
     }
 
     function toggleMenu() {
@@ -3401,7 +3398,7 @@ window.nachoQuizAnswer = function(btn, correct) {
     }
     function updateAudioUI() {
         const btn = document.getElementById('audioBtn');
-        if (btn) btn.textContent = window.audioEnabled && window.audioVolume > 0 ? (window.audioVolume > 0.5 ? '🔊' : '🔉') : '🔇';
+        if (btn) btn.setAttribute('data-audio', window.audioEnabled && window.audioVolume > 0 ? (window.audioVolume > 0.5 ? 'high' : 'low') : 'off');
         const slider = document.getElementById('volumeSlider');
         if (slider) slider.value = window.audioEnabled ? window.audioVolume : 0;
         

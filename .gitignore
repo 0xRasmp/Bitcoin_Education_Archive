@@ -5,3 +5,7 @@ scripts/
 .keys/
 firebase-debug.log
 local-dev-override.js
+node_modules/
+dist/
+bundle.src.js
+.claude/settings.local.json

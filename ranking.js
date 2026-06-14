@@ -628,7 +628,7 @@ async function signInWithFBSDK() {
 // Nostr sign-in — full modal with extension/nsec/npub options
 // Uses nostr-tools CDN for nsec decoding, signing, and key derivation
 window.signInWithNostr = async function() {
-    if (!checkRateLimit()) return;
+    if (!checkSignInRateLimit()) return;
     var hasExtension = !!window.nostr;
     var overlay = document.createElement('div');
     overlay.id = 'nostrAuthOverlay';
@@ -776,7 +776,7 @@ window.nostrCompleteAuth = async function(pubkey, sig, event) {
 
 // Lightning (LNURL-auth) Sign-In
 window.signInWithLightning = async function() {
-    if (!checkRateLimit()) return;
+    if (!checkSignInRateLimit()) return;
 
     // Show modal immediately with loading skeleton (Cloud Function can be slow on cold start)
     var qrModal = document.createElement('div');
@@ -894,7 +894,7 @@ window.signInWithLightning = async function() {
 };
 
 // Rate limiting check
-function checkRateLimit() {
+function checkSignInRateLimit() {
     const now = Date.now();
     if (now < signInLockout) {
         const secs = Math.ceil((signInLockout - now) / 1000);
@@ -1001,7 +1001,7 @@ async function _handleSignInResultGlobal(user, anonUid, anonData) {
 }
 
 async function signInWithProvider(provider) {
-    if (!checkRateLimit()) return;
+    if (!checkSignInRateLimit()) return;
 
     // In-app browsers can't do popups or redirects reliably — open in system browser
     if (isInAppBrowser()) {
@@ -2409,7 +2409,7 @@ function updateUserDisplay(lv) {
                 container.appendChild(el);
             }
             // Add horizontal row for Dashboard + Notifications
-            el.style.cssText = 'position:relative;top:auto;right:auto;z-index:10;display:flex;flex-direction:row;align-items:center;gap:10px;padding:12px;background:rgba(247,147,26,0.05);border:1px solid rgba(247,147,26,0.2);border-radius:12px;cursor:default;transition:0.3s;width:100%;';
+            el.style.cssText = 'position:relative;top:auto;right:auto;z-index:10;display:flex;flex-direction:row;align-items:center;gap:10px;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;cursor:default;transition:0.3s;width:100%;';
         } else {
             el.style.cssText = 'position:fixed;bottom:70px;left:12px;right:12px;z-index:200;display:flex;align-items:center;gap:10px;padding:10px 16px;background:linear-gradient(135deg,#1a1a2e,#2d1f4e);border:2px solid #f7931a;border-radius:14px;box-shadow:0 4px 20px rgba(247,147,26,0.3);font-size:0.85rem;cursor:pointer;';
         }
@@ -2423,7 +2423,7 @@ function updateUserDisplay(lv) {
                     '<div style="display:flex;align-items:center;gap:6px;">' +
                         '<span style="font-size:1.1rem;">' + lv.emoji + '</span>' +
                         '<span style="color:var(--text);font-weight:700;font-size:0.8rem;">GUEST</span>' +
-                        '<span style="color:#f7931a;font-weight:800;font-size:0.8rem;">' + pts.toLocaleString() + ' XP</span>' +
+                        '<span style="color:var(--accent);font-weight:800;font-size:0.8rem;">' + pts.toLocaleString() + ' XP</span>' +
                     '</div>' +
                 '</div>' +
                 (function() {
@@ -2433,14 +2433,14 @@ function updateUserDisplay(lv) {
                     if (typeof nachoLiveData !== 'undefined' && nachoLiveData.blockHeight) ch = nachoLiveData.blockHeight;
                     
                     var s = '<div id="userDisplayLive" style="display:flex;align-items:center;gap:12px;padding-top:4px;' + (_isMob ? 'font-size:0.7rem;' : 'font-size:0.75rem;') + '">';
-                    if (cp) s += '<div style="display:flex;align-items:center;gap:4px;"><span style="color:#f7931a;font-weight:900;">₿</span> <span style="color:var(--heading);font-weight:800;font-family:monospace;">$' + Math.round(cp).toLocaleString() + '</span></div>';
-                    if (ch) s += '<a href="https://mempool.space" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="display:flex;align-items:center;gap:4px;color:var(--text-muted);text-decoration:none;font-weight:700;" title="View on mempool.space"><span style="color:#6366f1;">⛓️</span> <span style="font-family:monospace;">' + ch.toLocaleString() + '</span></a>';
+                    if (cp) s += '<div style="display:flex;align-items:center;gap:4px;"><span style="color:var(--text-muted);font-weight:900;">₿</span> <span style="color:var(--heading);font-weight:800;font-family:monospace;">$' + Math.round(cp).toLocaleString() + '</span></div>';
+                    if (ch) s += '<a href="https://mempool.space" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="display:flex;align-items:center;gap:4px;color:var(--text-muted);text-decoration:none;font-weight:700;" title="View on mempool.space"><span style="color:var(--text-muted);">⛓</span> <span style="font-family:monospace;">' + ch.toLocaleString() + '</span></a>';
                     return s + '</div>';
                 })() +
                 (_isMob ? '<div style="color:#aaa;font-size:0.7rem;margin-top:2px;">Sign in to keep your XP!</div>' : '') +
             '</div>' +
             (!_isMob ? '<div id="notifBellPlaceholder" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;"></div>' : '') +
-            (!_isMob ? '<div onclick="event.stopPropagation();showUsernamePrompt();" style="background:#f7931a;color:#000;padding:6px 12px;border-radius:8px;font-weight:900;font-size:0.65rem;white-space:nowrap;cursor:pointer;">SIGN UP</div>' : '') +
+            (!_isMob ? '<div onclick="event.stopPropagation();showUsernamePrompt();" style="background:none;border:1px solid var(--accent);color:var(--accent);padding:5px 12px;border-radius:8px;font-weight:800;font-size:0.65rem;letter-spacing:0.5px;white-space:nowrap;cursor:pointer;transition:background 0.18s ease,color 0.18s ease;" onmouseover="this.style.background=\'var(--accent)\';this.style.color=\'var(--bg-side)\'" onmouseout="this.style.background=\'none\';this.style.color=\'var(--accent)\'">SIGN UP</div>' : '') +
             (_isMob ? '<div onclick="event.stopPropagation();showUsernamePrompt();" style="margin-left:auto;background:#f7931a;color:#000;padding:6px 14px;border-radius:10px;font-weight:800;font-size:0.8rem;white-space:nowrap;">Sign Up →</div>' : '');
     } else {
         // Signed in user

@@ -605,7 +605,7 @@ function profileStat(emoji, value, label) {
 // Rate limiting
 var _msgSentTimestamps = [];
 
-function checkRateLimit() {
+function checkMsgRateLimit() {
     var now = Date.now();
     _msgSentTimestamps = _msgSentTimestamps.filter(function(t) { return now - t < 3600000; });
     return _msgSentTimestamps.length < MSG_CONFIG.maxMsgsPerHour;
@@ -1123,7 +1123,7 @@ window.sendDM = function(convoId, recipientUid, recipientName) {
     }
 
     // Rate limit
-    if (!checkRateLimit()) {
+    if (!checkMsgRateLimit()) {
         if (typeof showToast === 'function') showToast('⏳ Slow down! Max ' + MSG_CONFIG.maxMsgsPerHour + ' messages per hour.');
         return;
     }
