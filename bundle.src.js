@@ -4991,7 +4991,7 @@ async function _lbSearchLoad(query, afterRank, append) {
       btn.id = "lbSearchMoreBtn";
       btn.style.cssText =
         "width:100%;padding:8px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.8rem;cursor:pointer;font-family:inherit;margin:4px 0 2px;";
-      btn.textContent = "Show more results ▼";
+      btn.textContent = "Show more results ›";
       btn.onclick = function () {
         _lbSearchLoad(_lbSearchQuery, _lbSearchLastRank, true);
       };
@@ -5610,7 +5610,7 @@ async function toggleLeaderboard() {
       html +=
         '<button id="lbShowMore" onclick="expandLeaderboard(event)" style="width:100%;padding:10px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.85rem;cursor:pointer;font-family:inherit;margin:8px 0;transition:0.2s;">Show Top ' +
         Math.min(allUsers.length, 150) +
-        " Users ▼</button>";
+        " Users ›</button>";
     }
     html += "</div>";
 
@@ -5789,7 +5789,7 @@ async function _loadPVPLeaderboard() {
       pvpHtml +=
         "<button onclick=\"event.stopPropagation();document.querySelectorAll('.pvp-lb-extra').forEach(function(el){el.style.display='flex'});this.remove();\" style=\"width:100%;padding:10px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.85rem;cursor:pointer;font-family:inherit;margin:8px 0;\">Show all " +
         players.length +
-        " PVP players ▼</button>";
+        " PVP players ›</button>";
     }
     container.innerHTML =
       pvpHtml ||
@@ -6938,7 +6938,7 @@ function showSettingsPage(tab) {
 
       // Advanced Account toggle — content renders BELOW this button
       html +=
-        "<button onclick=\"var p=document.getElementById('advAcctContent');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'▼':'▲'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Account <span>▼</span></button>";
+        "<button onclick=\"var p=document.getElementById('advAcctContent');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'›':'‹'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Account <span>›</span></button>";
 
       // Advanced Account content (hidden, appears at bottom when toggled)
       html +=
@@ -7101,7 +7101,7 @@ function showSettingsPage(tab) {
       // Flashcards (collapsible)
       html +=
         '<div style="margin-bottom:16px;text-align:center;">' +
-        "<button onclick=\"var p=document.getElementById('flashcardsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'▼':'▲'\" style=\"width:100%;padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;color:var(--text);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;\">📚 Study Flashcards <span>▼</span></button>" +
+        "<button onclick=\"var p=document.getElementById('flashcardsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'›':'‹'\" style=\"width:100%;padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;color:var(--text);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;\">📚 Study Flashcards <span>›</span></button>" +
         '<div id="flashcardsPanel" style="display:none;margin-top:12px;padding:16px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;">' +
         '<p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:12px;">Prepare for quests and exams with interactive flashcards.</p>' +
         '<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;">';
@@ -7138,7 +7138,7 @@ function showSettingsPage(tab) {
 
       // The Signal section (collapsible, moved from its own tab)
       html +=
-        "<button onclick=\"var p=document.getElementById('signalPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'▼':'▲';if(p.style.display!=='none')loadSignalContent()\" style=\"width:100%;padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;color:var(--text);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;\">📡 The Weekly Signal <span>▼</span></button>";
+        "<button onclick=\"var p=document.getElementById('signalPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'›':'‹';if(p.style.display!=='none')loadSignalContent()\" style=\"width:100%;padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;color:var(--text);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;\">📡 The Weekly Signal <span>›</span></button>";
       html += '<div id="signalPanel" style="display:none;">';
 
       // Ticker toggle
@@ -7704,11 +7704,11 @@ function showSettingsPage(tab) {
         html +=
           '<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:14px;margin-bottom:16px;">';
         html +=
-          "<button onclick=\"event.stopPropagation();var c=document.getElementById('earnXPContent');var a=this.querySelector('.earn-arrow');if(c.style.display==='none'){c.style.display='block';a.textContent='▲'}else{c.style.display='none';a.textContent='▼'}\" style=\"width:100%;padding:16px;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-family:inherit;touch-action:manipulation;\">";
+          "<button onclick=\"event.stopPropagation();var c=document.getElementById('earnXPContent');var a=this.querySelector('.earn-arrow');if(c.style.display==='none'){c.style.display='block';a.textContent='‹'}else{c.style.display='none';a.textContent='›'}\" style=\"width:100%;padding:16px;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-family:inherit;touch-action:manipulation;\">";
         html +=
           '<span style="font-weight:700;font-size:0.85rem;color:var(--text);">🎯 How to Earn XP</span>';
         html +=
-          '<span class="earn-arrow" style="color:var(--text-faint);font-size:0.8rem;">▼</span>';
+          '<span class="earn-arrow" style="color:var(--text-faint);font-size:0.8rem;">›</span>';
         html += "</button>";
         html +=
           '<div id="earnXPContent" onclick="event.stopPropagation()" style="display:none;padding:0 16px 16px;font-size:0.78rem;color:var(--text-muted);line-height:1.7;">';
@@ -7717,8 +7717,8 @@ function showSettingsPage(tab) {
             '<div style="margin-bottom:6px;border:1px solid var(--border);border-radius:10px;overflow:hidden;">' +
             "<button onclick=\"event.stopPropagation();var c=document.getElementById('" +
             id +
-            "');c.style.display=c.style.display==='none'?'block':'none';this.querySelector('.ea').textContent=c.style.display==='none'?'▶':'▼'\" style=\"width:100%;padding:10px 12px;background:rgba(255,255,255,0.03);border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:inherit;touch-action:manipulation;\">" +
-            '<span class="ea" style="color:var(--text-faint);font-size:0.7rem;">▶</span>' +
+            "');c.style.display=c.style.display==='none'?'block':'none';this.querySelector('.ea').textContent=c.style.display==='none'?'›':'›'\" style=\"width:100%;padding:10px 12px;background:rgba(255,255,255,0.03);border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:inherit;touch-action:manipulation;\">" +
+            '<span class="ea" style="color:var(--text-faint);font-size:0.7rem;">›</span>' +
             '<span style="color:var(--text);font-size:0.8rem;font-weight:700;">' +
             title +
             "</span></button>" +
@@ -7929,7 +7929,7 @@ function showSettingsPage(tab) {
         // Expandable disclaimer note
         html += '<div style="margin-bottom:8px;">';
         html +=
-          '<button onclick="window._toggleSatsCharityNote()" style="width:100%;padding:10px 14px;background:none;border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;">ℹ️ About Donations <span id="satsCharityNoteArrow">▼</span></button>';
+          '<button onclick="window._toggleSatsCharityNote()" style="width:100%;padding:10px 14px;background:none;border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;">ℹ️ About Donations <span id="satsCharityNoteArrow">›</span></button>';
         html +=
           '<div id="satsCharityNote" style="display:none;background:var(--card-bg);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:12px;font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Donations are non-refundable and not tax-deductible. Faction is always recorded even for anonymous donations. Community votes on which charities receive the funds.</div>';
         html += "</div>";
@@ -8064,7 +8064,7 @@ function showSettingsPage(tab) {
 
       // Advanced Prefs
       html +=
-        "<button onclick=\"var p=document.getElementById('advPrefsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'▼':'▲'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Prefs <span>▼</span></button>";
+        "<button onclick=\"var p=document.getElementById('advPrefsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'›':'‹'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Prefs <span>›</span></button>";
       html += '<div id="advPrefsPanel" style="display:none;">';
 
       // Nacho mascot toggle
@@ -8398,7 +8398,7 @@ function showSettingsPage(tab) {
 
       // Advanced Security (Blocked Users + Danger Zone)
       html +=
-        "<button onclick=\"var p=document.getElementById('advSecPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'▼':'▲'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Security <span>▼</span></button>";
+        "<button onclick=\"var p=document.getElementById('advSecPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'›':'‹'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Security <span>›</span></button>";
       html += '<div id="advSecPanel" style="display:none;">';
 
       // Blocked Users
@@ -8979,7 +8979,7 @@ function showSettingsPage(tab) {
 
       // Orange Tickets section (collapsible)
       html +=
-        "<button onclick=\"var p=document.getElementById('ticketsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'▼':'▲'\" style=\"width:100%;padding:12px;background:linear-gradient(135deg,rgba(247,147,26,0.08),rgba(234,88,12,0.04));border:2px solid rgba(247,147,26,0.2);border-radius:10px;color:var(--accent);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\"><span style=\"filter:hue-rotate(30deg) saturate(1.5);\">🎟️</span> Orange Tickets & Referrals <span>▼</span></button>";
+        "<button onclick=\"var p=document.getElementById('ticketsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'›':'‹'\" style=\"width:100%;padding:12px;background:linear-gradient(135deg,rgba(247,147,26,0.08),rgba(234,88,12,0.04));border:2px solid rgba(247,147,26,0.2);border-radius:10px;color:var(--accent);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\"><span style=\"filter:hue-rotate(30deg) saturate(1.5);\">🎟️</span> Orange Tickets & Referrals <span>›</span></button>";
       html += '<div id="ticketsPanel" style="display:none;">';
       if (!user || user.isAnonymous) {
         html +=
@@ -9009,7 +9009,7 @@ function showSettingsPage(tab) {
 
       // Advanced Stats section
       html +=
-        "<button onclick=\"var p=document.getElementById('advStatsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'▼':'▲'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Stats <span>▼</span></button>";
+        "<button onclick=\"var p=document.getElementById('advStatsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'›':'‹'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Stats <span>›</span></button>";
       html += '<div id="advStatsPanel" style="display:none;">';
 
       // Export data
@@ -9858,7 +9858,7 @@ window.minimizeSignUpBanner = function () {
       "position:fixed;bottom:70px;left:12px;z-index:200;display:flex;align-items:center;gap:6px;padding:8px 12px 8px 16px;background:var(--bg-side,#1a1a2e);border:2px solid #f7931a;border-radius:10px;box-shadow:0 2px 10px rgba(247,147,26,0.2);cursor:pointer;transition:0.3s;";
     pill.innerHTML =
       '<span style="font-size:0.8rem;font-weight:700;color:#f7931a;">🔐 Sign Up</span>' +
-      '<span style="color:var(--text-faint,#888);font-size:0.7rem;margin-left:4px;" title="Expand banner">▲</span>';
+      '<span style="color:var(--text-faint,#888);font-size:0.7rem;margin-left:4px;" title="Expand banner">‹</span>';
     pill.onclick = function () {
       window.expandSignUpBanner();
     };
@@ -9869,7 +9869,7 @@ window.minimizeSignUpBanner = function () {
       "position:fixed;top:12px;right:20px;z-index:200;display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--bg-side,#1a1a2e);border:2px solid #f7931a;border-radius:10px;box-shadow:0 2px 10px rgba(247,147,26,0.2);cursor:pointer;transition:0.3s;";
     ud.innerHTML =
       '<span style="font-size:0.8rem;font-weight:700;color:#f7931a;">🔐 Sign Up</span>' +
-      '<span style="color:var(--text-faint,#888);font-size:0.7rem;margin-left:4px;" title="Expand banner">▲</span>';
+      '<span style="color:var(--text-faint,#888);font-size:0.7rem;margin-left:4px;" title="Expand banner">‹</span>';
     ud.onclick = function () {
       window.expandSignUpBanner();
     };
@@ -11663,8 +11663,8 @@ function getBadgeHTML() {
         const allEarned = catEarned === badgeList.length;
         var _sec = '';
         _sec += '<div style="margin-bottom:6px;border:1px solid ' + (allEarned ? 'rgba(34,197,94,0.3)' : 'var(--border)') + ';border-radius:10px;overflow:visible;">';
-        _sec += '<button onclick="var c=document.getElementById(\'' + _bcId + '\');c.style.display=c.style.display===\'none\'?\'grid\':\'none\';this.querySelector(\'.bca\').textContent=c.style.display===\'none\'?\'▶\':\'▼\'" style="width:100%;padding:10px 12px;background:' + (allEarned ? 'rgba(34,197,94,0.06)' : 'rgba(255,255,255,0.03)') + ';border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:inherit;touch-action:manipulation;">';
-        _sec += '<span class="bca" style="color:var(--text-faint);font-size:0.7rem;">▶</span>';
+        _sec += '<button onclick="var c=document.getElementById(\'' + _bcId + '\');c.style.display=c.style.display===\'none\'?\'grid\':\'none\';this.querySelector(\'.bca\').textContent=c.style.display===\'none\'?\'›\':\'›\'" style="width:100%;padding:10px 12px;background:' + (allEarned ? 'rgba(34,197,94,0.06)' : 'rgba(255,255,255,0.03)') + ';border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:inherit;touch-action:manipulation;">';
+        _sec += '<span class="bca" style="color:var(--text-faint);font-size:0.7rem;">›</span>';
         _sec += '<span style="color:var(--text);font-size:0.8rem;font-weight:700;">' + catName + '</span>';
         _sec += '<span style="margin-left:auto;font-size:0.7rem;color:' + (allEarned ? '#22c55e' : 'var(--accent)') + ';font-weight:700;">' + catEarned + '/' + badgeList.length + (allEarned ? ' ✅' : '') + '</span>';
         _sec += '</button>';
@@ -11694,7 +11694,7 @@ function getBadgeHTML() {
         var _flexSec = '';
         _flexSec += '<div style="margin-bottom:6px;border:1px solid var(--border);border-radius:10px;overflow:visible;">';
         _flexSec += '<button onclick="var c=document.getElementById(\''+_flexCatId+'\');c.style.display=c.style.display===\'none\'?\'grid\':\'none\';this.querySelector(\'.bca\').textContent=c.style.display===\'none\'?\'\u25b6\':\'\u25bc\'" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.03);border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:inherit;touch-action:manipulation;">';
-        _flexSec += '<span class="bca" style="color:var(--text-faint);font-size:0.7rem;">▶</span>';
+        _flexSec += '<span class="bca" style="color:var(--text-faint);font-size:0.7rem;">›</span>';
         _flexSec += '<span style="color:var(--text);font-size:0.8rem;font-weight:700;">' + _flexCatName + '</span>';
         // Count earned dynamically
         var _allFlexBadgeIds = [];
@@ -11735,8 +11735,8 @@ function getBadgeHTML() {
             var allGoalsEarned = goalEarned === visibleGoals.length;
             var _gsec = '';
             _gsec += '<div style="margin-bottom:6px;border:1px solid ' + (allGoalsEarned ? 'rgba(34,197,94,0.3)' : 'var(--border)') + ';border-radius:10px;overflow:visible;">';
-            _gsec += '<button onclick="var c=document.getElementById(\'' + _goalId + '\');c.style.display=c.style.display===\'none\'?\'grid\':\'none\';this.querySelector(\'.bca\').textContent=c.style.display===\'none\'?\'▶\':\'▼\'" style="width:100%;padding:10px 12px;background:' + (allGoalsEarned ? 'rgba(34,197,94,0.06)' : 'rgba(255,255,255,0.03)') + ';border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:inherit;touch-action:manipulation;">';
-            _gsec += '<span class="bca" style="color:var(--text-faint);font-size:0.7rem;">▶</span>';
+            _gsec += '<button onclick="var c=document.getElementById(\'' + _goalId + '\');c.style.display=c.style.display===\'none\'?\'grid\':\'none\';this.querySelector(\'.bca\').textContent=c.style.display===\'none\'?\'›\':\'›\'" style="width:100%;padding:10px 12px;background:' + (allGoalsEarned ? 'rgba(34,197,94,0.06)' : 'rgba(255,255,255,0.03)') + ';border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:inherit;touch-action:manipulation;">';
+            _gsec += '<span class="bca" style="color:var(--text-faint);font-size:0.7rem;">›</span>';
             _gsec += '<span style="color:var(--text);font-size:0.8rem;font-weight:700;">🎯 Goals</span>';
             _gsec += '<span style="margin-left:auto;font-size:0.7rem;color:' + (allGoalsEarned ? '#22c55e' : 'var(--accent)') + ';font-weight:700;">' + goalEarned + '/' + visibleGoals.length + (allGoalsEarned ? ' ✅' : '') + '</span>';
             _gsec += '</button>';
@@ -11766,8 +11766,8 @@ function getBadgeHTML() {
         var allSecretsEarned = hiddenEarnedCount === hiddenCount;
         var _ssec = '';
         _ssec += '<div style="margin-bottom:6px;border:1px solid ' + (allSecretsEarned ? 'rgba(34,197,94,0.3)' : 'var(--border)') + ';border-radius:10px;overflow:visible;">';
-        _ssec += '<button onclick="var c=document.getElementById(\'' + _secretId + '\');c.style.display=c.style.display===\'none\'?\'grid\':\'none\';this.querySelector(\'.bca\').textContent=c.style.display===\'none\'?\'▶\':\'▼\'" style="width:100%;padding:10px 12px;background:' + (allSecretsEarned ? 'rgba(34,197,94,0.06)' : 'rgba(255,255,255,0.03)') + ';border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:inherit;touch-action:manipulation;">';
-        _ssec += '<span class="bca" style="color:var(--text-faint);font-size:0.7rem;">▶</span>';
+        _ssec += '<button onclick="var c=document.getElementById(\'' + _secretId + '\');c.style.display=c.style.display===\'none\'?\'grid\':\'none\';this.querySelector(\'.bca\').textContent=c.style.display===\'none\'?\'›\':\'›\'" style="width:100%;padding:10px 12px;background:' + (allSecretsEarned ? 'rgba(34,197,94,0.06)' : 'rgba(255,255,255,0.03)') + ';border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:inherit;touch-action:manipulation;">';
+        _ssec += '<span class="bca" style="color:var(--text-faint);font-size:0.7rem;">›</span>';
         _ssec += '<span style="color:var(--text);font-size:0.8rem;font-weight:700;">🔮 Secret Badges</span>';
         _ssec += '<span style="margin-left:auto;font-size:0.7rem;color:' + (allSecretsEarned ? '#22c55e' : 'var(--accent)') + ';font-weight:700;">' + hiddenEarnedCount + '/' + hiddenCount + (allSecretsEarned ? ' ✅' : '') + '</span>';
         _ssec += '</button>';
@@ -11961,7 +11961,7 @@ window._badgeSearchJump = function(badgeId) {
         var btn = parent.previousElementSibling;
         if (btn) {
             var arrow = btn.querySelector('.bca');
-            if (arrow) arrow.textContent = '▼';
+            if (arrow) arrow.textContent = '›';
         }
     }
 
@@ -12594,8 +12594,8 @@ function updateTicker() {
             localStorage.setItem('btc_last_price', p);
             if (_lastTickerPrice !== null) {
                 changeEls.forEach(el => {
-                    if (p > _lastTickerPrice) { el.textContent = '▲'; el.style.color = '#22c55e'; }
-                    else if (p < _lastTickerPrice) { el.textContent = '▼'; el.style.color = '#ef4444'; }
+                    if (p > _lastTickerPrice) { el.textContent = '‹'; el.style.color = '#22c55e'; }
+                    else if (p < _lastTickerPrice) { el.textContent = '›'; el.style.color = '#ef4444'; }
                     else { el.textContent = ''; }
                 });
             }
@@ -12836,7 +12836,7 @@ const TIPS = [
     { pose: 'point', text: "💡 Tip: Don't like me? Long-press to hide me. But I'll miss you. 🥺 (You can bring me back in Settings → Prefs)" },
     // Content
     { pose: 'brain', text: "💡 Tip: YouTube videos are embedded right in the channels — click to play without leaving the site! 🎬" },
-    { pose: 'point', text: "💡 Tip: Tweets are embedded too! Click '▶ Click to display tweet' to expand them. 🐦" },
+    { pose: 'point', text: "💡 Tip: Tweets are embedded too! Click '› Click to display tweet' to expand them. 🐦" },
     // Timechain TV
     { pose: 'fire', text: "📺 Tip: Timechain TV streams 21 curated channels 24/7 — earn <strong>10 pts per 10 min</strong> watched! <span onclick=\"go('timechain-tv')\" style=\"color:var(--accent);cursor:pointer;text-decoration:underline;\">Tune in →</span>" },
     { pose: 'cheese', text: "🛋️ Tip: Couch with me on Timechain TV — I react to every channel you tune into! 🍿 <span onclick=\"go('timechain-tv')\" style=\"color:var(--accent);cursor:pointer;text-decoration:underline;\">Let's chill →</span>" },
@@ -18625,7 +18625,7 @@ function _renderCharityTabInner(body) {
 
     // Expandable note
     html += '<div style="margin-bottom:16px;">' +
-        '<button onclick="var n=document.getElementById(\'charityNote\');n.style.display=n.style.display===\'none\'?\'block\':\'none\';this.querySelector(\'span\').textContent=n.style.display===\'none\'?\'▼\':\'▲\'" style="width:100%;padding:10px 14px;background:none;border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;">i️ About Donations <span>▼</span></button>' +
+        '<button onclick="var n=document.getElementById(\'charityNote\');n.style.display=n.style.display===\'none\'?\'block\':\'none\';this.querySelector(\'span\').textContent=n.style.display===\'none\'?\'›\':\'‹\'" style="width:100%;padding:10px 14px;background:none;border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;">i️ About Donations <span>›</span></button>' +
         '<div id="charityNote" style="display:none;background:var(--card-bg);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:14px;font-size:0.8rem;color:var(--text-muted);line-height:1.6;">' +
             '<p style="margin:0 0 8px;">Our community will vote on which charities our contributions go to. In Bitcoin, the charities will focus on Bitcoin education and adoption - but our donations are not limited to the Bitcoin ecosystem. We can find charities outside of Bitcoin that we want to support as a community.</p>' +
             '<p style="margin:0;color:#ef4444;"><strong>⚠️ Donations are non-refundable.</strong> Donated XP cannot be reclaimed or reversed. Donations are a community pledge and are not tax-deductible. This is not a registered charitable organization and no tax receipts are issued.</p>' +
@@ -27552,10 +27552,10 @@ window.toggleMobileFlashcards = function() {
     if (!grid) return;
     if (grid.style.display === 'none') {
         grid.style.display = 'flex';
-        if (btn) btn.textContent = '📚 Flashcards ▼';
+        if (btn) btn.textContent = '📚 Flashcards ›';
     } else {
         grid.style.display = 'none';
-        if (btn) btn.textContent = '📚 Flashcards ▶';
+        if (btn) btn.textContent = '📚 Flashcards ›';
     }
 };
 
@@ -27626,14 +27626,14 @@ function startPriceWs() {
                 var changeEl = document.getElementById('dashLiveChange');
                 if (changeEl) {
                     var color = _lastWsChange >= 0 ? '#22c55e' : '#ef4444';
-                    var arrow = _lastWsChange >= 0 ? '▲' : '▼';
+                    var arrow = _lastWsChange >= 0 ? '‹' : '›';
                     changeEl.innerHTML = '<span style="color:' + color + ';">' + arrow + ' ' + Math.abs(_lastWsChange).toFixed(2) + '% (24h)</span>';
                 }
                 // Update fixed button
                 var btnPrice = document.getElementById('dashBtnPrice');
                 if (btnPrice) {
                     var c2 = _lastWsChange >= 0 ? '#22c55e' : '#ef4444';
-                    var a2 = _lastWsChange >= 0 ? '▲' : '▼';
+                    var a2 = _lastWsChange >= 0 ? '‹' : '›';
                     btnPrice.innerHTML = '$' + fmtNum(_lastWsPrice, 0) + ' <span style="color:' + c2 + ';font-size:0.6rem;">' + a2 + Math.abs(_lastWsChange).toFixed(1) + '%</span>';
                 }
                 // Cache for other uses
@@ -27663,14 +27663,14 @@ function startPricePolling() {
                     var changeEl = document.getElementById('dashLiveChange');
                     if (changeEl) {
                         var color = _lastWsChange >= 0 ? '#22c55e' : '#ef4444';
-                        var arrow = _lastWsChange >= 0 ? '▲' : '▼';
+                        var arrow = _lastWsChange >= 0 ? '‹' : '›';
                         changeEl.innerHTML = '<span style="color:' + color + ';">' + arrow + ' ' + Math.abs(_lastWsChange).toFixed(2) + '% (24h)</span>';
                     }
                     // Update fixed button
                     var btnPrice = document.getElementById('dashBtnPrice');
                     if (btnPrice) {
                         var c2 = _lastWsChange >= 0 ? '#22c55e' : '#ef4444';
-                        var a2 = _lastWsChange >= 0 ? '▲' : '▼';
+                        var a2 = _lastWsChange >= 0 ? '‹' : '›';
                         btnPrice.innerHTML = '$' + fmtNum(_lastWsPrice, 0) + ' <span style="color:' + c2 + ';font-size:0.6rem;">' + a2 + Math.abs(_lastWsChange).toFixed(1) + '%</span>';
                     }
                     window._btcPriceCache = { price: _lastWsPrice, change: _lastWsChange, ts: Date.now() };
@@ -27954,7 +27954,7 @@ function fgColor(val) {
 function renderDashboard(data) {
     var d = data || {};
     var changeColor = (d.change24h || 0) >= 0 ? '#22c55e' : '#ef4444';
-    var changeArrow = (d.change24h || 0) >= 0 ? '▲' : '▼';
+    var changeArrow = (d.change24h || 0) >= 0 ? '‹' : '›';
     var diffChangeColor = (d.diffChange || 0) >= 0 ? '#22c55e' : '#ef4444';
     var nextRetarget = d.diffEstDate ? new Date(d.diffEstDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
 
@@ -27973,7 +27973,7 @@ function renderDashboard(data) {
     var livePrice = _lastWsPrice || d.price;
     var liveChange = _lastWsChange !== null ? _lastWsChange : (d.change24h || 0);
     var liveColor = liveChange >= 0 ? '#22c55e' : '#ef4444';
-    var liveArrow = liveChange >= 0 ? '▲' : '▼';
+    var liveArrow = liveChange >= 0 ? '‹' : '›';
     html += '<div style="text-align:center;padding:20px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px;">';
     html += '<div id="dashLivePrice" style="font-size:2.2rem;font-weight:900;color:var(--heading);letter-spacing:-1px;">$' + fmtNum(livePrice, 2) + '</div>';
     html += '<div id="dashLiveChange" style="font-size:1rem;font-weight:700;margin-top:4px;"><span style="color:' + liveColor + ';">' + liveArrow + ' ' + Math.abs(liveChange).toFixed(2) + '%</span></div>';
@@ -28022,7 +28022,7 @@ function renderDashboard(data) {
     html += metricCard('🪙', 'Block Subsidy', d.subsidy + ' BTC', fmtNum(d.halving) + ' blocks to halving', 'The reward miners receive for finding each new block. Started at 50 BTC in 2009 and halves every 210,000 blocks (~4 years). Currently 3.125 BTC per block.');
     // Hashrate
     var _hrSub = '';
-    if (d.hashrateChange24h != null) { var _hc = d.hashrateChange24h; _hrSub = '<span style="color:' + (_hc >= 0 ? '#22c55e' : '#ef4444') + ';">' + (_hc >= 0 ? '▲' : '▼') + ' ' + Math.abs(_hc).toFixed(1) + '%</span>'; }
+    if (d.hashrateChange24h != null) { var _hc = d.hashrateChange24h; _hrSub = '<span style="color:' + (_hc >= 0 ? '#22c55e' : '#ef4444') + ';">' + (_hc >= 0 ? '‹' : '›') + ' ' + Math.abs(_hc).toFixed(1) + '%</span>'; }
     html += metricCard('⛏️', 'Hashrate', fmtCompact(d.hashrate), _hrSub, 'The total computing power securing the Bitcoin network, measured in hashes per second. Higher hashrate = more secure network. EH/s = quintillion hashes per second.');
     // Difficulty
     html += metricCard('🎯', 'Difficulty', fmtT(d.difficulty), '', 'How hard it is to mine a new block. Adjusts every 2,016 blocks (~2 weeks) to keep block times at ~10 minutes. If miners join, difficulty goes up. If miners leave, it goes down.');
@@ -28038,7 +28038,7 @@ function renderDashboard(data) {
     html += metricCard('💰', 'Circulating Supply', fmtSupply(d.supply), fmtPctMined(d.supply) + ' mined', 'How many of the 21 million total Bitcoin have been mined so far. No more than 21 million will ever exist — this is enforced by code and consensus. The last Bitcoin will be mined around the year 2140.');
     // Market Cap
     var _mcSub = '';
-    if (d.mktCapChange24h != null) { var _mc = d.mktCapChange24h; _mcSub = '<span style="color:' + (_mc >= 0 ? '#22c55e' : '#ef4444') + ';">' + (_mc >= 0 ? '▲' : '▼') + ' ' + Math.abs(_mc).toFixed(1) + '%</span>'; }
+    if (d.mktCapChange24h != null) { var _mc = d.mktCapChange24h; _mcSub = '<span style="color:' + (_mc >= 0 ? '#22c55e' : '#ef4444') + ';">' + (_mc >= 0 ? '‹' : '›') + ' ' + Math.abs(_mc).toFixed(1) + '%</span>'; }
     html += metricCard('📊', 'Market Cap', '$' + fmtT(d.marketCap), _mcSub, 'Total value of all Bitcoin in circulation (price × circulating supply). Puts Bitcoin\'s size in perspective compared to gold (~$16T), the S&P 500, or global real estate.');
     // 24h Volume
     var _volSub = '';
@@ -28100,7 +28100,7 @@ function renderDashboard(data) {
     // Top Indicators (expandable)
     html += '<div style="margin-top:16px;">';
     html += '<button id="topIndicatorsBtn" onclick="toggleTopIndicators()" style="width:100%;padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;transition:0.2s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">';
-    html += '📊 Top Indicators <span id="topIndArrow">▼</span></button>';
+    html += '📊 Top Indicators <span id="topIndArrow">›</span></button>';
     html += '<div id="topIndicatorsPanel" style="display:none;margin-top:10px;animation:fadeSlideIn 0.3s;">';
     html += '<div id="topIndContent" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
     html += '<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-muted);font-size:0.8rem;"><div style="width:24px;height:24px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 8px;"></div>Loading indicators...</div>';
@@ -28206,7 +28206,7 @@ function _updateDashBtnPrice() {
                     var p = cached.data.price;
                     var change = cached.data.change24h || 0;
                     var color = change >= 0 ? '#22c55e' : '#ef4444';
-                    var arrow = change >= 0 ? '▲' : '▼';
+                    var arrow = change >= 0 ? '‹' : '›';
                     el.innerHTML = '$' + fmtNum(p, 0) + ' <span style="color:' + color + ';font-size:0.6rem;">' + arrow + (Math.abs(change)).toFixed(1) + '%</span>';
                 }
             }
@@ -28286,7 +28286,7 @@ window.toggleDashboard = async function() {
             var newPanel = document.getElementById('topIndicatorsPanel');
             var newArrow = document.getElementById('topIndArrow');
             if (newPanel) { newPanel.style.display = 'block'; _topIndLoaded = false; loadTopIndicators(); }
-            if (newArrow) newArrow.textContent = '▲';
+            if (newArrow) newArrow.textContent = '‹';
         }
     });
 
@@ -28306,7 +28306,7 @@ window.toggleDashboard = async function() {
                 var newPanel = document.getElementById('topIndicatorsPanel');
                 var newArrow = document.getElementById('topIndArrow');
                 if (newPanel) { newPanel.style.display = 'block'; _topIndLoaded = false; loadTopIndicators(); }
-                if (newArrow) newArrow.textContent = '▲';
+                if (newArrow) newArrow.textContent = '‹';
             }
         }
     }, DASH_CACHE_TTL);
@@ -28338,11 +28338,11 @@ window.toggleTopIndicators = function() {
     if (!panel) return;
     if (panel.style.display === 'none') {
         panel.style.display = 'block';
-        arrow.textContent = '▲';
+        arrow.textContent = '‹';
         loadTopIndicators();
     } else {
         panel.style.display = 'none';
-        arrow.textContent = '▼';
+        arrow.textContent = '›';
     }
 };
 
@@ -29612,11 +29612,11 @@ window._startHalvingTicker = function() {
         if (expanded) {
             group.style.display = 'none';
             label.setAttribute('data-expanded', 'false');
-            if (arrow) arrow.textContent = '▶';
+            if (arrow) arrow.textContent = '›';
         } else {
             group.style.display = '';
             label.setAttribute('data-expanded', 'true');
-            if (arrow) arrow.textContent = '▼';
+            if (arrow) arrow.textContent = '›';
         }
     }
 
@@ -29630,7 +29630,7 @@ window._startHalvingTicker = function() {
                 group.style.display = '';
                 label.setAttribute('data-expanded', 'true');
                 var arrow = label.querySelector('.cat-arrow');
-                if (arrow) arrow.textContent = '▼';
+                if (arrow) arrow.textContent = '›';
             }
         }
     }
@@ -29797,7 +29797,7 @@ window._startHalvingTicker = function() {
                                 '<div class="tw-preview-icon">𝕏</div>' +
                                 '<div class="tw-preview-content">' +
                                 '<div class="tw-preview-url">' + displayHandle + '</div>' +
-                                '<div class="tw-preview-hint">' + (isMob ? '▶ Tap to display tweet' : '▶ Click to display tweet') + '</div>' +
+                                '<div class="tw-preview-hint">' + (isMob ? '› Tap to display tweet' : '› Click to display tweet') + '</div>' +
                                 '</div>' +
                                 '<div class="tw-preview-arrow">→</div>' +
                                 '</div>';
@@ -30447,7 +30447,7 @@ window._startHalvingTicker = function() {
                     '<button id="donateCopyBtn" style="width:100%;padding:14px;background:var(--accent,#f7931a);color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 4px 12px rgba(247,147,26,0.3);transition:0.2s;touch-action:manipulation;" onmouseover="this.style.transform=\'scale(1.02)\'" onmouseout="this.style.transform=\'scale(1)\'">📋 Copy Lightning Address</button>' +
                 '</div>' +
                 '<p style="color:var(--text-faint,#666);font-size:0.75rem;margin-top:10px;">⚠️ Donations are non-refundable</p>' +
-                '<button onclick="var el=document.getElementById(\'moreDonateMethods\');el.style.display=el.style.display===\'none\'?\'block\':\'none\';this.textContent=el.style.display===\'none\'?\'💳 More Ways to Donate ▼\':\'💳 Hide Other Methods ▲\'" style="width:100%;padding:12px;background:var(--card-bg,#222);border:1px solid var(--border,#333);border-radius:10px;color:var(--text,#ccc);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-top:12px;transition:0.2s;">💳 More Ways to Donate ▼</button>' +
+                '<button onclick="var el=document.getElementById(\'moreDonateMethods\');el.style.display=el.style.display===\'none\'?\'block\':\'none\';this.textContent=el.style.display===\'none\'?\'💳 More Ways to Donate ›\':\'💳 Hide Other Methods ‹\'" style="width:100%;padding:12px;background:var(--card-bg,#222);border:1px solid var(--border,#333);border-radius:10px;color:var(--text,#ccc);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-top:12px;transition:0.2s;">💳 More Ways to Donate ›</button>' +
                 '<div id="moreDonateMethods" style="display:none;margin-top:14px;text-align:left;">' +
                     _donateMethodHtml('💵 Cash App', '$NEEDcreations', '$NEEDcreations', 'https://cash.app/$NEEDcreations', 'images/donate/cashapp-qr.jpg') +
                     _donateMethodHtml('💜 Venmo', '@Phil2140', '@Phil2140', 'https://venmo.com/code?user_id=1358236213051392692&created=1773155307', 'images/donate/venmo-qr.jpg') +
@@ -30647,7 +30647,7 @@ window._startHalvingTicker = function() {
                 '<div style="max-width:500px;margin:0 auto;position:relative;">' +
                     '<input type="text" id="nachoModeInput" placeholder="' + (hasSpeech ? 'Type or tap 🎙️ to speak...' : 'Ask Nacho anything about Bitcoin...') + '" maxlength="500" style="width:100%;padding:12px ' + (hasSpeech ? '96px' : '56px') + ' 12px 16px;background:var(--input-bg,#111);border:1px solid var(--border,#333);border-radius:24px;color:var(--text,#eee);font-size:16px;font-family:inherit;outline:none;box-sizing:border-box;" onkeydown="nachoModeKeydown(event)">' +
                     micHtml +
-                    '<button onclick="nachoModeSend()" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:var(--accent);color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1rem;cursor:pointer;font-family:inherit;touch-action:manipulation;display:flex;align-items:center;justify-content:center;">▶</button>' +
+                    '<button onclick="nachoModeSend()" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:var(--accent);color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1rem;cursor:pointer;font-family:inherit;touch-action:manipulation;display:flex;align-items:center;justify-content:center;">›</button>' +
                 '</div>' +
             '</div>';
 
@@ -33226,7 +33226,7 @@ window.nachoQuizAnswer = function(btn, correct) {
             let html = '';
             nextBatch.forEach((m, bi) => {
                 html += '<div class="msg" id="msg-' + (offset + bi) + '">';
-                if (m.text) { let t = m.text; let yt=[],tw=[]; t=t.replace(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([\w-]+)(?:[&?][^\s]*)?/g,function(m,id){yt.push(id);return '%%YT'+(yt.length-1)+'%%';}); t=t.replace(/(?:https?:\/\/)?youtu\.be\/([\w-]+)(?:\?[^\s]*)?/g,function(m,id){yt.push(id);return '%%YT'+(yt.length-1)+'%%';}); t=t.replace(/(?:https?:\/\/)?(?:twitter\.com|x\.com)\/([\w]+)\/status\/(\d+)(?:[^\s]*)?/g,function(m){var u=m.startsWith('http')?m:'https://'+m;tw.push(u);return '%%TW'+(tw.length-1)+'%%';}); t=t.replace(/(https?:\/\/[^\s<>"]+)/g,'<a class="msg-link" href="$1" target="_blank">$1</a>'); t=t.replace(/%%YT(\d+)%%/g,function(m,i){return '<div class="yt-embed"><iframe src="https://www.youtube-nocookie.com/embed/'+yt[parseInt(i)]+'" frameborder="0" allowfullscreen loading="lazy" decoding="async"></iframe></div>';}); t=t.replace(/%%TW(\d+)%%/g,function(m,i){var u=tw[parseInt(i)],tid='tw_'+Math.random().toString(36).substr(2,8),mob=typeof isMobile==='function'&&isMobile(),hm=u.match(/(?:twitter\.com|x\.com)\/([\w]+)\//),dh=hm?'@'+hm[1]:u.replace(/https?:\/\/(www\.)?/,'');return '<div class="tw-preview" id="'+tid+'" onclick="loadTweetEmbed(\''+tid+'\',\''+u+'\')"><div class="tw-preview-icon">𝕏</div><div class="tw-preview-content"><div class="tw-preview-url">'+dh+'</div><div class="tw-preview-hint">'+(mob?'▶ Tap to display tweet':'▶ Click to display tweet')+'</div></div><div class="tw-preview-arrow">→</div></div>';}); t=t.replace(/🟠 (.+)/g,'<span class="orange-glow">$1</span>'); html += '<div class="msg-text">' + t + '</div>'; }
+                if (m.text) { let t = m.text; let yt=[],tw=[]; t=t.replace(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([\w-]+)(?:[&?][^\s]*)?/g,function(m,id){yt.push(id);return '%%YT'+(yt.length-1)+'%%';}); t=t.replace(/(?:https?:\/\/)?youtu\.be\/([\w-]+)(?:\?[^\s]*)?/g,function(m,id){yt.push(id);return '%%YT'+(yt.length-1)+'%%';}); t=t.replace(/(?:https?:\/\/)?(?:twitter\.com|x\.com)\/([\w]+)\/status\/(\d+)(?:[^\s]*)?/g,function(m){var u=m.startsWith('http')?m:'https://'+m;tw.push(u);return '%%TW'+(tw.length-1)+'%%';}); t=t.replace(/(https?:\/\/[^\s<>"]+)/g,'<a class="msg-link" href="$1" target="_blank">$1</a>'); t=t.replace(/%%YT(\d+)%%/g,function(m,i){return '<div class="yt-embed"><iframe src="https://www.youtube-nocookie.com/embed/'+yt[parseInt(i)]+'" frameborder="0" allowfullscreen loading="lazy" decoding="async"></iframe></div>';}); t=t.replace(/%%TW(\d+)%%/g,function(m,i){var u=tw[parseInt(i)],tid='tw_'+Math.random().toString(36).substr(2,8),mob=typeof isMobile==='function'&&isMobile(),hm=u.match(/(?:twitter\.com|x\.com)\/([\w]+)\//),dh=hm?'@'+hm[1]:u.replace(/https?:\/\/(www\.)?/,'');return '<div class="tw-preview" id="'+tid+'" onclick="loadTweetEmbed(\''+tid+'\',\''+u+'\')"><div class="tw-preview-icon">𝕏</div><div class="tw-preview-content"><div class="tw-preview-url">'+dh+'</div><div class="tw-preview-hint">'+(mob?'› Tap to display tweet':'› Click to display tweet')+'</div></div><div class="tw-preview-arrow">→</div></div>';}); t=t.replace(/🟠 (.+)/g,'<span class="orange-glow">$1</span>'); html += '<div class="msg-text">' + t + '</div>'; }
                 if (m.imgs) m.imgs.forEach(img => { if (m.link) { html += '<a href="' + m.link + '" target="_blank" style="display:block;"><img class="msg-img" src="' + img + '" loading="lazy" decoding="async" title="Click to open source"></a>'; } else { html += '<img class="msg-img" src="' + img + '" onclick="openImg(this.src)" loading="lazy" decoding="async">'; } });
                 html += '</div>';
             });
@@ -34513,7 +34513,7 @@ window.toggleAITools = function() {
         panel.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:250000;background:var(--bg,#0a0a0f);border-top:2px solid var(--accent,#f7931a);border-radius:16px 16px 0 0;transform:translateY(100%);transition:transform 0.3s ease;box-shadow:0 -10px 40px rgba(0,0,0,0.6);';
         panel.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);">' +
             '<div style="display:flex;align-items:center;gap:8px;"><span style="font-size:1.2rem;">🤖</span><span style="color:var(--heading);font-weight:800;font-size:0.95rem;">AI Tools</span><span style="color:var(--text-faint);font-size:0.7rem;">powered by PPQ</span></div>' +
-            '<button onclick="toggleAITools()" style="padding:6px 12px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;">▼ Minimize</button>' +
+            '<button onclick="toggleAITools()" style="padding:6px 12px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;">› Minimize</button>' +
             '</div>' +
             '<iframe src="https://ppq.ai" style="width:100%;height:70vh;border:none;background:#000;"></iframe>';
         document.body.appendChild(panel);
@@ -35170,7 +35170,7 @@ window.toggleAITools = function() {
         mp.id = 'miniPlayer';
         mp.style.cssText = 'position:fixed;bottom:60px;left:0;right:0;z-index:180;background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid rgba(247,147,26,0.3);padding:8px 16px;display:none;align-items:center;gap:12px;';
         mp.innerHTML =
-            '<button id="mpPlayPause" onclick="toggleMiniPlayer()" style="background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;padding:4px;">▶</button>' +
+            '<button id="mpPlayPause" onclick="toggleMiniPlayer()" style="background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;padding:4px;">›</button>' +
             '<div style="flex:1;min-width:0;">' +
                 '<div id="mpTitle" style="color:#fff;font-size:0.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Not playing</div>' +
                 '<div id="mpArtist" style="color:rgba(255,255,255,0.5);font-size:0.7rem;">Bitcoin Beats</div>' +
@@ -35203,7 +35203,7 @@ window.toggleAITools = function() {
             document.getElementById('mpPlayPause').textContent = '⏸';
         } else {
             window._miniPlayerAudio.pause();
-            document.getElementById('mpPlayPause').textContent = '▶';
+            document.getElementById('mpPlayPause').textContent = '›';
         }
     };
 

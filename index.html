@@ -367,6 +367,65 @@
       .home-logos {
         position: relative;
       }
+      .hero-lockup {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        margin-bottom: 28px;
+        position: relative;
+      }
+      .hero-mark {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+      }
+      .hero-wordmark {
+        font-family: var(--display-font);
+        font-size: 0.92rem;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+        line-height: 1.25;
+        color: var(--text-muted);
+        text-align: left;
+      }
+      .hero-donate-btn {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 14px;
+        background: var(--accent-bg);
+        border: 1px solid var(--accent-glow);
+        border-radius: 999px;
+        color: var(--accent);
+        font-size: 0.74rem;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        cursor: pointer;
+        font-family: inherit;
+        transition: all 0.18s ease;
+      }
+      .hero-donate-btn:hover {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+      }
+      @media (max-width: 900px) {
+        .hero-donate-btn {
+          position: static;
+          transform: none;
+          margin-top: 10px;
+        }
+        .hero-lockup {
+          flex-direction: column;
+          gap: 8px;
+        }
+      }
       .home-logos::before {
         content: "";
         position: absolute;
@@ -1221,15 +1280,15 @@
         width: calc(100% - 18px);
         margin: 6px 9px;
         padding: 8px;
-        background: var(--accent-bg);
-        border: 1px solid rgba(245, 166, 35, 0.15);
+        background: none;
+        border: 1px solid var(--border);
         border-radius: 6px;
-        color: var(--accent);
+        color: var(--text-muted);
         font-size: 0.7rem;
         font-weight: 700;
         cursor: pointer;
         font-family: inherit;
-        transition: all 0.2s ease;
+        transition: all 0.15s ease;
         text-align: center;
         text-transform: uppercase;
         letter-spacing: 0.4px;
@@ -2076,21 +2135,18 @@
         justify-content: center;
         min-height: 100vh;
         text-align: center;
-        padding: 60px 30px;
-        background: radial-gradient(
-          ellipse 60% 50% at 50% -5%,
-          var(--accent-bg) 0%,
-          transparent 65%
-        );
+        padding: 48px 24px 80px;
+        background: none;
       }
       .home-page.hidden {
         display: none;
       }
       .home-inner {
-        max-width: 650px;
+        max-width: 560px;
         width: 100%;
         display: flex;
         flex-direction: column;
+        gap: 12px;
       }
       .home-logos {
         display: flex;
@@ -2150,28 +2206,30 @@
         filter: drop-shadow(0 0 30px rgba(247, 147, 26, 0.4));
       }
       .home-title {
-        font-size: 3.5rem;
-        font-weight: 900;
+        font-size: 2rem;
+        font-weight: 800;
         color: var(--heading);
-        letter-spacing: -2px;
-        line-height: 1.05;
-        margin-bottom: 20px;
+        letter-spacing: -0.8px;
+        line-height: 1.15;
+        margin-bottom: 8px;
         font-family: "Outfit", "Segoe UI", system-ui, sans-serif;
       }
       .home-subtitle {
-        font-size: 1.2rem;
-        color: var(--text-secondary, #94a3b8);
-        margin-bottom: 40px;
+        font-size: 0.92rem;
+        color: var(--text-muted);
+        margin-bottom: 0;
         line-height: 1.6;
+        max-width: 420px;
+        margin-left: auto;
+        margin-right: auto;
       }
       .home-credits {
         background: var(--card-bg);
         border: 1px solid var(--border);
-        border-radius: 18px;
-        padding: 24px 30px;
-        margin-bottom: 40px;
+        border-radius: 10px;
+        padding: 16px 20px;
+        margin-bottom: 0;
         text-align: left;
-        box-shadow: var(--shadow-sm);
       }
       .home-credits p {
         color: var(--text-dim);
@@ -2188,8 +2246,9 @@
       .home-stats {
         display: flex;
         justify-content: center;
-        gap: 40px;
-        margin-bottom: 40px;
+        gap: 24px;
+        margin-bottom: 0;
+        flex-wrap: wrap;
       }
       .home-stat {
         display: flex;
@@ -2197,32 +2256,29 @@
         align-items: center;
       }
       .home-stat-num {
-        font-size: 2rem;
-        font-weight: 900;
+        font-size: 1.4rem;
+        font-weight: 800;
         color: var(--accent);
       }
       .home-stat-label {
-        font-size: 0.8rem;
-        color: #475569;
+        font-size: 0.65rem;
+        color: var(--text-faint);
         text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-top: 4px;
+        letter-spacing: 0.6px;
+        margin-top: 2px;
       }
       .daily-channel {
         background: var(--card-bg);
         border: 1px solid var(--border);
-        border-radius: 18px;
-        padding: 20px 24px;
-        margin-bottom: 30px;
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin-bottom: 0;
         cursor: pointer;
-        transition: 0.2s;
+        transition: border-color 0.2s;
         text-align: left;
-        box-shadow: var(--shadow-sm);
       }
       .daily-channel:hover {
         border-color: var(--accent);
-        box-shadow: var(--shadow-md);
-        transform: translateY(-2px);
       }
       .daily-label {
         font-size: 0.7rem;
@@ -2248,22 +2304,19 @@
         background: var(--accent);
         color: #fff;
         border: none;
-        padding: 20px 56px;
-        border-radius: 16px;
-        font-size: 1.3rem;
-        font-weight: 800;
+        padding: 14px 32px;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 700;
         cursor: pointer;
         font-family: inherit;
-        transition: 0.2s;
+        transition: opacity 0.15s;
         letter-spacing: 0.2px;
-        box-shadow: 0 10px 28px var(--accent-glow);
-        margin-bottom: 30px;
+        margin-bottom: 0;
         touch-action: manipulation;
       }
       .home-cta:hover {
-        background: #ea580c;
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 18px 44px rgba(247, 147, 26, 0.4);
+        opacity: 0.88;
       }
       .home-cta:active {
         transform: translateY(0) scale(0.98);
@@ -2272,9 +2325,9 @@
       .suggest-box {
         background: var(--card-bg);
         border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 24px;
-        margin-bottom: 30px;
+        border-radius: 10px;
+        padding: 16px;
+        margin-bottom: 0;
         text-align: left;
       }
       .suggest-input {
@@ -2351,13 +2404,16 @@
 
       @media (max-width: 900px) {
         .home-title {
-          font-size: 2.4rem;
+          font-size: 1.6rem;
         }
         .home-stats {
-          gap: 24px;
+          gap: 16px;
         }
         .home-stat-num {
-          font-size: 1.5rem;
+          font-size: 1.2rem;
+        }
+        .home-inner {
+          gap: 10px;
         }
       }
 
@@ -4566,31 +4622,20 @@
       <!-- Home / Landing -->
       <div id="home" class="home-page">
         <div class="home-inner">
-          <div class="home-logos" style="flex-direction: column; gap: 12px;">
-            <img
-              src="/assets/bitcoin-logo.png"
-              alt="Bitcoin Logo"
-              fetchpriority="high"
-              decoding="async"
-              width="160"
-              height="auto"
-              style="
-                width: 160px;
-                height: auto;
-                object-fit: contain;
-                filter: drop-shadow(0 0 24px rgba(247, 147, 26, 0.45));
-                cursor: pointer;
-              "
-              onclick="goHome()"
-              title="Home"
-            />
-            <span
-              class="donate-circle"
-              onclick="showDonateModal()"
-              style="font-size: 0.75rem; color: var(--accent); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: 0.8;"
-            >⚡ Donate</span>
+          <div class="hero-lockup">
+            <div class="hero-mark" onclick="goHome()" title="Home">
+              <svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true">
+                <circle cx="16" cy="16" r="16" fill="#f7931a" />
+                <path d="M21.5 14.2c.3-1.9-1.1-2.9-3-3.6l.6-2.4-1.5-.4-.6 2.3c-.4-.1-.8-.2-1.2-.3l.6-2.3-1.5-.4-.6 2.4c-.3-.1-.7-.2-1-.3v-.01l-2.1-.5-.4 1.6s1.1.3 1.1.3c.6.1.7.5.7.8l-.7 2.7-.1 4.4c-.05.3-.2.7-.5.6 0 0-1.1-.3-1.1-.3l-.7 1.7 2 .5c.4.1.7.2 1.1.3l-.6 2.4 1.5.4.6-2.4c.4.1.8.2 1.2.3l-.6 2.4 1.5.4.6-2.4c2.5.5 4.4.3 5.2-2 .65-1.85-.03-2.9-1.35-3.6.95-.22 1.68-.85 1.87-2.13zm-3.4 4.8c-.46 1.85-3.6.85-4.6.6l.8-3.3c1.05.25 4.3.75 3.8 2.7zm.46-4.85c-.43 1.7-3.04.83-3.9.62l.74-3c.85.2 3.6.6 3.16 2.38z" fill="#fff"/>
+              </svg>
+              <span class="hero-wordmark">Bitcoin Education<br />Archive</span>
+            </div>
+            <button class="hero-donate-btn" onclick="showDonateModal()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
+              Donate
+            </button>
           </div>
-          <h1 class="home-title">Bitcoin Education Archive</h1>
+          <h1 class="home-title">Bitcoin Education<br />Archive</h1>
           <p class="home-subtitle">
             A curated library of Bitcoin education — 146 channels, Timechain TV
             (24/7 streaming), 7 mini-apps, and Quests to test your knowledge.
