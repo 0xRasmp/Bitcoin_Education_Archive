@@ -42,14 +42,14 @@ function startPriceWs() {
                 var changeEl = document.getElementById('dashLiveChange');
                 if (changeEl) {
                     var color = _lastWsChange >= 0 ? '#22c55e' : '#ef4444';
-                    var arrow = _lastWsChange >= 0 ? '▲' : '▼';
+                    var arrow = _lastWsChange >= 0 ? '‹' : '›';
                     changeEl.innerHTML = '<span style="color:' + color + ';">' + arrow + ' ' + Math.abs(_lastWsChange).toFixed(2) + '% (24h)</span>';
                 }
                 // Update fixed button
                 var btnPrice = document.getElementById('dashBtnPrice');
                 if (btnPrice) {
                     var c2 = _lastWsChange >= 0 ? '#22c55e' : '#ef4444';
-                    var a2 = _lastWsChange >= 0 ? '▲' : '▼';
+                    var a2 = _lastWsChange >= 0 ? '‹' : '›';
                     btnPrice.innerHTML = '$' + fmtNum(_lastWsPrice, 0) + ' <span style="color:' + c2 + ';font-size:0.6rem;">' + a2 + Math.abs(_lastWsChange).toFixed(1) + '%</span>';
                 }
                 // Cache for other uses
@@ -79,14 +79,14 @@ function startPricePolling() {
                     var changeEl = document.getElementById('dashLiveChange');
                     if (changeEl) {
                         var color = _lastWsChange >= 0 ? '#22c55e' : '#ef4444';
-                        var arrow = _lastWsChange >= 0 ? '▲' : '▼';
+                        var arrow = _lastWsChange >= 0 ? '‹' : '›';
                         changeEl.innerHTML = '<span style="color:' + color + ';">' + arrow + ' ' + Math.abs(_lastWsChange).toFixed(2) + '% (24h)</span>';
                     }
                     // Update fixed button
                     var btnPrice = document.getElementById('dashBtnPrice');
                     if (btnPrice) {
                         var c2 = _lastWsChange >= 0 ? '#22c55e' : '#ef4444';
-                        var a2 = _lastWsChange >= 0 ? '▲' : '▼';
+                        var a2 = _lastWsChange >= 0 ? '‹' : '›';
                         btnPrice.innerHTML = '$' + fmtNum(_lastWsPrice, 0) + ' <span style="color:' + c2 + ';font-size:0.6rem;">' + a2 + Math.abs(_lastWsChange).toFixed(1) + '%</span>';
                     }
                     window._btcPriceCache = { price: _lastWsPrice, change: _lastWsChange, ts: Date.now() };
@@ -370,7 +370,7 @@ function fgColor(val) {
 function renderDashboard(data) {
     var d = data || {};
     var changeColor = (d.change24h || 0) >= 0 ? '#22c55e' : '#ef4444';
-    var changeArrow = (d.change24h || 0) >= 0 ? '▲' : '▼';
+    var changeArrow = (d.change24h || 0) >= 0 ? '‹' : '›';
     var diffChangeColor = (d.diffChange || 0) >= 0 ? '#22c55e' : '#ef4444';
     var nextRetarget = d.diffEstDate ? new Date(d.diffEstDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
 
@@ -389,7 +389,7 @@ function renderDashboard(data) {
     var livePrice = _lastWsPrice || d.price;
     var liveChange = _lastWsChange !== null ? _lastWsChange : (d.change24h || 0);
     var liveColor = liveChange >= 0 ? '#22c55e' : '#ef4444';
-    var liveArrow = liveChange >= 0 ? '▲' : '▼';
+    var liveArrow = liveChange >= 0 ? '‹' : '›';
     html += '<div style="text-align:center;padding:20px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px;">';
     html += '<div id="dashLivePrice" style="font-size:2.2rem;font-weight:900;color:var(--heading);letter-spacing:-1px;">$' + fmtNum(livePrice, 2) + '</div>';
     html += '<div id="dashLiveChange" style="font-size:1rem;font-weight:700;margin-top:4px;"><span style="color:' + liveColor + ';">' + liveArrow + ' ' + Math.abs(liveChange).toFixed(2) + '%</span></div>';
@@ -438,7 +438,7 @@ function renderDashboard(data) {
     html += metricCard('🪙', 'Block Subsidy', d.subsidy + ' BTC', fmtNum(d.halving) + ' blocks to halving', 'The reward miners receive for finding each new block. Started at 50 BTC in 2009 and halves every 210,000 blocks (~4 years). Currently 3.125 BTC per block.');
     // Hashrate
     var _hrSub = '';
-    if (d.hashrateChange24h != null) { var _hc = d.hashrateChange24h; _hrSub = '<span style="color:' + (_hc >= 0 ? '#22c55e' : '#ef4444') + ';">' + (_hc >= 0 ? '▲' : '▼') + ' ' + Math.abs(_hc).toFixed(1) + '%</span>'; }
+    if (d.hashrateChange24h != null) { var _hc = d.hashrateChange24h; _hrSub = '<span style="color:' + (_hc >= 0 ? '#22c55e' : '#ef4444') + ';">' + (_hc >= 0 ? '‹' : '›') + ' ' + Math.abs(_hc).toFixed(1) + '%</span>'; }
     html += metricCard('⛏️', 'Hashrate', fmtCompact(d.hashrate), _hrSub, 'The total computing power securing the Bitcoin network, measured in hashes per second. Higher hashrate = more secure network. EH/s = quintillion hashes per second.');
     // Difficulty
     html += metricCard('🎯', 'Difficulty', fmtT(d.difficulty), '', 'How hard it is to mine a new block. Adjusts every 2,016 blocks (~2 weeks) to keep block times at ~10 minutes. If miners join, difficulty goes up. If miners leave, it goes down.');
@@ -454,7 +454,7 @@ function renderDashboard(data) {
     html += metricCard('💰', 'Circulating Supply', fmtSupply(d.supply), fmtPctMined(d.supply) + ' mined', 'How many of the 21 million total Bitcoin have been mined so far. No more than 21 million will ever exist — this is enforced by code and consensus. The last Bitcoin will be mined around the year 2140.');
     // Market Cap
     var _mcSub = '';
-    if (d.mktCapChange24h != null) { var _mc = d.mktCapChange24h; _mcSub = '<span style="color:' + (_mc >= 0 ? '#22c55e' : '#ef4444') + ';">' + (_mc >= 0 ? '▲' : '▼') + ' ' + Math.abs(_mc).toFixed(1) + '%</span>'; }
+    if (d.mktCapChange24h != null) { var _mc = d.mktCapChange24h; _mcSub = '<span style="color:' + (_mc >= 0 ? '#22c55e' : '#ef4444') + ';">' + (_mc >= 0 ? '‹' : '›') + ' ' + Math.abs(_mc).toFixed(1) + '%</span>'; }
     html += metricCard('📊', 'Market Cap', '$' + fmtT(d.marketCap), _mcSub, 'Total value of all Bitcoin in circulation (price × circulating supply). Puts Bitcoin\'s size in perspective compared to gold (~$16T), the S&P 500, or global real estate.');
     // 24h Volume
     var _volSub = '';
@@ -516,7 +516,7 @@ function renderDashboard(data) {
     // Top Indicators (expandable)
     html += '<div style="margin-top:16px;">';
     html += '<button id="topIndicatorsBtn" onclick="toggleTopIndicators()" style="width:100%;padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;transition:0.2s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">';
-    html += '📊 Top Indicators <span id="topIndArrow">▼</span></button>';
+    html += '📊 Top Indicators <span id="topIndArrow">›</span></button>';
     html += '<div id="topIndicatorsPanel" style="display:none;margin-top:10px;animation:fadeSlideIn 0.3s;">';
     html += '<div id="topIndContent" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
     html += '<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-muted);font-size:0.8rem;"><div style="width:24px;height:24px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 8px;"></div>Loading indicators...</div>';
@@ -622,7 +622,7 @@ function _updateDashBtnPrice() {
                     var p = cached.data.price;
                     var change = cached.data.change24h || 0;
                     var color = change >= 0 ? '#22c55e' : '#ef4444';
-                    var arrow = change >= 0 ? '▲' : '▼';
+                    var arrow = change >= 0 ? '‹' : '›';
                     el.innerHTML = '$' + fmtNum(p, 0) + ' <span style="color:' + color + ';font-size:0.6rem;">' + arrow + (Math.abs(change)).toFixed(1) + '%</span>';
                 }
             }
@@ -702,7 +702,7 @@ window.toggleDashboard = async function() {
             var newPanel = document.getElementById('topIndicatorsPanel');
             var newArrow = document.getElementById('topIndArrow');
             if (newPanel) { newPanel.style.display = 'block'; _topIndLoaded = false; loadTopIndicators(); }
-            if (newArrow) newArrow.textContent = '▲';
+            if (newArrow) newArrow.textContent = '‹';
         }
     });
 
@@ -722,7 +722,7 @@ window.toggleDashboard = async function() {
                 var newPanel = document.getElementById('topIndicatorsPanel');
                 var newArrow = document.getElementById('topIndArrow');
                 if (newPanel) { newPanel.style.display = 'block'; _topIndLoaded = false; loadTopIndicators(); }
-                if (newArrow) newArrow.textContent = '▲';
+                if (newArrow) newArrow.textContent = '‹';
             }
         }
     }, DASH_CACHE_TTL);
@@ -754,11 +754,11 @@ window.toggleTopIndicators = function() {
     if (!panel) return;
     if (panel.style.display === 'none') {
         panel.style.display = 'block';
-        arrow.textContent = '▲';
+        arrow.textContent = '‹';
         loadTopIndicators();
     } else {
         panel.style.display = 'none';
-        arrow.textContent = '▼';
+        arrow.textContent = '›';
     }
 };
 

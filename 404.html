@@ -690,7 +690,7 @@
                 <button class="theme-toggle" onclick="toggleAudio()" title="Toggle sound" id="audioBtn" style="font-size:1rem;background:none;border:1px solid var(--border);color:var(--text-dim);width:32px;height:32px;border-radius:8px;cursor:pointer;">🔊</button>
                 <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.5" oninput="setVolume(this.value)" style="width:50px;height:4px;accent-color:#f7931a;cursor:pointer;" title="Volume">
                 <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" id="themeBtn">🌙</button>
-                <button class="sidebar-collapse-btn" onclick="toggleSidebarCollapse()" title="Collapse sidebar">◀</button>
+                <button class="sidebar-collapse-btn" onclick="toggleSidebarCollapse()" title="Collapse sidebar">‹</button>
             </div>
         </div>
         <div class="search-box">
@@ -710,7 +710,7 @@
             </div>
 
             <div style="padding:8px 12px;margin-bottom:4px;">
-                <button onclick="var msg=document.getElementById('contentNote');if(msg.style.display==='none'){msg.style.display='block';this.textContent='📌 A note about the content in these topics ▲'}else{msg.style.display='none';this.textContent='📌 A note about the content in these topics ▼'}" style="padding:6px 12px;background:none;border:1px solid var(--border);color:var(--text-muted);border-radius:8px;font-size:0.75rem;cursor:pointer;font-family:inherit;transition:0.2s;width:100%;text-align:left;">📌 A note about the content in these topics ▼</button>
+                <button onclick="var msg=document.getElementById('contentNote');if(msg.style.display==='none'){msg.style.display='block';this.textContent='📌 A note about the content in these topics ‹'}else{msg.style.display='none';this.textContent='📌 A note about the content in these topics ›'}" style="padding:6px 12px;background:none;border:1px solid var(--border);color:var(--text-muted);border-radius:8px;font-size:0.75rem;cursor:pointer;font-family:inherit;transition:0.2s;width:100%;text-align:left;">📌 A note about the content in these topics ›</button>
                 <div id="contentNote" style="display:none;margin-top:8px;padding:10px 12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.8rem;line-height:1.6;">
                     <p style="margin:0 0 12px;">You can Favorite any topic by clicking the <span style="display:inline-flex;align-items:center;gap:4px;"><span style="font-size:1rem;">☆</span> <strong>Save</strong></span> star at the top of the topic. You can also Bookmark any message by clicking the <span style="display:inline-flex;align-items:center;gap:4px;"><span style="font-size:1rem;">🔖</span> <strong>bookmark</strong></span> icon under each message.</p>
                     <p style="margin:0 0 12px;">All YouTube links are embedded for you and contain videos that supplement the information in each topic. Additionally, topics are filled with tweets that were posted on Twitter over the last few years (as well as some that are much older), and you can expand these tweets to view them in each topic. Furthermore, there are links that open websites, articles, podcasts and more that will lead you further down each rabbit hole of knowledge pertaining to Bitcoin.</p>
@@ -718,7 +718,7 @@
                     <p style="margin:0;">All the education in these topics will remain free and open source forever. Enjoy learning about the peaceful revolution that is Bitcoin! And we hope you share this app with your family and friends who may be curious about Bitcoin but don't know where to start!</p>
                 </div>
             </div>
-            <div class="cat-label cat-toggle" onclick="toggleCat(this)" data-expanded="false">Properties Layer 1 <span class="cat-arrow">▶</span></div>
+            <div class="cat-label cat-toggle" onclick="toggleCat(this)" data-expanded="false">Properties Layer 1 <span class="cat-arrow">›</span></div>
             <div class="cat-group" style="display:none;">
             <button class="ch-btn" onclick="go('whitepaper',this)">📄 whitepaper</button>
             <button class="ch-btn" onclick="go('decentralized',this)">👪 decentralized-censorship-resistant</button>
@@ -733,7 +733,7 @@
             <button class="ch-btn" onclick="go('use-cases',this)">✔ use-cases</button>
 
             </div>
-            <div class="cat-label cat-toggle" onclick="toggleCat(this)" data-expanded="false">Experienced Topics <span class="cat-arrow">▶</span></div>
+            <div class="cat-label cat-toggle" onclick="toggleCat(this)" data-expanded="false">Experienced Topics <span class="cat-arrow">›</span></div>
             <div class="cat-group" style="display:none;">
             <button class="ch-btn" onclick="go('maximalism',this)">💯 maximalism</button>
             <button class="ch-btn" onclick="go('problems-of-money',this)">📉 problems-of-money</button>
@@ -764,7 +764,7 @@
             <button class="ch-btn" onclick="go('consensus',this)">🌐 consensus</button>
 
             </div>
-            <div class="cat-label cat-toggle" onclick="toggleCat(this)" data-expanded="false">Resources <span class="cat-arrow">▶</span></div>
+            <div class="cat-label cat-toggle" onclick="toggleCat(this)" data-expanded="false">Resources <span class="cat-arrow">›</span></div>
             <div class="cat-group" style="display:none;">
             <button class="ch-btn" onclick="go('one-stop-shop',this)">🛑 one-stop-shop</button>
             <button class="ch-btn" onclick="go('faq-glossary',this)">❓ faq-glossary</button>
@@ -801,7 +801,7 @@
             <button class="ch-btn" onclick="go('memes-funny',this)">😂 memes-funny</button>
 
             </div>
-            <div class="cat-label cat-toggle" onclick="toggleCat(this)" data-expanded="false">Additional Info <span class="cat-arrow">▶</span></div>
+            <div class="cat-label cat-toggle" onclick="toggleCat(this)" data-expanded="false">Additional Info <span class="cat-arrow">›</span></div>
             <div class="cat-group" style="display:none;">
             <button class="ch-btn" onclick="go('100_sats',this)">💯 100 Sats</button>
             <button class="ch-btn" onclick="go('analogies',this)">🔋 Analogies</button>
@@ -880,12 +880,12 @@
             <button class="ch-btn" onclick="go('vbyte',this)">🏋 vByte</button>
 
             </div>
-            <div class="cat-label cat-toggle" onclick="toggleCat(this)" data-expanded="false">Referral Links <span class="cat-arrow">▶</span></div>
+            <div class="cat-label cat-toggle" onclick="toggleCat(this)" data-expanded="false">Referral Links <span class="cat-arrow">›</span></div>
             <div class="cat-group" style="display:none;">
             <button class="ch-btn" onclick="go('referral-links',this)">🔗 free-btc-referral-links</button>
             </div>
             <div style="margin:14px 8px 12px;text-align:center;">
-                <button id="randomToggleBtn" onclick="toggleRandomPanel()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:none;border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;cursor:pointer;font-family:inherit;transition:all 0.2s;touch-action:manipulation;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">🎲 Random <span id="randomToggleArrow" style="font-size:0.6rem;transition:transform 0.3s;">▼</span></button>
+                <button id="randomToggleBtn" onclick="toggleRandomPanel()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:none;border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;cursor:pointer;font-family:inherit;transition:all 0.2s;touch-action:manipulation;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">🎲 Random <span id="randomToggleArrow" style="font-size:0.6rem;transition:transform 0.3s;">›</span></button>
                 <div id="randomPanel" style="display:none;margin-top:8px;">
                     <div style="display:flex;gap:8px;justify-content:center;">
                         <button class="random-btn" onclick="goRandom()" title="Random Channel"><span>🎲</span><span class="random-label">Channel</span></button>
@@ -908,7 +908,7 @@
                 };
             </script>
             <div style="margin:12px 8px 12px;text-align:center;">
-                <button id="communityStatsToggle" onclick="toggleCommunityStatsPanel()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:none;border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;cursor:pointer;font-family:inherit;transition:all 0.2s;touch-action:manipulation;" onmouseover="this.style.borderColor='#22c55e';this.style.color='#22c55e'" onmouseout="var o=document.getElementById('communityStatsPanel2');this.style.borderColor=o&&o.style.display!=='none'?'#22c55e':'var(--border)';this.style.color=o&&o.style.display!=='none'?'#22c55e':'var(--text-muted)'">🌍 Community Stats <span id="csToggleArrow" style="font-size:0.6rem;transition:transform 0.3s;">▼</span></button>
+                <button id="communityStatsToggle" onclick="toggleCommunityStatsPanel()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:none;border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;cursor:pointer;font-family:inherit;transition:all 0.2s;touch-action:manipulation;" onmouseover="this.style.borderColor='#22c55e';this.style.color='#22c55e'" onmouseout="var o=document.getElementById('communityStatsPanel2');this.style.borderColor=o&&o.style.display!=='none'?'#22c55e':'var(--border)';this.style.color=o&&o.style.display!=='none'?'#22c55e':'var(--text-muted)'">🌍 Community Stats <span id="csToggleArrow" style="font-size:0.6rem;transition:transform 0.3s;">›</span></button>
                 <div id="communityStatsPanel2" style="display:none;margin-top:10px;padding:10px;text-align:center;">
                     <div id="communityStatsInner" style="font-size:0.82rem;color:var(--text-muted);line-height:2;">Loading...</div>
                 </div>
@@ -930,7 +930,7 @@
         <a href="https://603btc.com" target="_blank" rel="noopener noreferrer" class="sidebar-promo">⚡ Powered by 603btc.com</a>
         <div id="rankBar"></div>
     </aside>
-    <button class="sidebar-expand-btn" onclick="toggleSidebarCollapse()" title="Show sidebar">▶</button>
+    <button class="sidebar-expand-btn" onclick="toggleSidebarCollapse()" title="Show sidebar">›</button>
 
     <button class="back-to-top" id="backToTop" onclick="document.getElementById('main').scrollTo({top:0,behavior:'smooth'})">↑</button>
     <button class="back-to-top scroll-to-bottom" id="scrollToBottom" onclick="var m=document.getElementById('main');m.scrollTo({top:m.scrollHeight,behavior:'smooth'})">↓</button>
@@ -952,7 +952,7 @@
                 <!-- Quest Guide Banner — always visible, collapsible -->
                 <div id="questGuideBanner" style="margin-bottom:16px;max-width:500px;margin-left:auto;margin-right:auto;">
                     <div id="questGuideFull" onclick="if(typeof showGuide==='function')showGuide()" style="padding:16px 18px;background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(168,85,247,0.06));border:1px solid rgba(99,102,241,0.25);border-radius:16px;cursor:pointer;transition:all 0.2s;position:relative;" onmouseover="this.style.borderColor='rgba(99,102,241,0.5)';this.style.boxShadow='0 4px 20px rgba(99,102,241,0.15)'" onmouseout="this.style.borderColor='rgba(99,102,241,0.25)';this.style.boxShadow='none'">
-                        <button onclick="event.stopPropagation();document.getElementById('questGuideFull').style.display='none';document.getElementById('questGuideMini').style.display='flex';localStorage.setItem('btc_guide_collapsed','1')" style="position:absolute;top:8px;right:10px;background:none;border:none;color:var(--text-faint);font-size:0.7rem;cursor:pointer;padding:4px;opacity:0.6;">▲ hide</button>
+                        <button onclick="event.stopPropagation();document.getElementById('questGuideFull').style.display='none';document.getElementById('questGuideMini').style.display='flex';localStorage.setItem('btc_guide_collapsed','1')" style="position:absolute;top:8px;right:10px;background:none;border:none;color:var(--text-faint);font-size:0.7rem;cursor:pointer;padding:4px;opacity:0.6;">‹ hide</button>
                         <div style="display:flex;align-items:center;gap:14px;">
                             <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(168,85,247,0.15));display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">📜</div>
                             <div style="flex:1;min-width:0;">
@@ -965,7 +965,7 @@
                     <div id="questGuideMini" onclick="if(typeof showGuide==='function')showGuide()" style="display:none;align-items:center;gap:10px;padding:10px 14px;background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.15);border-radius:12px;cursor:pointer;transition:0.2s;" onmouseover="this.style.borderColor='rgba(99,102,241,0.4)'" onmouseout="this.style.borderColor='rgba(99,102,241,0.15)'">
                         <span style="font-size:1.1rem;">📜</span>
                         <span style="font-size:0.82rem;font-weight:700;color:var(--heading);flex:1;">Quest Guide</span>
-                        <button onclick="event.stopPropagation();document.getElementById('questGuideFull').style.display='block';document.getElementById('questGuideMini').style.display='none';localStorage.removeItem('btc_guide_collapsed')" style="background:none;border:none;color:var(--text-faint);font-size:0.65rem;cursor:pointer;padding:4px;">▼ expand</button>
+                        <button onclick="event.stopPropagation();document.getElementById('questGuideFull').style.display='block';document.getElementById('questGuideMini').style.display='none';localStorage.removeItem('btc_guide_collapsed')" style="background:none;border:none;color:var(--text-faint);font-size:0.65rem;cursor:pointer;padding:4px;">› expand</button>
                         <span style="color:var(--accent);font-size:0.9rem;">→</span>
                     </div>
                 </div>
@@ -976,7 +976,7 @@
                         <button id="authBtn" onclick="showUsernamePrompt()" style="display:none;padding:12px 30px;width:100%;max-width:340px;background:var(--accent);color:#000;border:none;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;transition:0.2s;touch-action:manipulation;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">Create Free Account / Sign In</button>
 
                         <!-- Learn (standalone, between Settings and Explore Apps) -->
-                        <button onclick="toggleSidebarMenu('homeLearnMenu')" class="desktop-only-apps" style="display:block;padding:12px 30px;width:100%;max-width:340px;background:none;border:2px solid #22c55e;color:#22c55e;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;transition:0.2s;" onmouseover="this.style.background='#22c55e';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='#22c55e'">🎓 Learn ▼</button>
+                        <button onclick="toggleSidebarMenu('homeLearnMenu')" class="desktop-only-apps" style="display:block;padding:12px 30px;width:100%;max-width:340px;background:none;border:2px solid #22c55e;color:#22c55e;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;transition:0.2s;" onmouseover="this.style.background='#22c55e';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='#22c55e'">🎓 Learn ›</button>
                         <div id="homeLearnMenu" class="desktop-only-apps" style="display:none;width:100%;max-width:340px;flex-direction:column;gap:8px;padding:15px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:16px;animation:nachoPop 0.2s ease-out;">
                             <button onclick="go('one-stop-shop')" title="Start here if you're new to Bitcoin" data-tooltip="Start here if you're new to Bitcoin" style="padding:10px 12px;background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(37,99,235,0.08));border:1px solid #3b82f6;color:#3b82f6;border-radius:8px;font-weight:800;cursor:pointer;font-size:0.85rem;text-align:left;font-family:inherit;display:flex;align-items:center;gap:6px;">🟢 Brand New to Bitcoin?</button>
                             <button onclick="go('trails')" title="Guided learning path with topics and flashcards" data-tooltip="Guided learning path with topics and flashcards" style="padding:10px 12px;background:linear-gradient(135deg,rgba(247,147,26,0.1),rgba(234,88,12,0.05));border:1px solid var(--accent);color:var(--accent);border-radius:8px;font-weight:800;cursor:pointer;font-size:0.85rem;text-align:left;font-family:inherit;display:flex;align-items:center;gap:6px;">🦌🗺️ Nacho's Trails: Guided Learning</button>
@@ -987,7 +987,7 @@
                         </div>
 
                         <!-- Explore Apps -->
-                        <button onclick="toggleSidebarMenu('homeAppsMenu')" class="desktop-only-apps" style="display:block;padding:12px 30px;width:100%;max-width:340px;background:none;border:2px solid var(--accent);color:var(--accent);border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;transition:0.2s;" onmouseover="this.style.background='var(--accent)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='var(--accent)'">🧭 Explore Apps ▼</button>
+                        <button onclick="toggleSidebarMenu('homeAppsMenu')" class="desktop-only-apps" style="display:block;padding:12px 30px;width:100%;max-width:340px;background:none;border:2px solid var(--accent);color:var(--accent);border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;transition:0.2s;" onmouseover="this.style.background='var(--accent)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='var(--accent)'">🧭 Explore Apps ›</button>
                         <div id="homeAppsMenu" class="desktop-only-apps" style="display:none;width:100%;max-width:340px;flex-direction:column;gap:10px;padding:15px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:16px;animation:nachoPop 0.2s ease-out;">
                             <!-- Apps grid -->
                             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
@@ -1019,10 +1019,10 @@
                 <div style="margin-top:20px;max-width:500px;margin-left:auto;margin-right:auto;">
                     <!-- 2x2 Grid -->
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                        <button onclick="var s=document.getElementById('sponsorPanel');s.style.display=s.style.display==='none'?'block':'none';this.querySelector('span').textContent=s.style.display==='none'?'▼':'▲'" style="background:none;border:1px solid var(--border);color:var(--text-muted);padding:12px 8px;border-radius:10px;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;text-align:center;">📣 Sponsor <span>▼</span></button>
-                        <button onclick="var s=document.getElementById('creditsPanel');s.style.display=s.style.display==='none'?'block':'none';this.querySelector('span').textContent=s.style.display==='none'?'▼':'▲'" style="background:none;border:1px solid var(--border);color:var(--text-muted);padding:12px 8px;border-radius:10px;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;text-align:center;">👥 Contributors <span>▼</span></button>
-                        <button onclick="if(typeof showDonateModal==='function')showDonateModal()" style="background:none;border:1px solid var(--border);color:var(--text-muted);padding:12px 8px;border-radius:10px;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;text-align:center;">❤️ Donate ▼</button>
-                        <button onclick="var s=document.getElementById('appStatsPanel');s.style.display=s.style.display==='none'?'flex':'none';this.querySelector('span').textContent=s.style.display==='none'?'▼':'▲'" style="background:none;border:1px solid var(--border);color:var(--text-muted);padding:12px 8px;border-radius:10px;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;text-align:center;">📊 App Stats <span>▼</span></button>
+                        <button onclick="var s=document.getElementById('sponsorPanel');s.style.display=s.style.display==='none'?'block':'none';this.querySelector('span').textContent=s.style.display==='none'?'›':'‹'" style="background:none;border:1px solid var(--border);color:var(--text-muted);padding:12px 8px;border-radius:10px;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;text-align:center;">📣 Sponsor <span>›</span></button>
+                        <button onclick="var s=document.getElementById('creditsPanel');s.style.display=s.style.display==='none'?'block':'none';this.querySelector('span').textContent=s.style.display==='none'?'›':'‹'" style="background:none;border:1px solid var(--border);color:var(--text-muted);padding:12px 8px;border-radius:10px;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;text-align:center;">👥 Contributors <span>›</span></button>
+                        <button onclick="if(typeof showDonateModal==='function')showDonateModal()" style="background:none;border:1px solid var(--border);color:var(--text-muted);padding:12px 8px;border-radius:10px;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;text-align:center;">❤️ Donate ›</button>
+                        <button onclick="var s=document.getElementById('appStatsPanel');s.style.display=s.style.display==='none'?'flex':'none';this.querySelector('span').textContent=s.style.display==='none'?'›':'‹'" style="background:none;border:1px solid var(--border);color:var(--text-muted);padding:12px 8px;border-radius:10px;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;text-align:center;">📊 App Stats <span>›</span></button>
                     </div>
                     <!-- Expanded panels below grid -->
                     <div id="sponsorPanel" style="display:none;margin-top:10px;padding:20px;background:linear-gradient(135deg,rgba(247,147,26,0.05),rgba(247,147,26,0.02));border:2px dashed rgba(247,147,26,0.3);border-radius:12px;text-align:center;">
@@ -1036,7 +1036,7 @@
                     <div style="color:var(--accent);font-weight:600;font-size:0.95rem;margin-bottom:8px;">spontaneousleopard54@zeuspay.com</div>
                     <button onclick="navigator.clipboard.writeText('spontaneousleopard54@zeuspay.com');if(typeof showToast==='function')showToast('📋 Lightning Address copied!')" style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;">📋 Copy Lightning Address</button>
                     <br>
-                    <button onclick="var el=document.getElementById('homeDonateMore');el.style.display=el.style.display==='none'?'block':'none';this.textContent=el.style.display==='none'?'💳 More Ways to Donate ▼':'💳 Hide Other Methods ▲'" style="padding:10px 20px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;">💳 More Ways to Donate ▼</button>
+                    <button onclick="var el=document.getElementById('homeDonateMore');el.style.display=el.style.display==='none'?'block':'none';this.textContent=el.style.display==='none'?'💳 More Ways to Donate ›':'💳 Hide Other Methods ‹'" style="padding:10px 20px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;">💳 More Ways to Donate ›</button>
                     <div id="homeDonateMore" style="display:none;text-align:left;max-width:340px;margin:10px auto 0;">
                         <div style="padding:12px;margin-bottom:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;">
                             <div style="font-size:0.75rem;color:var(--text-faint);font-weight:700;margin-bottom:8px;">₿ On-Chain Bitcoin</div>
@@ -1087,7 +1087,7 @@
                     </div>
                     <!-- Contact/Support below grid -->
                     <div style="text-align:center;margin-top:10px;">
-                        <button onclick="toggleSidebarMenu('homeSupportMenu')" style="background:none;border:1px solid var(--border);color:var(--text-muted);padding:10px 20px;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px;">📧 Support &amp; Feedback <span>▼</span></button>
+                        <button onclick="toggleSidebarMenu('homeSupportMenu')" style="background:none;border:1px solid var(--border);color:var(--text-muted);padding:10px 20px;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px;">📧 Support &amp; Feedback <span>›</span></button>
                     </div>
                     <div id="homeSupportMenu" style="display:none;margin-top:8px;flex-direction:column;gap:10px;padding:15px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:16px;">
                         <div style="display:flex;align-items:center;gap:8px;padding:10px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;">

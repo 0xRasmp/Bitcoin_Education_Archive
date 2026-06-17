@@ -129,7 +129,7 @@ const TIPS = [
     { pose: 'point', text: "💡 Tip: Don't like me? Long-press to hide me. But I'll miss you. 🥺 (You can bring me back in Settings → Prefs)" },
     // Content
     { pose: 'brain', text: "💡 Tip: YouTube videos are embedded right in the channels — click to play without leaving the site! 🎬" },
-    { pose: 'point', text: "💡 Tip: Tweets are embedded too! Click '▶ Click to display tweet' to expand them. 🐦" },
+    { pose: 'point', text: "💡 Tip: Tweets are embedded too! Click '› Click to display tweet' to expand them. 🐦" },
     // Timechain TV
     { pose: 'fire', text: "📺 Tip: Timechain TV streams 21 curated channels 24/7 — earn <strong>10 pts per 10 min</strong> watched! <span onclick=\"go('timechain-tv')\" style=\"color:var(--accent);cursor:pointer;text-decoration:underline;\">Tune in →</span>" },
     { pose: 'cheese', text: "🛋️ Tip: Couch with me on Timechain TV — I react to every channel you tune into! 🍿 <span onclick=\"go('timechain-tv')\" style=\"color:var(--accent);cursor:pointer;text-decoration:underline;\">Let's chill →</span>" },

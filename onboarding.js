@@ -611,7 +611,7 @@ window.applySimplifiedHome = function() {
             var group = el.nextElementSibling;
             if (group && group.classList.contains('cat-group')) group.style.display = 'none';
             var arrow = el.querySelector('.cat-arrow');
-            if (arrow) arrow.textContent = '▶';
+            if (arrow) arrow.textContent = '›';
         });
     }
 

@@ -53,7 +53,7 @@ function injectMeetupBuilder() {
     var resources = document.createElement('div');
     resources.style.cssText = 'margin-bottom:30px;';
         function _mbToggle(id) {
-        return 'onclick="var c=document.getElementById(\'' + id + '\');var a=this.querySelector(\'.mb-arrow\');if(c.style.display===\'none\'){c.style.display=\'block\';a.textContent=\'▲\'}else{c.style.display=\'none\';a.textContent=\'▼\'}"';
+        return 'onclick="var c=document.getElementById(\'' + id + '\');var a=this.querySelector(\'.mb-arrow\');if(c.style.display===\'none\'){c.style.display=\'block\';a.textContent=\'‹\'}else{c.style.display=\'none\';a.textContent=\'›\'}"';
     }
     var _btnStyle = 'display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:12px 16px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;transition:0.2s;';
 
@@ -62,7 +62,7 @@ function injectMeetupBuilder() {
 
         '<div ' + _mbToggle('mbPlatforms') + ' style="' + _btnStyle + '">' +
             '<div style="display:flex;align-items:center;gap:8px;"><span>📱</span><span style="color:var(--text);font-weight:700;font-size:0.85rem;">Platforms & Promotion</span></div>' +
-            '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">▼</span>' +
+            '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">›</span>' +
         '</div>' +
         '<div id="mbPlatforms" style="display:none;margin-bottom:16px;">' +
             '<div style="display:flex;flex-direction:column;gap:8px;padding:0 4px;">' +
@@ -82,7 +82,7 @@ function injectMeetupBuilder() {
 
         '<div ' + _mbToggle('mbVenues') + ' style="' + _btnStyle + '">' +
             '<div style="display:flex;align-items:center;gap:8px;"><span>🏠</span><span style="color:var(--text);font-weight:700;font-size:0.85rem;">Free Venue Ideas</span></div>' +
-            '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">▼</span>' +
+            '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">›</span>' +
         '</div>' +
         '<div id="mbVenues" style="display:none;margin-bottom:16px;">' +
             '<div style="display:flex;flex-direction:column;gap:8px;padding:0 4px;">' +
@@ -97,7 +97,7 @@ function injectMeetupBuilder() {
 
         '<div ' + _mbToggle('mbGuides') + ' style="' + _btnStyle + '">' +
             '<div style="display:flex;align-items:center;gap:8px;"><span>📖</span><span style="color:var(--text);font-weight:700;font-size:0.85rem;">Guides & Education</span></div>' +
-            '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">▼</span>' +
+            '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">›</span>' +
         '</div>' +
         '<div id="mbGuides" style="display:none;margin-bottom:16px;">' +
             '<div style="display:flex;flex-direction:column;gap:8px;padding:0 4px;">' +
@@ -112,7 +112,7 @@ function injectMeetupBuilder() {
 
         '<div ' + _mbToggle('mbTips') + ' style="' + _btnStyle + 'border-color:rgba(247,147,26,0.3);background:rgba(247,147,26,0.04);">' +
             '<div style="display:flex;align-items:center;gap:8px;"><span>💡</span><span style="color:var(--accent);font-weight:700;font-size:0.85rem;">Pro Tips</span></div>' +
-            '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">▲</span>' +
+            '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">‹</span>' +
         '</div>' +
         '<div id="mbTips" style="display:block;margin-bottom:16px;">' +
             '<div style="padding:14px;background:rgba(247,147,26,0.06);border:1px solid rgba(247,147,26,0.2);border-radius:12px;color:var(--text);font-size:0.82rem;line-height:1.7;">' +

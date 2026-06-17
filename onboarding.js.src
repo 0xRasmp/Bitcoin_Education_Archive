@@ -414,7 +414,7 @@
                     group.style.display = 'none';
                 }
                 var arrow = toggle.querySelector('.cat-arrow');
-                if (arrow) arrow.textContent = '▶';
+                if (arrow) arrow.textContent = '›';
             });
         }
 

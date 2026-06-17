@@ -192,8 +192,8 @@ function updateTicker() {
             localStorage.setItem('btc_last_price', p);
             if (_lastTickerPrice !== null) {
                 changeEls.forEach(el => {
-                    if (p > _lastTickerPrice) { el.textContent = '▲'; el.style.color = '#22c55e'; }
-                    else if (p < _lastTickerPrice) { el.textContent = '▼'; el.style.color = '#ef4444'; }
+                    if (p > _lastTickerPrice) { el.textContent = '‹'; el.style.color = '#22c55e'; }
+                    else if (p < _lastTickerPrice) { el.textContent = '›'; el.style.color = '#ef4444'; }
                     else { el.textContent = ''; }
                 });
             }

@@ -3379,7 +3379,8 @@ function updateUserDisplay(lv) {
     if (_ud) _ud.style.display = "none";
     return;
   }
-  // Hide old guest banner — we now use unified display
+
+  // Hide old guest banner — unified display handles it
   var guestBanner = document.getElementById("guestPointsBanner");
   if (guestBanner) guestBanner.style.display = "none";
 
@@ -3390,12 +3391,7 @@ function updateUserDisplay(lv) {
     !currentUser.username;
   var hasUsername = currentUser && currentUser.username;
   var pts = currentUser.points || 0;
-  var streakBit =
-    (currentUser.streak || 0) > 0
-      ? '<span style="color:#f97316;font-weight:700;font-size:0.7rem;">🔥' +
-        currentUser.streak +
-        "</span>"
-      : "";
+  var streak = currentUser.streak || 0;
   var displayEmoji = getUserDisplayEmoji(lv);
 
   let el = document.getElementById("userDisplay");
@@ -3405,300 +3401,412 @@ function updateUserDisplay(lv) {
     document.body.appendChild(el);
   }
 
-  if (
-    isAnon ||
-    (auth.currentUser && auth.currentUser.isAnonymous && !hasUsername)
-  ) {
-    // Mobile: hide the fixed overlay — user info already lives in the mobile top bar.
-    // Anonymous users on mobile see their stats in #mobileUserInfo, no need for the
-    // intrusive bottom sign-up banner.
+  // ── ANONYMOUS / GUEST ──────────────────────────────────────────────────────
+  if (isAnon || (auth.currentUser && auth.currentUser.isAnonymous && !hasUsername)) {
     var _isMob = window.innerWidth <= 900;
+
     if (_isMob) {
       el.setAttribute("data-mob-hidden", "1");
       el.style.display = "none";
       return;
     }
-    // If user dismissed the banner this session, keep it hidden.
-    // Use a CSS class (which also has !important) so the "display:flex !important"
-    // mobile rule can't resurrect it.
+
     if (sessionStorage.getItem("btc_signin_banner_dismissed") === "1") {
       el.classList.add("user-hidden");
       el.style.display = "none";
       return;
     }
-    // Otherwise ensure the hide class is removed (re-expanded state)
+
     el.classList.remove("user-hidden");
-    // Consolidated Metric Dashboard + Guest Sign-in
     el.setAttribute("data-anon", "1");
 
-    // NEW POSITIONING: Under sidebar branding for tablet/laptop
-    if (!_isMob) {
-      var sidebarHeader = document.querySelector(".sidebar-header");
-      if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
-        var container = document.createElement("div");
-        container.id = "userDisplayContainer";
-        container.style.padding = "0 20px 16px";
-        container.style.borderBottom = "1px solid var(--border)";
-        sidebarHeader.parentNode.insertBefore(
-          container,
-          sidebarHeader.nextSibling,
-        );
-        container.appendChild(el);
-      }
-      // Add horizontal row for Dashboard + Notifications
-      el.style.cssText =
-        "position:relative;top:auto;right:auto;z-index:10;display:flex;flex-direction:row;align-items:center;gap:10px;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;cursor:default;transition:0.3s;width:100%;";
-    } else {
-      el.style.cssText =
-        "position:fixed;bottom:70px;left:12px;right:12px;z-index:200;display:flex;align-items:center;gap:10px;padding:10px 16px;background:linear-gradient(135deg,#1a1a2e,#2d1f4e);border:2px solid #f7931a;border-radius:14px;box-shadow:0 4px 20px rgba(247,147,26,0.3);font-size:0.85rem;cursor:pointer;";
+    // Position under sidebar header
+    var sidebarHeader = document.querySelector(".sidebar-header");
+    if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
+      var container = document.createElement("div");
+      container.id = "userDisplayContainer";
+      container.style.cssText = "padding:12px 14px 14px;border-bottom:1px solid var(--border);";
+      sidebarHeader.parentNode.insertBefore(container, sidebarHeader.nextSibling);
+      container.appendChild(el);
+    }
+
+    // Inject card styles once
+    if (!document.getElementById("userDisplayStyles")) {
+      var styleEl = document.createElement("style");
+      styleEl.id = "userDisplayStyles";
+      styleEl.textContent = `
+        #userDisplay[data-anon] {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+          background: var(--card-bg);
+          border: 1px solid var(--border);
+          border-radius: 12px;
+          overflow: hidden;
+          cursor: default;
+          width: 100%;
+        }
+        #userDisplay[data-anon] .ud-top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 10px 12px 8px;
+        }
+        #userDisplay[data-anon] .ud-label {
+          font-size: 0.6rem;
+          font-weight: 800;
+          letter-spacing: 1.2px;
+          text-transform: uppercase;
+          color: var(--text-faint);
+        }
+        #userDisplay[data-anon] .ud-rank {
+          font-size: 0.75rem;
+          font-weight: 700;
+          color: var(--accent);
+          letter-spacing: 0.3px;
+        }
+        #userDisplay[data-anon] .ud-xp {
+          font-size: 1.4rem;
+          font-weight: 900;
+          color: var(--heading);
+          font-family: var(--display-font, 'Outfit', sans-serif);
+          letter-spacing: -0.5px;
+          line-height: 1;
+          padding: 0 12px 4px;
+        }
+        #userDisplay[data-anon] .ud-xp span {
+          font-size: 0.7rem;
+          font-weight: 700;
+          color: var(--accent);
+          margin-left: 4px;
+          vertical-align: middle;
+          letter-spacing: 1px;
+        }
+        #userDisplay[data-anon] .ud-live {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 6px 12px;
+          background: var(--secondary, rgba(0,0,0,0.04));
+          border-top: 1px solid var(--border);
+        }
+        #userDisplay[data-anon] .ud-live-item {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          font-size: 0.7rem;
+          font-family: 'SF Mono', 'Fira Code', monospace;
+          color: var(--text-dim);
+          font-weight: 600;
+        }
+        #userDisplay[data-anon] .ud-live-dot {
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background: var(--accent);
+          flex-shrink: 0;
+        }
+        #userDisplay[data-anon] .ud-cta {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 8px 12px;
+          gap: 10px;
+          border-top: 1px solid var(--border);
+        }
+        #userDisplay[data-anon] .ud-cta-text {
+          font-size: 0.68rem;
+          color: var(--text-faint);
+          line-height: 1.3;
+        }
+        #userDisplay[data-anon] .ud-cta-btn {
+          flex-shrink: 0;
+          padding: 6px 14px;
+          background: var(--accent);
+          color: #000;
+          border: none;
+          border-radius: 8px;
+          font-size: 0.7rem;
+          font-weight: 800;
+          letter-spacing: 0.4px;
+          text-transform: uppercase;
+          cursor: pointer;
+          font-family: inherit;
+          transition: opacity 0.15s ease, transform 0.15s ease;
+        }
+        #userDisplay[data-anon] .ud-cta-btn:hover {
+          opacity: 0.88;
+          transform: translateY(-1px);
+        }
+        #userDisplay[data-anon] .ud-dismiss {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          background: none;
+          border: none;
+          color: var(--text-faint);
+          font-size: 0.65rem;
+          cursor: pointer;
+          padding: 2px 5px;
+          border-radius: 4px;
+          line-height: 1;
+          transition: color 0.15s;
+        }
+        #userDisplay[data-anon] .ud-dismiss:hover {
+          color: var(--text-muted);
+        }
+
+        /* ── Signed-in card ── */
+        #userDisplay:not([data-anon]) {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+          background: var(--card-bg);
+          border: 1px solid var(--border);
+          border-radius: 12px;
+          overflow: hidden;
+          cursor: pointer;
+          width: 100%;
+          transition: border-color 0.18s ease;
+        }
+        #userDisplay:not([data-anon]):hover {
+          border-color: var(--accent);
+        }
+        #userDisplay:not([data-anon]) .ud-user-top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 10px 12px 6px;
+        }
+        #userDisplay:not([data-anon]) .ud-name {
+          font-size: 0.82rem;
+          font-weight: 700;
+          color: var(--heading);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 130px;
+        }
+        #userDisplay:not([data-anon]) .ud-level-pill {
+          font-size: 0.6rem;
+          font-weight: 800;
+          letter-spacing: 0.8px;
+          text-transform: uppercase;
+          color: var(--accent);
+          background: var(--accent-bg);
+          border: 1px solid var(--accent-glow);
+          border-radius: 20px;
+          padding: 2px 8px;
+          white-space: nowrap;
+        }
+        #userDisplay:not([data-anon]) .ud-xp-row {
+          display: flex;
+          align-items: baseline;
+          gap: 6px;
+          padding: 2px 12px 8px;
+        }
+        #userDisplay:not([data-anon]) .ud-xp-big {
+          font-size: 1.4rem;
+          font-weight: 900;
+          color: var(--heading);
+          font-family: var(--display-font, 'Outfit', sans-serif);
+          letter-spacing: -0.5px;
+          line-height: 1;
+        }
+        #userDisplay:not([data-anon]) .ud-xp-label {
+          font-size: 0.65rem;
+          font-weight: 800;
+          color: var(--accent);
+          letter-spacing: 1px;
+          text-transform: uppercase;
+        }
+        #userDisplay:not([data-anon]) .ud-streak {
+          font-size: 0.65rem;
+          font-weight: 700;
+          color: #f97316;
+          margin-left: auto;
+        }
+        #userDisplay:not([data-anon]) .ud-live {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 6px 12px;
+          background: var(--secondary, rgba(0,0,0,0.04));
+          border-top: 1px solid var(--border);
+        }
+        #userDisplay:not([data-anon]) .ud-live-item {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          font-size: 0.7rem;
+          font-family: 'SF Mono', 'Fira Code', monospace;
+          color: var(--text-dim);
+          font-weight: 600;
+        }
+        #userDisplay:not([data-anon]) .ud-live-item a {
+          color: var(--text-dim);
+          text-decoration: none;
+        }
+        #userDisplay:not([data-anon]) .ud-live-item a:hover {
+          color: var(--accent);
+        }
+        #userDisplay:not([data-anon]) .ud-bell-row {
+          padding: 0 12px 10px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+      `;
+      document.head.appendChild(styleEl);
+    }
+
+    el.style.cssText = ""; // let CSS classes handle it
+
+    // Live market data
+    var cp = parseFloat(localStorage.getItem("btc_last_price")) || 0;
+    var ch = parseInt(localStorage.getItem("btc_last_height")) || 0;
+    if (typeof nachoLiveData !== "undefined" && nachoLiveData.price) cp = nachoLiveData.price;
+    if (typeof nachoLiveData !== "undefined" && nachoLiveData.blockHeight) ch = nachoLiveData.blockHeight;
+
+    var liveHtml = "";
+    if (cp || ch) {
+      liveHtml = '<div class="ud-live">';
+      if (cp) liveHtml += '<div class="ud-live-item"><span class="ud-live-dot"></span>$' + Math.round(cp).toLocaleString() + '</div>';
+      if (ch) liveHtml += '<a href="https://mempool.space" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="ud-live-item" title="View on mempool.space" style="text-decoration:none;">Block ' + ch.toLocaleString() + '</a>';
+      liveHtml += '</div>';
     }
 
     el.onclick = function (e) {
-      if (!_isMob && e.target.closest("button")) return;
+      if (e.target.closest("button")) return;
       showSettingsPage("account");
     };
 
     el.innerHTML =
-      (_isMob
-        ? '<button onclick="event.stopPropagation();minimizeSignUpBanner();" style="position:absolute;top:-8px;right:-8px;background:var(--bg-side,#1a1a2e);border:1px solid var(--border,#333);color:var(--text-muted,#888);width:24px;height:24px;border-radius:50%;font-size:0.75rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1;padding:0;line-height:1;">▼</button>'
-        : "") +
-      '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;">' +
-      '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;">' +
-      '<div style="display:flex;align-items:center;gap:6px;">' +
-      '<span style="font-size:1.1rem;">' +
-      lv.emoji +
-      "</span>" +
-      '<span style="color:var(--text);font-weight:700;font-size:0.8rem;">GUEST</span>' +
-      '<span style="color:var(--accent);font-weight:800;font-size:0.8rem;">' +
-      pts.toLocaleString() +
-      " XP</span>" +
-      "</div>" +
-      "</div>" +
-      (function () {
-        var cp = parseFloat(localStorage.getItem("btc_last_price")) || 0;
-        var ch = parseInt(localStorage.getItem("btc_last_height")) || 0;
-        if (typeof nachoLiveData !== "undefined" && nachoLiveData.price)
-          cp = nachoLiveData.price;
-        if (typeof nachoLiveData !== "undefined" && nachoLiveData.blockHeight)
-          ch = nachoLiveData.blockHeight;
+      '<button class="ud-dismiss" onclick="event.stopPropagation();minimizeSignUpBanner();" title="Dismiss">✕</button>' +
+      '<div class="ud-top">' +
+        '<span class="ud-label">Guest</span>' +
+        '<span class="ud-rank">' + lv.name + '</span>' +
+      '</div>' +
+      '<div class="ud-xp">' + pts.toLocaleString() + '<span>XP</span></div>' +
+      liveHtml +
+      '<div class="ud-cta">' +
+        '<span class="ud-cta-text">Sign in to save your progress &amp; earn sats</span>' +
+        '<button class="ud-cta-btn" onclick="event.stopPropagation();showUsernamePrompt();">Sign Up</button>' +
+      '</div>';
 
-        var s =
-          '<div id="userDisplayLive" style="display:flex;align-items:center;gap:12px;padding-top:4px;' +
-          (_isMob ? "font-size:0.7rem;" : "font-size:0.75rem;") +
-          '">';
-        if (cp)
-          s +=
-            '<div style="display:flex;align-items:center;gap:4px;"><span style="color:var(--text-muted);font-weight:900;">₿</span> <span style="color:var(--heading);font-weight:800;font-family:monospace;">$' +
-            Math.round(cp).toLocaleString() +
-            "</span></div>";
-        if (ch)
-          s +=
-            '<a href="https://mempool.space" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="display:flex;align-items:center;gap:4px;color:var(--text-muted);text-decoration:none;font-weight:700;" title="View on mempool.space"><span style="color:var(--text-muted);">⛓</span> <span style="font-family:monospace;">' +
-            ch.toLocaleString() +
-            "</span></a>";
-        return s + "</div>";
-      })() +
-      (_isMob
-        ? '<div style="color:#aaa;font-size:0.7rem;margin-top:2px;">Sign in to keep your XP!</div>'
-        : "") +
-      "</div>" +
-      (!_isMob
-        ? '<div id="notifBellPlaceholder" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;"></div>'
-        : "") +
-      (!_isMob
-        ? "<div onclick=\"event.stopPropagation();showUsernamePrompt();\" style=\"background:none;border:1px solid var(--accent);color:var(--accent);padding:5px 12px;border-radius:8px;font-weight:800;font-size:0.65rem;letter-spacing:0.5px;white-space:nowrap;cursor:pointer;transition:background 0.18s ease,color 0.18s ease;\" onmouseover=\"this.style.background='var(--accent)';this.style.color='var(--bg-side)'\" onmouseout=\"this.style.background='none';this.style.color='var(--accent)'\">SIGN UP</div>"
-        : "") +
-      (_isMob
-        ? '<div onclick="event.stopPropagation();showUsernamePrompt();" style="margin-left:auto;background:#f7931a;color:#000;padding:6px 14px;border-radius:10px;font-weight:800;font-size:0.8rem;white-space:nowrap;">Sign Up →</div>'
-        : "");
+  // ── SIGNED-IN USER ─────────────────────────────────────────────────────────
   } else {
-    // Signed in user
     el.removeAttribute("data-anon");
     el.removeAttribute("data-mob-hidden");
     var _isMob = window.innerWidth <= 900;
 
-    // dashboardFloatBtn is static HTML — just ensure onclick is wired
+    // Wire up dashboard FAB
     var dashBtn = document.getElementById("dashboardFloatBtn");
     if (!dashBtn) {
       dashBtn = document.createElement("div");
       dashBtn.id = "dashboardFloatBtn";
       dashBtn.className = "fab-btn";
-      dashBtn.innerHTML = "📊";
       dashBtn.title = "Bitcoin Metrics";
+      dashBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 16l4-6 3 4 5-8"/></svg>';
       document.body.appendChild(dashBtn);
     }
     dashBtn.onclick = function () {
       if (typeof toggleDashboard === "function") toggleDashboard();
     };
 
-    // Mobile: hide the fixed overlay entirely — user info lives in the mobile-bar instead
     if (_isMob) {
       el.style.display = "none";
-      // updateRankUI will populate #mobileUserInfo in the mobile-bar
       return;
     }
 
-    if (!_isMob) {
-      var sidebarHeader = document.querySelector(".sidebar-header");
-      if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
-        var container = document.createElement("div");
-        container.id = "userDisplayContainer";
-        container.style.padding = "0 20px 16px";
-        container.style.borderBottom = "1px solid var(--border)";
-        sidebarHeader.parentNode.insertBefore(
-          container,
-          sidebarHeader.nextSibling,
-        );
-        container.appendChild(el);
-      }
-      el.style.cssText =
-        "position:relative;top:auto;right:auto;z-index:10;display:flex;flex-direction:row;align-items:center;gap:10px;padding:10px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;cursor:pointer;width:100%;";
-    } else {
-      el.style.cssText =
-        "position:fixed;top:12px;right:20px;z-index:200;display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--bg-side);border:1px solid var(--border);border-radius:10px;font-size:0.8rem;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,0.2);";
+    // Position under sidebar header
+    var sidebarHeader = document.querySelector(".sidebar-header");
+    if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
+      var container = document.createElement("div");
+      container.id = "userDisplayContainer";
+      container.style.cssText = "padding:12px 14px 14px;border-bottom:1px solid var(--border);";
+      sidebarHeader.parentNode.insertBefore(container, sidebarHeader.nextSibling);
+      container.appendChild(el);
     }
 
-    // Clicking the user display opens settings (except block height link)
+    el.style.cssText = "";
     el.onclick = function (e) {
       if (e.target.closest("a")) return;
       showSettings();
     };
 
-    var displayName =
-      currentUser.username ||
-      (auth.currentUser && auth.currentUser.displayName) ||
-      "Anon";
+    var displayName = currentUser.username ||
+      (auth.currentUser && auth.currentUser.displayName) || "Anon";
 
-    // Show BOTH display badge and rank emoji if a badge is selected
-    var chosenBadge = currentUser.displayBadge;
-    var iconsHtml = "";
-    if (chosenBadge) {
-      iconsHtml =
-        '<span style="font-size:1.1rem;margin-right:2px;">' +
-        displayEmoji +
-        "</span> " +
-        '<span style="font-size:0.9rem;opacity:0.7;">' +
-        lv.emoji +
-        "</span>";
-    } else {
-      iconsHtml = '<span style="font-size:1.1rem;">' + lv.emoji + "</span>";
+    var cp = parseFloat(localStorage.getItem("btc_last_price")) || 0;
+    var ch = parseInt(localStorage.getItem("btc_last_height")) || 0;
+    if (typeof nachoLiveData !== "undefined" && nachoLiveData.price) cp = nachoLiveData.price;
+    if (typeof nachoLiveData !== "undefined" && nachoLiveData.blockHeight) ch = nachoLiveData.blockHeight;
+
+    var liveHtml = "";
+    if (cp || ch) {
+      liveHtml = '<div class="ud-live">';
+      if (cp) liveHtml += '<div class="ud-live-item"><span style="color:var(--accent);font-weight:900;margin-right:1px;">B</span>$' + Math.round(cp).toLocaleString() + '</div>';
+      if (ch) liveHtml += '<a href="https://mempool.space" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="ud-live-item" title="View on mempool.space">Block ' + ch.toLocaleString() + '</a>';
+      liveHtml += '</div>';
     }
 
+    var streakHtml = streak > 0
+      ? '<span class="ud-streak">' + streak + 'd streak</span>'
+      : "";
+
     el.innerHTML =
-      '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">' +
-      '<div style="display:flex;align-items:center;gap:6px;">' +
-      iconsHtml +
-      '<span style="color:var(--heading);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' +
-      escapeHtml(displayName) +
-      "</span>" +
-      (streakBit
-        ? '<span style="margin-left:4px;">' + streakBit + "</span>"
-        : "") +
-      "</div>" +
-      (function () {
-        var cp = parseFloat(localStorage.getItem("btc_last_price")) || 0;
-        var ch = parseInt(localStorage.getItem("btc_last_height")) || 0;
-        if (typeof nachoLiveData !== "undefined" && nachoLiveData.price)
-          cp = nachoLiveData.price;
-        if (typeof nachoLiveData !== "undefined" && nachoLiveData.blockHeight)
-          ch = nachoLiveData.blockHeight;
-        var s =
-          '<div id="userDisplayLive" style="display:flex;align-items:center;gap:12px;font-size:0.7rem;opacity:0.8;">';
-        if (cp)
-          s +=
-            '<div style="display:flex;align-items:center;gap:4px;"><span style="color:#f7931a;font-weight:900;">₿</span> <span style="font-family:monospace;">$' +
-            Math.round(cp).toLocaleString() +
-            "</span></div>";
-        if (ch)
-          s +=
-            '<a href="https://mempool.space" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="display:flex;align-items:center;gap:4px;color:#aaa;text-decoration:none;" title="View on mempool.space"><span style="color:#6366f1;">⛓️</span> <span style="font-family:monospace;">' +
-            ch.toLocaleString() +
-            "</span></a>";
-        s +=
-          '<span style="color:#f7931a;font-weight:700;">' +
-          pts.toLocaleString() +
-          " XP</span>";
-        return s + "</div>";
-      })() +
-      "</div>" +
-      (!_isMob
-        ? '<div id="notifBellPlaceholder" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;"></div>'
-        : "");
+      '<div class="ud-user-top">' +
+        '<span class="ud-name">' + escapeHtml(displayName) + '</span>' +
+        '<span class="ud-level-pill">' + lv.name + '</span>' +
+      '</div>' +
+      '<div class="ud-xp-row">' +
+        '<span class="ud-xp-big">' + pts.toLocaleString() + '</span>' +
+        '<span class="ud-xp-label">XP</span>' +
+        streakHtml +
+      '</div>' +
+      liveHtml +
+      '<div class="ud-bell-row">' +
+        '<div id="notifBellPlaceholder" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;"></div>' +
+        '<span style="font-size:0.62rem;color:var(--text-faint);letter-spacing:0.3px;">Settings</span>' +
+      '</div>';
   }
+
   el.style.display = "flex";
 
-  // dashboardFloatBtn is now created earlier (before mobile early-return) to ensure it shows on mobile too
-
-  // Update mobile top bar user info (username + price + block height + pts)
-  const mobileInfo = document.getElementById("mobileUserInfo");
+  // ── MOBILE TOP BAR ─────────────────────────────────────────────────────────
+  var mobileInfo = document.getElementById("mobileUserInfo");
   if (mobileInfo && window.innerWidth <= 900) {
-    var chosenBadge = currentUser.displayBadge;
-    var mobileIcons = displayEmoji;
-    if (chosenBadge) mobileIcons += " " + lv.emoji;
-    var pts = currentUser.points || 0;
-    var _cp = parseFloat(localStorage.getItem("btc_last_price")) || 0;
-    var _ch = parseInt(localStorage.getItem("btc_last_height")) || 0;
-    if (typeof nachoLiveData !== "undefined" && nachoLiveData.price)
-      _cp = nachoLiveData.price;
-    if (typeof nachoLiveData !== "undefined" && nachoLiveData.blockHeight)
-      _ch = nachoLiveData.blockHeight;
-    var nameStr = escapeHtml(
-      currentUser.username || (isAnon ? "Anonymous" : "Anon"),
-    );
-    var s =
-      '<span style="cursor:pointer;" onclick="if(typeof showSettings===\'function\')showSettings()">' +
-      mobileIcons +
-      " <b>" +
-      nameStr +
-      "</b></span>";
-    if (_cp)
-      s +=
-        ' <span style="color:#f7931a;font-weight:900;">₿</span> <span style="font-family:monospace;">$' +
-        Math.round(_cp).toLocaleString() +
-        "</span>";
-    if (_ch)
-      s +=
-        ' <span style="color:#6366f1;">⛓️</span> <span style="font-family:monospace;">' +
-        _ch.toLocaleString() +
-        "</span>";
-    s +=
-      ' <span style="color:#f7931a;font-weight:700;">' +
-      pts.toLocaleString() +
-      " XP</span>";
+    var cp2 = parseFloat(localStorage.getItem("btc_last_price")) || 0;
+    var ch2 = parseInt(localStorage.getItem("btc_last_height")) || 0;
+    if (typeof nachoLiveData !== "undefined" && nachoLiveData.price) cp2 = nachoLiveData.price;
+    if (typeof nachoLiveData !== "undefined" && nachoLiveData.blockHeight) ch2 = nachoLiveData.blockHeight;
+    var nameStr = escapeHtml(currentUser.username || (isAnon ? "Anonymous" : "Anon"));
+    var s = '<span style="cursor:pointer;font-weight:700;" onclick="if(typeof showSettings===\'function\')showSettings()">' + nameStr + '</span>';
+    if (cp2) s += ' <span style="color:var(--accent);font-family:monospace;font-size:0.85em;">$' + Math.round(cp2).toLocaleString() + '</span>';
+    if (ch2) s += ' <span style="color:var(--text-faint);font-family:monospace;font-size:0.85em;">#' + ch2.toLocaleString() + '</span>';
+    s += ' <span style="color:var(--accent);font-weight:700;">' + pts.toLocaleString() + ' XP</span>';
     mobileInfo.innerHTML = s;
     mobileInfo.style.display = "inline";
     mobileInfo.style.maxWidth = "none";
   }
 
-  // Update home page welcome banner
-  const wb = document.getElementById("welcomeBanner");
+  // ── WELCOME BANNER ─────────────────────────────────────────────────────────
+  var wb = document.getElementById("welcomeBanner");
   if (wb && currentUser.username) {
-    // Sync auth button whenever we update the welcome banner to ensure identity consistency
     updateAuthButton();
-
-    const streak = currentUser.streak || 0;
-    const wbBestStreak = currentUser.bestStreak || 0;
-    const streakText =
-      streak > 0 || wbBestStreak > 0
-        ? '<span style="color:#f97316;font-weight:700;"> · 🔥 ' +
-          streak +
-          (wbBestStreak > 0 ? "(" + wbBestStreak + ")" : "") +
-          " day streak</span>"
-        : "";
+    var wbStreak = currentUser.streak || 0;
+    var wbBest = currentUser.bestStreak || 0;
+    var streakText = wbStreak > 0 || wbBest > 0
+      ? '<span style="color:#f97316;font-weight:700;"> · ' + wbStreak + (wbBest > 0 ? ' (' + wbBest + ')' : '') + 'd streak</span>'
+      : "";
     wb.innerHTML =
-      '<span style="font-size:1.2rem;">' +
-      lv.emoji +
-      "</span> " +
-      '<span style="color:var(--heading);font-weight:700;">Welcome back, ' +
-      escapeHtml(currentUser.username || "Anon") +
-      "!</span>" +
-      '<span style="color:var(--text-muted);font-size:0.85rem;"> · ' +
-      lv.name +
-      " · " +
-      (currentUser.points || 0).toLocaleString() +
-      " XP</span>" +
+      '<span style="font-size:1.1rem;font-weight:800;color:var(--heading);">Welcome back, ' + escapeHtml(currentUser.username || "Anon") + '</span>' +
+      '<span style="color:var(--text-muted);font-size:0.85rem;"> · ' + lv.name + ' · ' + (currentUser.points || 0).toLocaleString() + ' XP</span>' +
       streakText +
-      '<div style="color:var(--text-faint);font-size:0.75rem;margin-top:4px;">⚙️ Tap here for Account & Settings</div>';
+      '<div style="color:var(--text-faint);font-size:0.72rem;margin-top:3px;letter-spacing:0.2px;">Settings &amp; account →</div>';
     wb.style.display = "block";
     wb.removeAttribute("data-simplified-hidden");
   }
@@ -3833,7 +3941,7 @@ async function _lbSearchLoad(query, afterRank, append) {
       btn.id = "lbSearchMoreBtn";
       btn.style.cssText =
         "width:100%;padding:8px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.8rem;cursor:pointer;font-family:inherit;margin:4px 0 2px;";
-      btn.textContent = "Show more results ▼";
+      btn.textContent = "Show more results ›";
       btn.onclick = function () {
         _lbSearchLoad(_lbSearchQuery, _lbSearchLastRank, true);
       };
@@ -4452,7 +4560,7 @@ async function toggleLeaderboard() {
       html +=
         '<button id="lbShowMore" onclick="expandLeaderboard(event)" style="width:100%;padding:10px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.85rem;cursor:pointer;font-family:inherit;margin:8px 0;transition:0.2s;">Show Top ' +
         Math.min(allUsers.length, 150) +
-        " Users ▼</button>";
+        " Users ›</button>";
     }
     html += "</div>";
 
@@ -4631,7 +4739,7 @@ async function _loadPVPLeaderboard() {
       pvpHtml +=
         "<button onclick=\"event.stopPropagation();document.querySelectorAll('.pvp-lb-extra').forEach(function(el){el.style.display='flex'});this.remove();\" style=\"width:100%;padding:10px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.85rem;cursor:pointer;font-family:inherit;margin:8px 0;\">Show all " +
         players.length +
-        " PVP players ▼</button>";
+        " PVP players ›</button>";
     }
     container.innerHTML =
       pvpHtml ||
@@ -5780,7 +5888,7 @@ function showSettingsPage(tab) {
 
       // Advanced Account toggle — content renders BELOW this button
       html +=
-        "<button onclick=\"var p=document.getElementById('advAcctContent');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'▼':'▲'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Account <span>▼</span></button>";
+        "<button onclick=\"var p=document.getElementById('advAcctContent');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'›':'‹'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Account <span>›</span></button>";
 
       // Advanced Account content (hidden, appears at bottom when toggled)
       html +=
@@ -5943,7 +6051,7 @@ function showSettingsPage(tab) {
       // Flashcards (collapsible)
       html +=
         '<div style="margin-bottom:16px;text-align:center;">' +
-        "<button onclick=\"var p=document.getElementById('flashcardsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'▼':'▲'\" style=\"width:100%;padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;color:var(--text);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;\">📚 Study Flashcards <span>▼</span></button>" +
+        "<button onclick=\"var p=document.getElementById('flashcardsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'›':'‹'\" style=\"width:100%;padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;color:var(--text);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;\">📚 Study Flashcards <span>›</span></button>" +
         '<div id="flashcardsPanel" style="display:none;margin-top:12px;padding:16px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;">' +
         '<p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:12px;">Prepare for quests and exams with interactive flashcards.</p>' +
         '<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;">';
@@ -5980,7 +6088,7 @@ function showSettingsPage(tab) {
 
       // The Signal section (collapsible, moved from its own tab)
       html +=
-        "<button onclick=\"var p=document.getElementById('signalPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'▼':'▲';if(p.style.display!=='none')loadSignalContent()\" style=\"width:100%;padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;color:var(--text);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;\">📡 The Weekly Signal <span>▼</span></button>";
+        "<button onclick=\"var p=document.getElementById('signalPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'›':'‹';if(p.style.display!=='none')loadSignalContent()\" style=\"width:100%;padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;color:var(--text);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;\">📡 The Weekly Signal <span>›</span></button>";
       html += '<div id="signalPanel" style="display:none;">';
 
       // Ticker toggle
@@ -6546,11 +6654,11 @@ function showSettingsPage(tab) {
         html +=
           '<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:14px;margin-bottom:16px;">';
         html +=
-          "<button onclick=\"event.stopPropagation();var c=document.getElementById('earnXPContent');var a=this.querySelector('.earn-arrow');if(c.style.display==='none'){c.style.display='block';a.textContent='▲'}else{c.style.display='none';a.textContent='▼'}\" style=\"width:100%;padding:16px;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-family:inherit;touch-action:manipulation;\">";
+          "<button onclick=\"event.stopPropagation();var c=document.getElementById('earnXPContent');var a=this.querySelector('.earn-arrow');if(c.style.display==='none'){c.style.display='block';a.textContent='‹'}else{c.style.display='none';a.textContent='›'}\" style=\"width:100%;padding:16px;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-family:inherit;touch-action:manipulation;\">";
         html +=
           '<span style="font-weight:700;font-size:0.85rem;color:var(--text);">🎯 How to Earn XP</span>';
         html +=
-          '<span class="earn-arrow" style="color:var(--text-faint);font-size:0.8rem;">▼</span>';
+          '<span class="earn-arrow" style="color:var(--text-faint);font-size:0.8rem;">›</span>';
         html += "</button>";
         html +=
           '<div id="earnXPContent" onclick="event.stopPropagation()" style="display:none;padding:0 16px 16px;font-size:0.78rem;color:var(--text-muted);line-height:1.7;">';
@@ -6559,8 +6667,8 @@ function showSettingsPage(tab) {
             '<div style="margin-bottom:6px;border:1px solid var(--border);border-radius:10px;overflow:hidden;">' +
             "<button onclick=\"event.stopPropagation();var c=document.getElementById('" +
             id +
-            "');c.style.display=c.style.display==='none'?'block':'none';this.querySelector('.ea').textContent=c.style.display==='none'?'▶':'▼'\" style=\"width:100%;padding:10px 12px;background:rgba(255,255,255,0.03);border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:inherit;touch-action:manipulation;\">" +
-            '<span class="ea" style="color:var(--text-faint);font-size:0.7rem;">▶</span>' +
+            "');c.style.display=c.style.display==='none'?'block':'none';this.querySelector('.ea').textContent=c.style.display==='none'?'›':'›'\" style=\"width:100%;padding:10px 12px;background:rgba(255,255,255,0.03);border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:inherit;touch-action:manipulation;\">" +
+            '<span class="ea" style="color:var(--text-faint);font-size:0.7rem;">›</span>' +
             '<span style="color:var(--text);font-size:0.8rem;font-weight:700;">' +
             title +
             "</span></button>" +
@@ -6771,7 +6879,7 @@ function showSettingsPage(tab) {
         // Expandable disclaimer note
         html += '<div style="margin-bottom:8px;">';
         html +=
-          '<button onclick="window._toggleSatsCharityNote()" style="width:100%;padding:10px 14px;background:none;border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;">ℹ️ About Donations <span id="satsCharityNoteArrow">▼</span></button>';
+          '<button onclick="window._toggleSatsCharityNote()" style="width:100%;padding:10px 14px;background:none;border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;">ℹ️ About Donations <span id="satsCharityNoteArrow">›</span></button>';
         html +=
           '<div id="satsCharityNote" style="display:none;background:var(--card-bg);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:12px;font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Donations are non-refundable and not tax-deductible. Faction is always recorded even for anonymous donations. Community votes on which charities receive the funds.</div>';
         html += "</div>";
@@ -6906,7 +7014,7 @@ function showSettingsPage(tab) {
 
       // Advanced Prefs
       html +=
-        "<button onclick=\"var p=document.getElementById('advPrefsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'▼':'▲'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Prefs <span>▼</span></button>";
+        "<button onclick=\"var p=document.getElementById('advPrefsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'›':'‹'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Prefs <span>›</span></button>";
       html += '<div id="advPrefsPanel" style="display:none;">';
 
       // Nacho mascot toggle
@@ -7240,7 +7348,7 @@ function showSettingsPage(tab) {
 
       // Advanced Security (Blocked Users + Danger Zone)
       html +=
-        "<button onclick=\"var p=document.getElementById('advSecPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'▼':'▲'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Security <span>▼</span></button>";
+        "<button onclick=\"var p=document.getElementById('advSecPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'›':'‹'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Security <span>›</span></button>";
       html += '<div id="advSecPanel" style="display:none;">';
 
       // Blocked Users
@@ -7821,7 +7929,7 @@ function showSettingsPage(tab) {
 
       // Orange Tickets section (collapsible)
       html +=
-        "<button onclick=\"var p=document.getElementById('ticketsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'▼':'▲'\" style=\"width:100%;padding:12px;background:linear-gradient(135deg,rgba(247,147,26,0.08),rgba(234,88,12,0.04));border:2px solid rgba(247,147,26,0.2);border-radius:10px;color:var(--accent);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\"><span style=\"filter:hue-rotate(30deg) saturate(1.5);\">🎟️</span> Orange Tickets & Referrals <span>▼</span></button>";
+        "<button onclick=\"var p=document.getElementById('ticketsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'›':'‹'\" style=\"width:100%;padding:12px;background:linear-gradient(135deg,rgba(247,147,26,0.08),rgba(234,88,12,0.04));border:2px solid rgba(247,147,26,0.2);border-radius:10px;color:var(--accent);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\"><span style=\"filter:hue-rotate(30deg) saturate(1.5);\">🎟️</span> Orange Tickets & Referrals <span>›</span></button>";
       html += '<div id="ticketsPanel" style="display:none;">';
       if (!user || user.isAnonymous) {
         html +=
@@ -7851,7 +7959,7 @@ function showSettingsPage(tab) {
 
       // Advanced Stats section
       html +=
-        "<button onclick=\"var p=document.getElementById('advStatsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'▼':'▲'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Stats <span>▼</span></button>";
+        "<button onclick=\"var p=document.getElementById('advStatsPanel');p.style.display=p.style.display==='none'?'block':'none';this.querySelector('span').textContent=p.style.display==='none'?'›':'‹'\" style=\"width:100%;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;\">⚙️ Advanced Stats <span>›</span></button>";
       html += '<div id="advStatsPanel" style="display:none;">';
 
       // Export data
@@ -8700,7 +8808,7 @@ window.minimizeSignUpBanner = function () {
       "position:fixed;bottom:70px;left:12px;z-index:200;display:flex;align-items:center;gap:6px;padding:8px 12px 8px 16px;background:var(--bg-side,#1a1a2e);border:2px solid #f7931a;border-radius:10px;box-shadow:0 2px 10px rgba(247,147,26,0.2);cursor:pointer;transition:0.3s;";
     pill.innerHTML =
       '<span style="font-size:0.8rem;font-weight:700;color:#f7931a;">🔐 Sign Up</span>' +
-      '<span style="color:var(--text-faint,#888);font-size:0.7rem;margin-left:4px;" title="Expand banner">▲</span>';
+      '<span style="color:var(--text-faint,#888);font-size:0.7rem;margin-left:4px;" title="Expand banner">‹</span>';
     pill.onclick = function () {
       window.expandSignUpBanner();
     };
@@ -8711,7 +8819,7 @@ window.minimizeSignUpBanner = function () {
       "position:fixed;top:12px;right:20px;z-index:200;display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--bg-side,#1a1a2e);border:2px solid #f7931a;border-radius:10px;box-shadow:0 2px 10px rgba(247,147,26,0.2);cursor:pointer;transition:0.3s;";
     ud.innerHTML =
       '<span style="font-size:0.8rem;font-weight:700;color:#f7931a;">🔐 Sign Up</span>' +
-      '<span style="color:var(--text-faint,#888);font-size:0.7rem;margin-left:4px;" title="Expand banner">▲</span>';
+      '<span style="color:var(--text-faint,#888);font-size:0.7rem;margin-left:4px;" title="Expand banner">‹</span>';
     ud.onclick = function () {
       window.expandSignUpBanner();
     };
@@ -9827,4 +9935,3 @@ function getLevelFlavor(name) {
   };
   return flavors[name] || "You're leveling up!";
 }
-az

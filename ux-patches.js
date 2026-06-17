@@ -599,7 +599,7 @@
         mp.id = 'miniPlayer';
         mp.style.cssText = 'position:fixed;bottom:60px;left:0;right:0;z-index:180;background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid rgba(247,147,26,0.3);padding:8px 16px;display:none;align-items:center;gap:12px;';
         mp.innerHTML =
-            '<button id="mpPlayPause" onclick="toggleMiniPlayer()" style="background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;padding:4px;">▶</button>' +
+            '<button id="mpPlayPause" onclick="toggleMiniPlayer()" style="background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;padding:4px;">›</button>' +
             '<div style="flex:1;min-width:0;">' +
                 '<div id="mpTitle" style="color:#fff;font-size:0.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Not playing</div>' +
                 '<div id="mpArtist" style="color:rgba(255,255,255,0.5);font-size:0.7rem;">Bitcoin Beats</div>' +
@@ -632,7 +632,7 @@
             document.getElementById('mpPlayPause').textContent = '⏸';
         } else {
             window._miniPlayerAudio.pause();
-            document.getElementById('mpPlayPause').textContent = '▶';
+            document.getElementById('mpPlayPause').textContent = '›';
         }
     };
 

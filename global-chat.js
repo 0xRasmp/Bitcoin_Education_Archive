@@ -1076,7 +1076,7 @@ function createChatOverlay() {
     // Satoshi's Favor banner + minimize button on same line
     header.innerHTML += '<div style="display:flex;width:100%;align-items:center;justify-content:space-between;gap:8px;">' +
         '<div id="satoshiFavorChatBanner" style="flex:1;min-width:0;"></div>' +
-        '<button onclick="toggleChatOverlay()" style="flex-shrink:0;padding:4px 10px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">▼ Minimize</button>' +
+        '<button onclick="toggleChatOverlay()" style="flex-shrink:0;padding:4px 10px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">› Minimize</button>' +
     '</div>';
 
     // Chat content container
@@ -1388,7 +1388,7 @@ window.showReactPicker = function(msgId, btnEl) {
             html += '<button onclick="toggleReaction(\'' + msgId + '\',\'' + emojis[i] + '\');document.getElementById(\'reactPicker\').remove()" style="padding:5px 6px;font-size:1.2rem;cursor:pointer;background:none;border:none;border-radius:8px;transition:0.15s;touch-action:manipulation;line-height:1;" onmouseover="this.style.background=\'rgba(255,255,255,0.1)\'" onmouseout="this.style.background=\'none\'">' + emojis[i] + '</button>';
         }
         html += '</div>';
-        html += '<button onclick="window._reactExpanded=!window._reactExpanded;window._rerenderReactPicker(\'' + msgId + '\')" style="width:100%;padding:4px;margin-top:4px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;color:var(--text-faint);font-size:0.65rem;cursor:pointer;font-family:inherit;">' + (_reactExpanded ? '▲ Less' : '▼ More emojis') + '</button>';
+        html += '<button onclick="window._reactExpanded=!window._reactExpanded;window._rerenderReactPicker(\'' + msgId + '\')" style="width:100%;padding:4px;margin-top:4px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;color:var(--text-faint);font-size:0.65rem;cursor:pointer;font-family:inherit;">' + (_reactExpanded ? '‹ Less' : '› More emojis') + '</button>';
         picker.innerHTML = html;
     }
 
@@ -1957,10 +1957,10 @@ window.showDJControlPanel = function() {
     panel.style.cssText = 'position:fixed;bottom:80px;right:16px;z-index:310;width:280px;background:var(--bg-side,#1a1a2e);border:2px solid #6366f1;border-radius:16px;box-shadow:0 8px 32px rgba(99,102,241,0.3);display:flex;flex-direction:column;transition:0.3s;overflow:hidden;';
 
     panel.innerHTML =
-        '<div onclick="var body=document.getElementById(\'djControlBody\');var arrow=document.getElementById(\'djControlArrow\');if(body.style.display===\'none\'){body.style.display=\'block\';arrow.textContent=\'▼\'}else{body.style.display=\'none\';arrow.textContent=\'▶\'}" style="padding:10px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;border-bottom:1px solid var(--border);">' +
+        '<div onclick="var body=document.getElementById(\'djControlBody\');var arrow=document.getElementById(\'djControlArrow\');if(body.style.display===\'none\'){body.style.display=\'block\';arrow.textContent=\'›\'}else{body.style.display=\'none\';arrow.textContent=\'›\'}" style="padding:10px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;border-bottom:1px solid var(--border);">' +
             '<span style="font-weight:700;font-size:0.85rem;color:#6366f1;">🎛️ DJ Controls</span>' +
             '<div style="display:flex;align-items:center;gap:8px;">' +
-                '<span id="djControlArrow" style="color:var(--text-faint);font-size:0.8rem;">▼</span>' +
+                '<span id="djControlArrow" style="color:var(--text-faint);font-size:0.8rem;">›</span>' +
                 '<span onclick="event.stopPropagation();document.getElementById(\'djControlPanel\').style.display=\'none\'" style="color:var(--text-faint);font-size:1rem;cursor:pointer;padding:2px 6px;">✕</span>' +
             '</div>' +
         '</div>' +

@@ -8406,7 +8406,7 @@ window.renderTimechainTV = function() {
         }
         /* Pull-tab arrow on the visible left edge - points left to hint "pull me" */
         #tctv-remote-inline.collapsed .tctv-remote-tap-zone::before {
-            content: '◀';
+            content: '‹';
             position: absolute;
             left: 12px;
             top: 18px;
@@ -8705,7 +8705,7 @@ window.renderTimechainTV = function() {
             /* Disclaimer: collapsed by default, fully scrollable when expanded */
             #tctv-disclaimer { font-size: 0.72rem !important; padding: 10px 12px !important; margin: 8px 12px !important; max-height: 36px; overflow: hidden; cursor: pointer; position: relative; }
             #tctv-disclaimer.expanded { max-height: 400px !important; overflow-y: auto !important; cursor: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
-            #tctv-disclaimer:not(.expanded)::after { content: 'Tap to read full disclaimer ▼'; display: block; position: absolute; bottom: 0; left: 0; right: 0; text-align: center; padding: 6px; background: linear-gradient(transparent, #0a0a0a 60%); color: #888; font-size: 0.65rem; font-weight: 600; }
+            #tctv-disclaimer:not(.expanded)::after { content: 'Tap to read full disclaimer ›'; display: block; position: absolute; bottom: 0; left: 0; right: 0; text-align: center; padding: 6px; background: linear-gradient(transparent, #0a0a0a 60%); color: #888; font-size: 0.65rem; font-weight: 600; }
             #tctv-disclaimer + div { height: 60px !important; }
         }
         /* Very short screens (landscape phones) - same flex approach but tighter video budget */
@@ -8801,15 +8801,15 @@ window.renderTimechainTV = function() {
             // CH and VOL side-by-side
             '<div style="display:flex;gap:8px;align-items:flex-start;justify-content:center;width:100%;">' +
                 '<div style="background:#1a1a1a;border-radius:12px;padding:8px 4px;display:flex;flex-direction:column;gap:8px;align-items:center;">' +
-                    '<button class="remote-btn" onclick="tctvRemoteChannel(1)">▲</button>' +
+                    '<button class="remote-btn" onclick="tctvRemoteChannel(1)">‹</button>' +
                     '<input type="text" id="remote-ch-input-inline" class="remote-input" style="width:44px;padding:3px;font-size:0.75rem;" placeholder="#" maxlength="2" inputmode="numeric" title="Type 0-21 and hit Enter" onkeydown="if(event.key===\'Enter\')tctvDirectChannel(this.value)">' +
-                    '<button class="remote-btn" onclick="tctvRemoteChannel(-1)">▼</button>' +
+                    '<button class="remote-btn" onclick="tctvRemoteChannel(-1)">›</button>' +
                     '<span class="remote-label" style="margin:0">CH</span>' +
                 '</div>' +
                 '<div style="background:#1a1a1a;border-radius:12px;padding:8px 4px;display:flex;flex-direction:column;gap:8px;align-items:center;">' +
-                    '<button class="remote-btn" onclick="tctvRemoteVolume(1)">▲</button>' +
+                    '<button class="remote-btn" onclick="tctvRemoteVolume(1)">‹</button>' +
                     '<button class="remote-btn" id="remote-mute-btn-inline" onclick="tctvRemoteMute()" title="Mute" style="font-size:1rem;">\ud83d\udd08</button>' +
-                    '<button class="remote-btn" onclick="tctvRemoteVolume(-1)">▼</button>' +
+                    '<button class="remote-btn" onclick="tctvRemoteVolume(-1)">›</button>' +
                     '<span class="remote-label" style="margin:0">VOL</span>' +
                 '</div>' +
             '</div>' +
@@ -9571,7 +9571,7 @@ function _tctvSwipeChannel(direction) {
 function _showSwipeHint(direction) {
     var hint = document.createElement('div');
     hint.id = 'tctv-swipe-hint';
-    hint.textContent = direction === 'next' ? '▲' : '▼';
+    hint.textContent = direction === 'next' ? '‹' : '›';
     hint.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:999999;color:#f7931a;font-size:4rem;font-weight:900;text-shadow:0 0 30px rgba(247,147,26,0.8);pointer-events:none;opacity:0;transition:opacity 0.15s;';
     document.body.appendChild(hint);
     

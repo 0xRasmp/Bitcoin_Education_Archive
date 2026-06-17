@@ -65,7 +65,7 @@ window.renderBitcoinBeats = function() {
                     window._beatsQueue = [t];
                     window._beatsQueueIdx = 0;
                     // On mobile, autoplay is blocked without a user gesture.
-                    // Load the track into the player UI so one tap on ▶ starts it.
+                    // Load the track into the player UI so one tap on › starts it.
                     var isMob = window.innerWidth <= 900;
                     if (isMob) {
                         // Create audio element (paused) so play button works instantly
@@ -100,7 +100,7 @@ window.renderBitcoinBeats = function() {
                             if (typeof beatsSetMediaSession === 'function') beatsSetMediaSession(t);
                         }).catch(function() {
                             // Autoplay blocked — show toast so user knows to tap play
-                            if (typeof showToast === 'function') showToast('🎵 Tap ▶ to play');
+                            if (typeof showToast === 'function') showToast('🎵 Tap › to play');
                         });
                     } else {
                         beatsPlayTrack(0);
@@ -159,12 +159,12 @@ window.beatsEnsureGlobalPlayer = function() {
             '</div>' +
             '<div id="beatsTime" style="color:rgba(255,255,255,0.4);font-size:0.65rem;white-space:nowrap;">0:00 / 0:00</div>' +
             '<button onclick="beatsPrevTrack()" style="background:none;border:none;color:#fff;font-size:1rem;cursor:pointer;padding:4px;">⏮</button>' +
-            '<button id="beatsPlayBtn" onclick="beatsTogglePlay()" style="background:var(--accent);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">▶</button>' +
+            '<button id="beatsPlayBtn" onclick="beatsTogglePlay()" style="background:var(--accent);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">›</button>' +
             '<button onclick="beatsNextTrack()" style="background:none;border:none;color:#fff;font-size:1rem;cursor:pointer;padding:4px;">⏭</button>' +
             '<input type="range" id="beatsVolume" min="0" max="100" value="80" oninput="beatsSetVolume(this.value)" style="width:50px;accent-color:var(--accent);cursor:pointer;" title="Volume">' +
             '<button onclick="beatsShowComments()" style="background:none;border:none;color:rgba(255,255,255,0.4);font-size:0.9rem;cursor:pointer;padding:4px;" title="Comments">💬</button>' +
             '<button onclick="if(typeof go===\'function\')go(\'bitcoin-beats\')" style="background:none;border:none;color:var(--accent);font-size:0.85rem;cursor:pointer;padding:4px;" title="Open Bitcoin Beats">🎵</button>' +
-            '<button onclick="beatsCollapsePlayer()" style="background:none;border:none;color:rgba(255,255,255,0.3);font-size:0.9rem;cursor:pointer;padding:4px;" title="Minimize">▼</button>' +
+            '<button onclick="beatsCollapsePlayer()" style="background:none;border:none;color:rgba(255,255,255,0.3);font-size:0.9rem;cursor:pointer;padding:4px;" title="Minimize">›</button>' +
             '<button onclick="beatsClosePlayer()" style="background:none;border:none;color:rgba(255,255,255,0.3);font-size:0.9rem;cursor:pointer;padding:4px;" title="Close">✕</button>' +
         '</div>';
     document.body.appendChild(gp);
@@ -221,7 +221,7 @@ window.beatsCollapsePlayer = function() {
         var miniTitle = document.getElementById('beatsMiniTitle');
         if (title && miniTitle) miniTitle.textContent = title.textContent;
         var miniBtn = document.getElementById('beatsMiniPlayBtn');
-        if (miniBtn) miniBtn.textContent = (window._beatsAudio && !window._beatsAudio.paused) ? '⏸' : '▶';
+        if (miniBtn) miniBtn.textContent = (window._beatsAudio && !window._beatsAudio.paused) ? '⏸' : '›';
         mini.style.display = 'flex';
     }
     // Close comments panel if open
@@ -389,7 +389,7 @@ window.beatsLoadTracks = function(tab) {
                     '<div style="flex-shrink:0;text-align:right;">' +
                         '<div style="color:var(--text-faint);font-size:0.7rem;">' + duration + '</div>' +
                         '<div style="color:var(--text-faint);font-size:0.6rem;display:flex;align-items:center;gap:4px;justify-content:flex-end;">' +
-                            '<span title="' + (t.plays || 0) + ' plays">▶ ' + _formatPlays(t.plays || 0) + '</span>' +
+                            '<span title="' + (t.plays || 0) + ' plays">› ' + _formatPlays(t.plays || 0) + '</span>' +
                             (isPlaying ? '<button class="beats-action-btn" onclick="event.stopPropagation();djBroadcast()" style="padding:2px 6px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);border-radius:6px;color:#6366f1;font-size:0.55rem;font-weight:700;cursor:pointer;font-family:inherit;" title="Broadcast to Global Chat">📡 DJ</button>' : '') +
                         '</div>' +
                     '</div>' +
@@ -543,8 +543,8 @@ window.beatsTogglePlay = function() {
         if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
     } else {
         window._beatsAudio.pause();
-        if (btn) btn.textContent = '▶';
-        if (miniBtn) miniBtn.textContent = '▶';
+        if (btn) btn.textContent = '›';
+        if (miniBtn) miniBtn.textContent = '›';
         if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
     }
 };
@@ -1218,7 +1218,7 @@ window.beatsShowTrackDetail = function(idx) {
             (track.commentCount ? '<div style="text-align:center;"><div style="font-weight:700;font-size:0.9rem;color:var(--heading);">' + track.commentCount + '</div>Comments</div>' : '') +
         '</div>' +
         '<div style="display:flex;gap:8px;">' +
-            '<button id="beatsDetailPlayBtn" onclick="' + (isPlaying ? 'beatsTogglePlay();var b=this;if(window._beatsAudio&&window._beatsAudio.paused){b.textContent=\'▶ Paused\';b.style.background=\'rgba(247,147,26,0.3)\'}else{b.textContent=\'⏸ Now Playing\';b.style.background=\'var(--accent)\'}' : 'document.getElementById(\'beatsDetailOverlay\').remove();beatsPlayTrack(' + idx + ')') + '" style="flex:1;padding:14px;background:var(--accent);border:none;border-radius:12px;color:#fff;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;">' + (isPlaying ? '⏸ Now Playing' : '▶ Play') + '</button>' +
+            '<button id="beatsDetailPlayBtn" onclick="' + (isPlaying ? 'beatsTogglePlay();var b=this;if(window._beatsAudio&&window._beatsAudio.paused){b.textContent=\'› Paused\';b.style.background=\'rgba(247,147,26,0.3)\'}else{b.textContent=\'⏸ Now Playing\';b.style.background=\'var(--accent)\'}' : 'document.getElementById(\'beatsDetailOverlay\').remove();beatsPlayTrack(' + idx + ')') + '" style="flex:1;padding:14px;background:var(--accent);border:none;border-radius:12px;color:#fff;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;">' + (isPlaying ? '⏸ Now Playing' : '› Play') + '</button>' +
             (isPlaying ? '<button class="beats-action-btn" onclick="event.stopPropagation();djBroadcast();document.getElementById(\'beatsDetailOverlay\').remove()" style="padding:14px 18px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);border-radius:12px;color:#6366f1;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;" title="Broadcast to Global Chat">📡 DJ</button>' : '') +
             '<button class="beats-action-btn" onclick="event.stopPropagation();beatsToggleLike(\'' + track.id + '\',this);setTimeout(function(){var o=document.getElementById(\'beatsDetailOverlay\');if(o)o.remove();beatsLoadTracks(window._beatsCurrentTab);},300)" style="padding:14px 18px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:12px;font-size:1rem;cursor:pointer;font-family:inherit;color:' + (isLiked ? '#ef4444' : 'var(--text-faint)') + ';">' + (isLiked ? '❤️' : '🤍') + '</button>' +
             '<button class="beats-action-btn" onclick="event.stopPropagation();beatsShowComments(\'' + track.id + '\');document.getElementById(\'beatsDetailOverlay\').remove()" style="padding:14px 18px;background:rgba(247,147,26,0.1);border:1px solid rgba(247,147,26,0.3);border-radius:12px;font-size:1rem;cursor:pointer;font-family:inherit;color:var(--text-faint);">💬</button>' +
@@ -1706,7 +1706,7 @@ window.beatsRenderLivestream = function() {
                         '<div style="color:var(--text-faint);font-size:0.75rem;margin-top:8px;">Now playing: ' + (typeof escapeHtml === 'function' ? escapeHtml(window._beatsNowPlaying.title) : window._beatsNowPlaying.title) + '</div>';
                 } else {
                     html += '<div style="padding:20px;background:var(--card-bg);border:1px solid var(--border);border-radius:14px;">' +
-                        '<div style="font-size:1.5rem;margin-bottom:8px;">▶</div>' +
+                        '<div style="font-size:1.5rem;margin-bottom:8px;">›</div>' +
                         '<div style="color:var(--text-muted);font-size:0.85rem;">Play a song from the Discover tab first, then come back here to go live!</div>' +
                     '</div>';
                 }
@@ -2288,7 +2288,7 @@ window.beatsSetGenre = function(genre) {
                 '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">' +
                     '<button class="beats-sort-btn" data-sort="newest" onclick="beatsSetSort(\'newest\')" style="' + sortBtnStyle + 'border-color:var(--accent);color:var(--accent);">🆕 Newest</button>' +
                     '<button class="beats-sort-btn" data-sort="trending" onclick="beatsSetSort(\'trending\')" style="' + sortBtnStyle + 'color:var(--text-muted);">🔥 Trending</button>' +
-                    '<button class="beats-sort-btn" data-sort="most-played" onclick="beatsSetSort(\'most-played\')" style="' + sortBtnStyle + 'color:var(--text-muted);">▶ Most Played</button>' +
+                    '<button class="beats-sort-btn" data-sort="most-played" onclick="beatsSetSort(\'most-played\')" style="' + sortBtnStyle + 'color:var(--text-muted);">› Most Played</button>' +
                     '<button class="beats-sort-btn" data-sort="most-liked" onclick="beatsSetSort(\'most-liked\')" style="' + sortBtnStyle + 'color:var(--text-muted);">❤️ Most Liked</button>' +
                     '<button class="beats-sort-btn" data-sort="shuffle" onclick="beatsSetSort(\'shuffle\')" style="' + sortBtnStyle + 'color:var(--text-muted);">🎲 Shuffle</button>' +
                 '</div>' +
@@ -2374,7 +2374,7 @@ window.beatsSetGenre = function(genre) {
                         '<div style="flex-shrink:0;text-align:right;">' +
                             '<div style="color:var(--text-faint);font-size:0.7rem;">' + duration + '</div>' +
                             '<div style="color:var(--text-faint);font-size:0.6rem;display:flex;align-items:center;gap:4px;justify-content:flex-end;">' +
-                                '<span title="' + (t.plays || 0) + ' plays">▶ ' + _formatPlays(t.plays || 0) + '</span>' +
+                                '<span title="' + (t.plays || 0) + ' plays">› ' + _formatPlays(t.plays || 0) + '</span>' +
                                 (t.likes ? '<span style="color:#ef4444;" title="' + t.likes + ' likes">❤ ' + t.likes + '</span>' : '') +
                             '</div>' +
                         '</div>' +
@@ -2563,7 +2563,7 @@ window.beatsShowArtistPage = function(uid) {
                             '<div style="width:22px;color:var(--text-faint);font-size:0.7rem;text-align:center;flex-shrink:0;">' + (t.trackNumber || '') + '</div>' +
                             '<div style="flex:1;min-width:0;">' +
                                 '<div style="color:var(--heading);font-weight:600;font-size:0.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + escapeHtml(t.title || 'Untitled') + '</div>' +
-                                '<div style="color:var(--text-faint);font-size:0.6rem;">▶ ' + _formatPlays(t.plays || 0) + (t.likes ? ' · ❤ ' + t.likes : '') + (t.releaseDate ? ' · ' + t.releaseDate : '') + '</div>' +
+                                '<div style="color:var(--text-faint);font-size:0.6rem;">› ' + _formatPlays(t.plays || 0) + (t.likes ? ' · ❤ ' + t.likes : '') + (t.releaseDate ? ' · ' + t.releaseDate : '') + '</div>' +
                             '</div>' +
                             '<div style="flex-shrink:0;color:var(--text-faint);font-size:0.68rem;">' + (t.duration ? beatsFormatTime(t.duration) : '') + '</div>' +
                         '</div>' +
@@ -2585,7 +2585,7 @@ window.beatsShowArtistPage = function(uid) {
                         '<div style="width:36px;height:36px;border-radius:6px;background:linear-gradient(135deg,#1e293b,#0f172a);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;overflow:hidden;">' + ((t.coverArt || t.coverUrl) ? '<img src="' + _safeCover(t.coverUrl || t.coverArt) + '" style="width:100%;height:100%;object-fit:cover;">' : '🎵') + '</div>' +
                         '<div style="flex:1;min-width:0;">' +
                             '<div style="color:var(--heading);font-weight:600;font-size:0.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + escapeHtml(t.title || 'Untitled') + '</div>' +
-                            '<div style="color:var(--text-faint);font-size:0.65rem;">▶ ' + _formatPlays(t.plays || 0) + (t.likes ? ' · ❤ ' + t.likes : '') + (t.genre ? ' · ' + t.genre : '') + (t.releaseDate ? ' · ' + t.releaseDate : '') + '</div>' +
+                            '<div style="color:var(--text-faint);font-size:0.65rem;">› ' + _formatPlays(t.plays || 0) + (t.likes ? ' · ❤ ' + t.likes : '') + (t.genre ? ' · ' + t.genre : '') + (t.releaseDate ? ' · ' + t.releaseDate : '') + '</div>' +
                         '</div>' +
                         '<div style="flex-shrink:0;color:var(--text-faint);font-size:0.7rem;">' + (t.duration ? beatsFormatTime(t.duration) : '') + '</div>' +
                     '</div>' +
@@ -2692,7 +2692,7 @@ window.beatsInjectArtistDashboard = function() {
                 (topTrack ? '<div style="padding:10px 12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;gap:10px;margin-bottom:12px;">' +
                     '<div style="font-size:1.2rem;">🏆</div>' +
                     '<div style="flex:1;min-width:0;"><div style="color:var(--text-faint);font-size:0.65rem;">Top Track</div><div style="color:var(--heading);font-weight:700;font-size:0.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + escapeHtml(topTrack.title || 'Untitled') + '</div></div>' +
-                    '<div style="text-align:right;"><div style="color:var(--accent);font-weight:700;font-size:0.8rem;">▶ ' + _formatPlays(topTrack.plays || 0) + '</div><div style="color:var(--text-faint);font-size:0.65rem;">' + (topTrack.likes || 0) + ' likes</div></div>' +
+                    '<div style="text-align:right;"><div style="color:var(--accent);font-weight:700;font-size:0.8rem;">› ' + _formatPlays(topTrack.plays || 0) + '</div><div style="color:var(--text-faint);font-size:0.65rem;">' + (topTrack.likes || 0) + ' likes</div></div>' +
                 '</div>' : '') +
                 '<div style="font-size:0.75rem;color:var(--text-muted);text-align:center;">💡 Set up a Lightning Address in Settings to receive tips from listeners!</div>';
             listEl.parentNode.insertBefore(dash, listEl);
@@ -2917,7 +2917,7 @@ window.beatsRenderTrackList = function(el, tracks, showTip) {
                 '<div style="color:var(--text-faint);font-size:0.68rem;">' + escapeHtml(t.artist || t.authorName || 'Unknown') + (t.genre ? ' · ' + t.genre : '') + '</div>' +
             '</div>' +
             '<div style="display:flex;align-items:center;gap:4px;flex-shrink:0;">' +
-                '<span style="color:var(--text-faint);font-size:0.65rem;">▶ ' + _formatPlays(t.plays || 0) + '</span>' +
+                '<span style="color:var(--text-faint);font-size:0.65rem;">› ' + _formatPlays(t.plays || 0) + '</span>' +
                 '<button class="beats-action-btn" onclick="event.stopPropagation();beatsToggleLike(\'' + t.id + '\',this)" style="background:none;border:none;font-size:0.8rem;cursor:pointer;padding:2px;color:' + (isLiked ? '#ef4444' : 'var(--text-faint)') + ';">' + (isLiked ? '❤️' : '🤍') + '</button>' +
                 '<button class="beats-action-btn" onclick="event.stopPropagation();beatsAddToPlaylistPicker(\'' + t.id + '\')" style="background:none;border:none;font-size:0.7rem;cursor:pointer;padding:2px;color:var(--text-faint);" title="Add to playlist">➕</button>' +
             '</div>' +
@@ -3000,7 +3000,7 @@ window.beatsOpenPlaylist = function(playlistId) {
         var header = '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">' +
             '<button onclick="beatsRenderLibrary()" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;padding:4px;">←</button>' +
             '<div style="flex:1;"><div style="color:var(--heading);font-weight:800;font-size:1.1rem;">' + escapeHtml(pl.name || 'Playlist') + '</div><div style="color:var(--text-faint);font-size:0.75rem;">' + ids.length + ' tracks</div></div>' +
-            '<button onclick="beatsPlayPlaylist(\'' + playlistId + '\')" style="padding:8px 16px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:inherit;">▶ Play All</button>' +
+            '<button onclick="beatsPlayPlaylist(\'' + playlistId + '\')" style="padding:8px 16px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:inherit;">› Play All</button>' +
             '<button onclick="beatsShufflePlaylist(\'' + playlistId + '\')" style="padding:8px 12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;font-size:0.82rem;cursor:pointer;font-family:inherit;color:var(--text-muted);">🎲</button>' +
             '<button onclick="beatsSharePlaylistLink(\'' + playlistId + '\',\'' + escapeHtml(pl.name || 'Playlist').replace(/[\\'"]/g, "") + '\')" style="background:none;border:none;color:var(--text-faint);font-size:0.9rem;cursor:pointer;" title="Share">🔗</button>' +
         '</div>';
@@ -3320,7 +3320,7 @@ window.beatsPerformSearch = function() {
         
         var html='<div style="margin-bottom:12px;display:flex;align-items:center;gap:8px;"><span style="color:var(--text-faint);font-size:0.75rem;">🔍 Found '+results.length+' result'+(results.length!==1?'s':'')+' for "'+escapeHtml(query)+'"</span><button onclick="beatsClearSearch()" style="padding:4px 10px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.7rem;cursor:pointer;">Clear</button></div>';
         
-        results.forEach(function(t,idx){ var isLiked=liked.indexOf(t.id)!==-1;var isPlaying=window._beatsQueueIdx===idx;var duration=t.duration?beatsFormatTime(t.duration):'--:--'; html+='<div class="beats-track-row" onclick="beatsPlayTrack('+idx+')" style="padding:10px 12px;border-radius:12px;cursor:pointer;transition:0.15s;'+ (isPlaying?'background:rgba(247,147,26,0.1);border:1px solid rgba(247,147,26,0.2);':'background:var(--card-bg);border:1px solid var(--border);') + 'margin-bottom:8px;"><div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;text-align:center;color:' + (isPlaying?'var(--accent)':'var(--text-faint)') + ';font-size:0.75rem;font-weight:700;">'+(isPlaying?'▶':(idx+1))+'</div><div style="width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,#1e293b,#0f172a);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;overflow:hidden;">' + ((t.coverArt||t.coverUrl)?'<img src="'+_safeCover(t.coverUrl||t.coverArt)+'" style="width:100%;height:100%;object-fit:cover;">':(t.genre==='podcast'?'🎙️':'🎵')) + '</div><div style="flex:1;min-width:0;"><div style="color:' + (isPlaying?'var(--accent)':'var(--heading)') + ';font-weight:700;font-size:0.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + escapeHtml(t.title||'Untitled') + '</div><div style="color:var(--text-faint);font-size:0.72rem;">' + escapeHtml(t.artist||t.authorName||'Unknown') + (t.genre?' · '+t.genre:'') + '</div></div><div style="flex-shrink:0;text-align:right;"><div style="color:var(--text-faint);font-size:0.7rem;">'+duration+'</div><div style="color:var(--text-faint);font-size:0.6rem;">▶ '+_formatPlays(t.plays||0)+'</div></div></div></div>';});
+        results.forEach(function(t,idx){ var isLiked=liked.indexOf(t.id)!==-1;var isPlaying=window._beatsQueueIdx===idx;var duration=t.duration?beatsFormatTime(t.duration):'--:--'; html+='<div class="beats-track-row" onclick="beatsPlayTrack('+idx+')" style="padding:10px 12px;border-radius:12px;cursor:pointer;transition:0.15s;'+ (isPlaying?'background:rgba(247,147,26,0.1);border:1px solid rgba(247,147,26,0.2);':'background:var(--card-bg);border:1px solid var(--border);') + 'margin-bottom:8px;"><div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;text-align:center;color:' + (isPlaying?'var(--accent)':'var(--text-faint)') + ';font-size:0.75rem;font-weight:700;">'+(isPlaying?'›':(idx+1))+'</div><div style="width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,#1e293b,#0f172a);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;overflow:hidden;">' + ((t.coverArt||t.coverUrl)?'<img src="'+_safeCover(t.coverUrl||t.coverArt)+'" style="width:100%;height:100%;object-fit:cover;">':(t.genre==='podcast'?'🎙️':'🎵')) + '</div><div style="flex:1;min-width:0;"><div style="color:' + (isPlaying?'var(--accent)':'var(--heading)') + ';font-weight:700;font-size:0.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + escapeHtml(t.title||'Untitled') + '</div><div style="color:var(--text-faint);font-size:0.72rem;">' + escapeHtml(t.artist||t.authorName||'Unknown') + (t.genre?' · '+t.genre:'') + '</div></div><div style="flex-shrink:0;text-align:right;"><div style="color:var(--text-faint);font-size:0.7rem;">'+duration+'</div><div style="color:var(--text-faint);font-size:0.6rem;">› '+_formatPlays(t.plays||0)+'</div></div></div></div>';});
         
         listEl.innerHTML=html;
     }).catch(function(e){console.error('[Beats Search]',e);listEl.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-faint);">Error searching</div>';});

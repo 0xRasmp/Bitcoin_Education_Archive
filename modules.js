@@ -261,7 +261,7 @@ window.renderModules = function(container) {
             '<button onclick="startFlashcards(\'Satoshi Nakamoto\')" style="' + _fbs + '">🦸 Satoshi</button>' +
             '<button onclick="startFlashcards(\'Global Impact\')" style="' + _fbs + '">🌍 Global</button>' +
         '</div>' +
-        '<button onclick="var m=document.getElementById(\'trailsMoreFlash\');m.style.display=m.style.display===\'none\'?\'flex\':\'none\';this.textContent=m.style.display===\'none\'?\'\u25bc More Topics\':\'\u25b2 Less\'" style="width:100%;margin-top:8px;background:none;border:none;color:var(--accent);cursor:pointer;font-size:0.72rem;font-weight:700;font-family:inherit;padding:4px;">▼ More Topics</button>' +
+        '<button onclick="var m=document.getElementById(\'trailsMoreFlash\');m.style.display=m.style.display===\'none\'?\'flex\':\'none\';this.textContent=m.style.display===\'none\'?\'\u25bc More Topics\':\'\u25b2 Less\'" style="width:100%;margin-top:8px;background:none;border:none;color:var(--accent);cursor:pointer;font-size:0.72rem;font-weight:700;font-family:inherit;padding:4px;">› More Topics</button>' +
     '</div>';
 
     // ── Certifications ──

@@ -282,7 +282,7 @@ window.renderFirstPurchase = function() {
         });
 
         // Advanced wallets (collapsed)
-        html += '<button onclick="var p=document.getElementById(\'advWallets\');p.style.display=p.style.display===\'none\'?\'block\':\'none\';this.textContent=p.style.display===\'none\'?\'🔧 Advanced ▼\':\'🔧 Advanced ▲\'" style="width:100%;padding:10px;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:10px;color:#a855f7;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit;margin:8px 0;transition:0.2s;">🔧 Advanced ▼</button>';
+        html += '<button onclick="var p=document.getElementById(\'advWallets\');p.style.display=p.style.display===\'none\'?\'block\':\'none\';this.textContent=p.style.display===\'none\'?\'🔧 Advanced ›\':\'🔧 Advanced ‹\'" style="width:100%;padding:10px;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:10px;color:#a855f7;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit;margin:8px 0;transition:0.2s;">🔧 Advanced ›</button>';
         html += '<div id="advWallets" style="display:none;">';
         SELF_CUSTODY_WALLETS.filter(function(w) { return w.tier === 'advanced'; }).forEach(function(w) {
             html += _walletCard(w);
@@ -378,7 +378,7 @@ window.renderFirstPurchase = function() {
 
         // ---- Advanced: Passphrases & Multisig (collapsible) ----
         html += '<div style="margin-top:16px;">' +
-            '<button id="fpAdvancedBtn" onclick="var c=document.getElementById(\'fpAdvancedContent\');var b=this;if(c.style.display===\'none\'){c.style.display=\'block\';b.innerHTML=\'🔬 Advanced Security ▲\'}else{c.style.display=\'none\';b.innerHTML=\'🔬 Advanced Security ▼\'}" style="width:100%;padding:12px 16px;background:linear-gradient(135deg,rgba(139,92,246,0.1),rgba(99,102,241,0.05));border:1px solid rgba(139,92,246,0.3);border-radius:12px;color:#a78bfa;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:inherit;text-align:left;transition:0.2s;">🔬 Advanced Security ▼</button>' +
+            '<button id="fpAdvancedBtn" onclick="var c=document.getElementById(\'fpAdvancedContent\');var b=this;if(c.style.display===\'none\'){c.style.display=\'block\';b.innerHTML=\'🔬 Advanced Security ‹\'}else{c.style.display=\'none\';b.innerHTML=\'🔬 Advanced Security ›\'}" style="width:100%;padding:12px 16px;background:linear-gradient(135deg,rgba(139,92,246,0.1),rgba(99,102,241,0.05));border:1px solid rgba(139,92,246,0.3);border-radius:12px;color:#a78bfa;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:inherit;text-align:left;transition:0.2s;">🔬 Advanced Security ›</button>' +
             '<div id="fpAdvancedContent" style="display:none;margin-top:10px;">' +
 
                 // Passphrase (25th word)
@@ -605,7 +605,7 @@ function _walletCard(w) {
         '<div style="flex:1;"><div style="font-weight:700;font-size:0.85rem;">' + w.name + badge + ' ↗</div>' +
         '<div style="color:var(--text-muted);font-size:0.75rem;line-height:1.4;margin-top:1px;">' + w.desc + '</div></div></a>';
     if (w.extra === 'watchonly') {
-        html += '<button onclick="var p=document.getElementById(\'watchOnlyInfo\');p.style.display=p.style.display===\'none\'?\'block\':\'none\';this.textContent=p.style.display===\'none\'?\'👁️ What is a Watch-Only Wallet? ▼\':\'👁️ What is a Watch-Only Wallet? ▲\'" style="width:100%;padding:8px 12px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:8px;color:#3b82f6;font-size:0.75rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:6px;transition:0.2s;">👁️ What is a Watch-Only Wallet? ▼</button>' +
+        html += '<button onclick="var p=document.getElementById(\'watchOnlyInfo\');p.style.display=p.style.display===\'none\'?\'block\':\'none\';this.textContent=p.style.display===\'none\'?\'👁️ What is a Watch-Only Wallet? ›\':\'👁️ What is a Watch-Only Wallet? ‹\'" style="width:100%;padding:8px 12px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:8px;color:#3b82f6;font-size:0.75rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:6px;transition:0.2s;">👁️ What is a Watch-Only Wallet? ›</button>' +
         '<div id="watchOnlyInfo" style="display:none;padding:14px;background:var(--card-bg);border:1px solid rgba(59,130,246,0.2);border-radius:10px;margin-bottom:8px;font-size:0.8rem;color:var(--text);line-height:1.6;">' +
             '<div style="font-weight:700;color:var(--heading);margin-bottom:6px;">👁️ Watch-Only Wallet</div>' +
             '<p style="margin:0 0 8px;">A watch-only wallet lets you <strong>monitor your Bitcoin balance and transactions</strong> without being able to spend. It only has your public key (xpub) — no private keys.</p>' +

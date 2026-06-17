@@ -298,7 +298,7 @@ function _renderArcadeTab(wrap) {
                     '<span class="pop-game-tag">' + game.players + '</span>' +
                 '</div>' +
                 '<div class="pop-game-desc">' + game.desc + '</div>' +
-                '<button class="pop-game-play-btn" onclick="event.stopPropagation();window._popLaunchGame(\'' + game.url + '\',\'' + game.title.replace(/'/g, "\\'") + '\')">▶ Play Now</button>' +
+                '<button class="pop-game-play-btn" onclick="event.stopPropagation();window._popLaunchGame(\'' + game.url + '\',\'' + game.title.replace(/'/g, "\\'") + '\')">› Play Now</button>' +
             '</div>' +
         '</div>';
     });

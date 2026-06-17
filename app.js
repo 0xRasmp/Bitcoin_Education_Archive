@@ -102,11 +102,11 @@
         if (expanded) {
             group.style.display = 'none';
             label.setAttribute('data-expanded', 'false');
-            if (arrow) arrow.textContent = '▶';
+            if (arrow) arrow.textContent = '›';
         } else {
             group.style.display = '';
             label.setAttribute('data-expanded', 'true');
-            if (arrow) arrow.textContent = '▼';
+            if (arrow) arrow.textContent = '›';
         }
     }
 
@@ -120,7 +120,7 @@
                 group.style.display = '';
                 label.setAttribute('data-expanded', 'true');
                 var arrow = label.querySelector('.cat-arrow');
-                if (arrow) arrow.textContent = '▼';
+                if (arrow) arrow.textContent = '›';
             }
         }
     }
@@ -287,7 +287,7 @@
                                 '<div class="tw-preview-icon">𝕏</div>' +
                                 '<div class="tw-preview-content">' +
                                 '<div class="tw-preview-url">' + displayHandle + '</div>' +
-                                '<div class="tw-preview-hint">' + (isMob ? '▶ Tap to display tweet' : '▶ Click to display tweet') + '</div>' +
+                                '<div class="tw-preview-hint">' + (isMob ? '› Tap to display tweet' : '› Click to display tweet') + '</div>' +
                                 '</div>' +
                                 '<div class="tw-preview-arrow">→</div>' +
                                 '</div>';
@@ -937,7 +937,7 @@
                     '<button id="donateCopyBtn" style="width:100%;padding:14px;background:var(--accent,#f7931a);color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 4px 12px rgba(247,147,26,0.3);transition:0.2s;touch-action:manipulation;" onmouseover="this.style.transform=\'scale(1.02)\'" onmouseout="this.style.transform=\'scale(1)\'">📋 Copy Lightning Address</button>' +
                 '</div>' +
                 '<p style="color:var(--text-faint,#666);font-size:0.75rem;margin-top:10px;">⚠️ Donations are non-refundable</p>' +
-                '<button onclick="var el=document.getElementById(\'moreDonateMethods\');el.style.display=el.style.display===\'none\'?\'block\':\'none\';this.textContent=el.style.display===\'none\'?\'💳 More Ways to Donate ▼\':\'💳 Hide Other Methods ▲\'" style="width:100%;padding:12px;background:var(--card-bg,#222);border:1px solid var(--border,#333);border-radius:10px;color:var(--text,#ccc);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-top:12px;transition:0.2s;">💳 More Ways to Donate ▼</button>' +
+                '<button onclick="var el=document.getElementById(\'moreDonateMethods\');el.style.display=el.style.display===\'none\'?\'block\':\'none\';this.textContent=el.style.display===\'none\'?\'💳 More Ways to Donate ›\':\'💳 Hide Other Methods ‹\'" style="width:100%;padding:12px;background:var(--card-bg,#222);border:1px solid var(--border,#333);border-radius:10px;color:var(--text,#ccc);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-top:12px;transition:0.2s;">💳 More Ways to Donate ›</button>' +
                 '<div id="moreDonateMethods" style="display:none;margin-top:14px;text-align:left;">' +
                     _donateMethodHtml('💵 Cash App', '$NEEDcreations', '$NEEDcreations', 'https://cash.app/$NEEDcreations', 'images/donate/cashapp-qr.jpg') +
                     _donateMethodHtml('💜 Venmo', '@Phil2140', '@Phil2140', 'https://venmo.com/code?user_id=1358236213051392692&created=1773155307', 'images/donate/venmo-qr.jpg') +
@@ -1137,7 +1137,7 @@
                 '<div style="max-width:500px;margin:0 auto;position:relative;">' +
                     '<input type="text" id="nachoModeInput" placeholder="' + (hasSpeech ? 'Type or tap 🎙️ to speak...' : 'Ask Nacho anything about Bitcoin...') + '" maxlength="500" style="width:100%;padding:12px ' + (hasSpeech ? '96px' : '56px') + ' 12px 16px;background:var(--input-bg,#111);border:1px solid var(--border,#333);border-radius:24px;color:var(--text,#eee);font-size:16px;font-family:inherit;outline:none;box-sizing:border-box;" onkeydown="nachoModeKeydown(event)">' +
                     micHtml +
-                    '<button onclick="nachoModeSend()" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:var(--accent);color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1rem;cursor:pointer;font-family:inherit;touch-action:manipulation;display:flex;align-items:center;justify-content:center;">▶</button>' +
+                    '<button onclick="nachoModeSend()" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:var(--accent);color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1rem;cursor:pointer;font-family:inherit;touch-action:manipulation;display:flex;align-items:center;justify-content:center;">›</button>' +
                 '</div>' +
             '</div>';
 
@@ -3716,7 +3716,7 @@ window.nachoQuizAnswer = function(btn, correct) {
             let html = '';
             nextBatch.forEach((m, bi) => {
                 html += '<div class="msg" id="msg-' + (offset + bi) + '">';
-                if (m.text) { let t = m.text; let yt=[],tw=[]; t=t.replace(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([\w-]+)(?:[&?][^\s]*)?/g,function(m,id){yt.push(id);return '%%YT'+(yt.length-1)+'%%';}); t=t.replace(/(?:https?:\/\/)?youtu\.be\/([\w-]+)(?:\?[^\s]*)?/g,function(m,id){yt.push(id);return '%%YT'+(yt.length-1)+'%%';}); t=t.replace(/(?:https?:\/\/)?(?:twitter\.com|x\.com)\/([\w]+)\/status\/(\d+)(?:[^\s]*)?/g,function(m){var u=m.startsWith('http')?m:'https://'+m;tw.push(u);return '%%TW'+(tw.length-1)+'%%';}); t=t.replace(/(https?:\/\/[^\s<>"]+)/g,'<a class="msg-link" href="$1" target="_blank">$1</a>'); t=t.replace(/%%YT(\d+)%%/g,function(m,i){return '<div class="yt-embed"><iframe src="https://www.youtube-nocookie.com/embed/'+yt[parseInt(i)]+'" frameborder="0" allowfullscreen loading="lazy" decoding="async"></iframe></div>';}); t=t.replace(/%%TW(\d+)%%/g,function(m,i){var u=tw[parseInt(i)],tid='tw_'+Math.random().toString(36).substr(2,8),mob=typeof isMobile==='function'&&isMobile(),hm=u.match(/(?:twitter\.com|x\.com)\/([\w]+)\//),dh=hm?'@'+hm[1]:u.replace(/https?:\/\/(www\.)?/,'');return '<div class="tw-preview" id="'+tid+'" onclick="loadTweetEmbed(\''+tid+'\',\''+u+'\')"><div class="tw-preview-icon">𝕏</div><div class="tw-preview-content"><div class="tw-preview-url">'+dh+'</div><div class="tw-preview-hint">'+(mob?'▶ Tap to display tweet':'▶ Click to display tweet')+'</div></div><div class="tw-preview-arrow">→</div></div>';}); t=t.replace(/🟠 (.+)/g,'<span class="orange-glow">$1</span>'); html += '<div class="msg-text">' + t + '</div>'; }
+                if (m.text) { let t = m.text; let yt=[],tw=[]; t=t.replace(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([\w-]+)(?:[&?][^\s]*)?/g,function(m,id){yt.push(id);return '%%YT'+(yt.length-1)+'%%';}); t=t.replace(/(?:https?:\/\/)?youtu\.be\/([\w-]+)(?:\?[^\s]*)?/g,function(m,id){yt.push(id);return '%%YT'+(yt.length-1)+'%%';}); t=t.replace(/(?:https?:\/\/)?(?:twitter\.com|x\.com)\/([\w]+)\/status\/(\d+)(?:[^\s]*)?/g,function(m){var u=m.startsWith('http')?m:'https://'+m;tw.push(u);return '%%TW'+(tw.length-1)+'%%';}); t=t.replace(/(https?:\/\/[^\s<>"]+)/g,'<a class="msg-link" href="$1" target="_blank">$1</a>'); t=t.replace(/%%YT(\d+)%%/g,function(m,i){return '<div class="yt-embed"><iframe src="https://www.youtube-nocookie.com/embed/'+yt[parseInt(i)]+'" frameborder="0" allowfullscreen loading="lazy" decoding="async"></iframe></div>';}); t=t.replace(/%%TW(\d+)%%/g,function(m,i){var u=tw[parseInt(i)],tid='tw_'+Math.random().toString(36).substr(2,8),mob=typeof isMobile==='function'&&isMobile(),hm=u.match(/(?:twitter\.com|x\.com)\/([\w]+)\//),dh=hm?'@'+hm[1]:u.replace(/https?:\/\/(www\.)?/,'');return '<div class="tw-preview" id="'+tid+'" onclick="loadTweetEmbed(\''+tid+'\',\''+u+'\')"><div class="tw-preview-icon">𝕏</div><div class="tw-preview-content"><div class="tw-preview-url">'+dh+'</div><div class="tw-preview-hint">'+(mob?'› Tap to display tweet':'› Click to display tweet')+'</div></div><div class="tw-preview-arrow">→</div></div>';}); t=t.replace(/🟠 (.+)/g,'<span class="orange-glow">$1</span>'); html += '<div class="msg-text">' + t + '</div>'; }
                 if (m.imgs) m.imgs.forEach(img => { if (m.link) { html += '<a href="' + m.link + '" target="_blank" style="display:block;"><img class="msg-img" src="' + img + '" loading="lazy" decoding="async" title="Click to open source"></a>'; } else { html += '<img class="msg-img" src="' + img + '" onclick="openImg(this.src)" loading="lazy" decoding="async">'; } });
                 html += '</div>';
             });
@@ -5003,7 +5003,7 @@ window.toggleAITools = function() {
         panel.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:250000;background:var(--bg,#0a0a0f);border-top:2px solid var(--accent,#f7931a);border-radius:16px 16px 0 0;transform:translateY(100%);transition:transform 0.3s ease;box-shadow:0 -10px 40px rgba(0,0,0,0.6);';
         panel.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);">' +
             '<div style="display:flex;align-items:center;gap:8px;"><span style="font-size:1.2rem;">🤖</span><span style="color:var(--heading);font-weight:800;font-size:0.95rem;">AI Tools</span><span style="color:var(--text-faint);font-size:0.7rem;">powered by PPQ</span></div>' +
-            '<button onclick="toggleAITools()" style="padding:6px 12px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;">▼ Minimize</button>' +
+            '<button onclick="toggleAITools()" style="padding:6px 12px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;">› Minimize</button>' +
             '</div>' +
             '<iframe src="https://ppq.ai" style="width:100%;height:70vh;border:none;background:#000;"></iframe>';
         document.body.appendChild(panel);

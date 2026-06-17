@@ -713,10 +713,10 @@ window.toggleMobileFlashcards = function() {
     if (!grid) return;
     if (grid.style.display === 'none') {
         grid.style.display = 'flex';
-        if (btn) btn.textContent = '📚 Flashcards ▼';
+        if (btn) btn.textContent = '📚 Flashcards ›';
     } else {
         grid.style.display = 'none';
-        if (btn) btn.textContent = '📚 Flashcards ▶';
+        if (btn) btn.textContent = '📚 Flashcards ›';
     }
 };
 

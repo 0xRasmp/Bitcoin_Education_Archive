@@ -256,7 +256,7 @@ const NACHO_KB = [
       channel: 'timechain-tv', channelName: 'Timechain TV' },
 
     { keys: ['how to use remote','tv remote','remote control','remote buttons','back button','pause tv'],
-      answer: "🎮 Use the **Retro Remote** on the right side of the screen! \n• **CH ▲/▼**: Flip through stations.\n• **BACK**: Jump back to the last station you watched.\n• **PWR**: Pause the stream (enters Standby).\n• **JUMP TO LIVE**: Re-syncs your player if you've been paused. \n\nYou can even collapse the remote if it's in your way! 🦌⚡",
+      answer: "🎮 Use the **Retro Remote** on the right side of the screen! \n• **CH ‹/›**: Flip through stations.\n• **BACK**: Jump back to the last station you watched.\n• **PWR**: Pause the stream (enters Standby).\n• **JUMP TO LIVE**: Re-syncs your player if you've been paused. \n\nYou can even collapse the remote if it's in your way! 🦌⚡",
       channel: 'timechain-tv', channelName: 'Timechain TV' },
 
     { keys: ['energy','environment','electricity','bad for environment','waste energy','carbon','climate','carbon footprint','global warming'],
