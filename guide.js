@@ -55,29 +55,33 @@
 
         var overlay = document.createElement('div');
         overlay.id = 'guideOverlay';
-        overlay.style.cssText = 'position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:flex-end;justify-content:center;padding:0;';
+        overlay.style.cssText = 'position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:flex-end;justify-content:center;padding:0;';
         overlay.onclick = function(e) { if (e.target === overlay) minimizeGuide(); };
 
         var sheet = document.createElement('div');
         sheet.id = 'guideSheet';
-        sheet.style.cssText = 'background:linear-gradient(180deg,#1a1b2e 0%,#12131f 100%);border:1px solid rgba(99,102,241,0.3);border-bottom:none;border-radius:24px 24px 0 0;width:100%;max-width:500px;max-height:88vh;overflow-y:auto;padding:0 20px 120px;animation:guideSlideUp 0.4s ease-out;-webkit-overflow-scrolling:touch;';
+        sheet.style.cssText = 'background:#0f1117;border:1px solid rgba(255,255,255,0.08);border-bottom:none;border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:82vh;overflow-y:auto;padding:0 16px 100px;animation:guideSlideUp 0.4s cubic-bezier(0.16,1,0.3,1);-webkit-overflow-scrolling:touch;scrollbar-width:none;';
 
         sheet.innerHTML =
             // ── HERO ──
             '<div style="position:sticky;top:0;z-index:2;background:linear-gradient(180deg,#1a1b2e 90%,transparent);padding:12px 0 0;text-align:center;">' +
-                '<div style="width:36px;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;margin:0 auto 8px;"></div>' +
+                '<div style="width:36px;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin:0 auto 10px;"></div>' +
             '</div>' +
 
-            '<div style="text-align:center;padding:24px 10px 40px;min-height:40vh;display:flex;flex-direction:column;align-items:center;justify-content:center;">' +
-                '<div style="font-size:3rem;margin-bottom:20px;">📜</div>' +
-                '<h1 style="font-size:2rem;font-weight:900;color:#fff;margin:0 0 12px;line-height:1.2;">Your <span style="color:#f7931a;">Quest</span> Begins</h1>' +
-                '<p style="font-size:1rem;color:#94a3b8;margin:0;max-width:320px;line-height:1.6;">How to earn, learn, and level up</p>' +
-                '<div style="margin-top:24px;font-size:0.75rem;color:#4b5563;letter-spacing:1px;">↓ SCROLL TO EXPLORE ↓</div>' +
+            '<div style="text-align:center;padding:20px 10px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;">' +
+                '<div style="width:56px;height:56px;border-radius:16px;background:rgba(247,147,26,0.12);border:1px solid rgba(247,147,26,0.25);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f7931a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>' +
+                '<h1 style="font-size:1.6rem;font-weight:900;color:#fff;margin:0 0 8px;line-height:1.2;letter-spacing:-0.5px;">Your <span style="color:#f7931a;">Quest</span> Begins</h1>' +
+                '<p style="font-size:0.88rem;color:#64748b;margin:0;max-width:280px;line-height:1.6;">How to earn, learn, and level up</p>' +
+                '<div style="margin-top:16px;display:flex;align-items:center;gap:6px;font-size:0.68rem;color:#374151;letter-spacing:1.2px;text-transform:uppercase;">' +
+                    '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>' +
+                    'Scroll to explore' +
+                    '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>' +
+                '</div>' +
             '</div>' +
 
             // ── PROGRESS BAR ──
             '<div onclick="minimizeGuide();goHome();setTimeout(function(){var el=document.getElementById(\'explorationMap\');if(el)el.scrollIntoView({behavior:\'smooth\',block:\'center\'});},400)" style="display:flex;align-items:center;gap:8px;padding:10px 14px;margin:0 0 20px;background:rgba(247,147,26,0.08);border:1px solid rgba(247,147,26,0.2);border-radius:12px;cursor:pointer;">' +
-                '<div style="font-size:1.3rem;">🌱</div>' +
+                '<div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f7931a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M5 3a7 7 0 0 0 7 7 7 7 0 0 0-7-7"/><path d="M19 3a7 7 0 0 1-7 7 7 7 0 0 1 7-7"/></svg></div>' +
                 '<div style="flex:1;">' +
                     '<div style="font-size:0.7rem;color:#f7931a;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Your Journey</div>' +
                     '<div style="font-size:0.82rem;color:#e2e8f0;font-weight:600;margin-top:2px;">' + (typeof escapeHtml === 'function' ? escapeHtml(rank) : rank) + ' · ' + channelsRead + '/' + totalChannels + ' Topics Read</div>' +
@@ -124,8 +128,8 @@
 
             // ── ACTIONS ──
             '<div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">' +
-                '<button onclick="minimizeGuide()" style="width:100%;padding:14px;border:none;border-radius:14px;font-size:0.95rem;font-weight:800;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#f7931a,#eab308);color:#000;transition:0.2s;touch-action:manipulation;">🚀 Start Exploring</button>' +
-                '<button onclick="dismissGuidePermanent()" style="width:100%;padding:10px;border:none;border-radius:10px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;background:none;color:#94a3b8;transition:0.2s;">Don\'t show this again</button>' +
+                '<button onclick="minimizeGuide()" style="width:100%;padding:13px;border:none;border-radius:12px;font-size:0.9rem;font-weight:800;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#f7931a,#ea580c);color:#fff;transition:0.2s;touch-action:manipulation;letter-spacing:0.2px;box-shadow:0 4px 16px rgba(247,147,26,0.3);">Start Exploring</button>' +
+                '<button onclick="dismissGuidePermanent()" style="width:100%;padding:9px;border:none;border-radius:10px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;background:none;color:#374151;transition:0.2s;">Don\'t show this again</button>' +
             '</div>';
 
         overlay.appendChild(sheet);
@@ -334,11 +338,11 @@
         _guideReturnBtn.id = 'guideReturnFloat';
         _guideReturnBtn.innerHTML =
             '<div id="guideReturnExpanded" style="display:flex;align-items:center;gap:6px;padding:10px 16px;background:linear-gradient(135deg,#6366f1,#4f46e5);border-radius:14px;box-shadow:0 4px 20px rgba(99,102,241,0.4);cursor:pointer;transition:all 0.3s ease;touch-action:manipulation;" onclick="returnToGuide()">' +
-                '<span style="font-size:0.95rem;">📜</span>' +
+                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>' +
                 '<span style="font-size:0.78rem;font-weight:700;color:#fff;white-space:nowrap;">Back to Guide</span>' +
                 '<button onclick="event.stopPropagation();collapseGuideReturn()" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:0.7rem;cursor:pointer;padding:2px 4px;margin-left:2px;">✕</button>' +
             '</div>' +
-            '<div id="guideReturnCollapsed" style="display:none;width:40px;height:40px;background:linear-gradient(135deg,#6366f1,#4f46e5);border-radius:50%;box-shadow:0 4px 16px rgba(99,102,241,0.4);cursor:pointer;align-items:center;justify-content:center;font-size:1.1rem;transition:all 0.3s ease;touch-action:manipulation;" onclick="returnToGuide()">📜</div>';
+            '<div id="guideReturnCollapsed" style="display:none;width:40px;height:40px;background:linear-gradient(135deg,#6366f1,#4f46e5);border-radius:50%;box-shadow:0 4px 16px rgba(99,102,241,0.4);cursor:pointer;align-items:center;justify-content:center;transition:all 0.3s ease;touch-action:manipulation;" onclick="returnToGuide()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>';
         _guideReturnBtn.style.cssText = 'position:fixed;bottom:80px;left:16px;z-index:9980;animation:guideReturnIn 0.4s ease;';
         if (!document.getElementById('guideReturnStyle')) {
             var s = document.createElement('style');

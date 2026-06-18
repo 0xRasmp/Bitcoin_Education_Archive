@@ -4641,6 +4641,15 @@
             (24/7 streaming), 7 mini-apps, and Quests to test your knowledge.
             Start your Quest today!
           </p>
+
+          <button
+            id="authBtn"
+            class="home-cta"
+            onclick="showUsernamePrompt()"
+            style="display: none; width: 100%; max-width: 340px; align-self: center"
+          >
+            Create Free Account / Sign In
+          </button>
           <!-- App Stats moved to bottom -->
 
           <div
@@ -4866,32 +4875,6 @@
               margin-bottom: 10px;
             "
           >
-            <!-- Create Account / Sign In -->
-            <button
-              id="authBtn"
-              onclick="showUsernamePrompt()"
-              style="
-                display: none;
-                padding: 12px 30px;
-                width: 100%;
-                max-width: 340px;
-                background: var(--accent);
-                color: #000;
-                border: none;
-                border-radius: 12px;
-                font-size: 1rem;
-                font-weight: 800;
-                cursor: pointer;
-                font-family: inherit;
-                transition: 0.2s;
-                touch-action: manipulation;
-              "
-              onmouseover="this.style.transform = 'scale(1.02)'"
-              onmouseout="this.style.transform = 'scale(1)'"
-            >
-              Create Free Account / Sign In
-            </button>
-
             <!-- Learn (standalone, between Settings and Explore Apps) -->
             <button
               onclick="toggleSidebarMenu('homeLearnMenu')"
@@ -4902,8 +4885,8 @@
                 width: 100%;
                 max-width: 340px;
                 background: none;
-                border: 2px solid #22c55e;
-                color: #22c55e;
+                border: 2px solid var(--accent);
+                color: var(--accent);
                 border-radius: 12px;
                 font-size: 1rem;
                 font-weight: 700;
@@ -4912,12 +4895,12 @@
                 transition: 0.2s;
               "
               onmouseover="
-                this.style.background = '#22c55e';
+                this.style.background = 'var(--accent)';
                 this.style.color = '#fff';
               "
               onmouseout="
                 this.style.background = 'none';
-                this.style.color = '#22c55e';
+                this.style.color = 'var(--accent)';
               "
             >
               🎓 Learn ›
@@ -5527,10 +5510,9 @@
               <button
                 onclick="
                   var s = document.getElementById('sponsorPanel');
-                  s.style.display =
-                    s.style.display === 'none' ? 'block' : 'none';
-                  this.querySelector('span').textContent =
-                    s.style.display === 'none' ? '›' : '‹';
+                  var open = s.style.display !== 'none';
+                  s.style.display = open ? 'none' : 'block';
+                  document.getElementById('sponsorArrow').style.transform = open ? '' : 'rotate(90deg)';
                 "
                 style="
                   background: none;
@@ -5560,15 +5542,17 @@
                 >
                   <path d="M1 9l4 3 4-10 4 10 4-3" />
                 </svg>
-                Sponsor <span>›</span>
+                Sponsor
+                <span id="sponsorArrow" class="sidebar-panel-arrow" style="color: inherit; transition: transform 0.3s">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                </span>
               </button>
               <button
                 onclick="
                   var s = document.getElementById('creditsPanel');
-                  s.style.display =
-                    s.style.display === 'none' ? 'block' : 'none';
-                  this.querySelector('span').textContent =
-                    s.style.display === 'none' ? '›' : '‹';
+                  var open = s.style.display !== 'none';
+                  s.style.display = open ? 'none' : 'block';
+                  document.getElementById('contribArrow').style.transform = open ? '' : 'rotate(90deg)';
                 "
                 style="
                   background: none;
@@ -5601,7 +5585,10 @@
                   <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
                   <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                 </svg>
-                Contributors <span>›</span>
+                Contributors
+                <span id="contribArrow" class="sidebar-panel-arrow" style="color: inherit; transition: transform 0.3s">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                </span>
               </button>
               <button
                 onclick="
@@ -5636,15 +5623,17 @@
                     d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
                   />
                 </svg>
-                Donate ›
+                Donate
+                <span style="display: inline-flex">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                </span>
               </button>
               <button
                 onclick="
                   var s = document.getElementById('appStatsPanel');
-                  s.style.display =
-                    s.style.display === 'none' ? 'flex' : 'none';
-                  this.querySelector('span').textContent =
-                    s.style.display === 'none' ? '›' : '‹';
+                  var open = s.style.display !== 'none';
+                  s.style.display = open ? 'none' : 'flex';
+                  document.getElementById('statsArrow').style.transform = open ? '' : 'rotate(90deg)';
                 "
                 style="
                   background: none;
@@ -5675,7 +5664,10 @@
                   <line x1="12" y1="2" x2="12" y2="22" />
                   <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                 </svg>
-                App Stats <span>›</span>
+                App Stats
+                <span id="statsArrow" class="sidebar-panel-arrow" style="color: inherit; transition: transform 0.3s">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                </span>
               </button>
             </div>
             <!-- Expanded panels below grid -->

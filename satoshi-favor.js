@@ -112,19 +112,21 @@
     }
 
     function renderHomeBanner() {
-        const homeInner = document.querySelector('#home .home-inner');
-        if (!homeInner) return;
-
         let banner = document.getElementById('satoshiFavorHomeBanner');
         if (!banner) {
             banner = document.createElement('div');
             banner.id = 'satoshiFavorHomeBanner';
-            // Explicit centering
-            banner.style.cssText = 'width: 100%; margin: 0 0 20px 0; box-sizing: border-box; align-self: center;';
-            
-            // Insert at the VERY top of home-inner
-            homeInner.prepend(banner);
-            console.log('[FAVOR] Injected banner at top of home-inner');
+            banner.style.cssText = 'width:100%;box-sizing:border-box;position:sticky;top:0;z-index:50;';
+
+            // Insert at the very top of main, before #home
+            const main = document.getElementById('main');
+            const home = document.getElementById('home');
+            if (main && home) {
+                main.insertBefore(banner, home);
+            } else if (main) {
+                main.prepend(banner);
+            }
+            console.log('[FAVOR] Injected banner at top of main');
         }
 
         banner.innerHTML = buildBannerHTML('home');
@@ -148,11 +150,11 @@
         const isCompact = context === 'chat';
 
         if (isActive) {
-            return `<div class="favor-banner-active" style="${isCompact?'padding:8px 12px;':'padding:12px 16px;margin-bottom:16px;'}background:linear-gradient(135deg,rgba(247,147,26,0.15),rgba(247,147,26,0.05));border:2px solid var(--accent);border-radius:12px;text-align:center;animation:favorPulse 2s ease-in-out infinite;cursor:pointer;" onclick="window.showQuestHub && window.showQuestHub(); window._questHubTab = 'favor'; setTimeout(function(){ if(window._renderQuestHubTab) window._renderQuestHubTab(); }, 50);"><div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;"><span style="font-size:${isCompact?'1.2rem':'1.5rem'};">✨⛏️</span><span style="font-size:${isCompact?'0.85rem':'1rem'};font-weight:800;color:var(--accent);">SATOSHI'S FAVOR</span><span style="font-size:${isCompact?'0.7rem':'0.8rem'};color:var(--text-muted);background:rgba(0,0,0,0.3);padding:2px 8px;border-radius:6px;" id="${context}Countdown">--:--:--</span></div><div style="font-size:${isCompact?'0.65rem':'0.75rem'};color:var(--text-muted);margin-top:4px;">Mine now! Click to hash →</div></div><style>@keyframes favorPulse{0%,100%{box-shadow:0 0 0 0 rgba(247,147,26,0.4)}50%{box-shadow:0 0 0 10px rgba(247,147,26,0)}}</style>`;
+            return `<div class="favor-banner-active" style="${isCompact?'padding:6px 12px;':'padding:7px 16px;'}background:rgba(247,147,26,0.08);border-top:1px solid rgba(247,147,26,0.25);border-bottom:1px solid rgba(247,147,26,0.25);display:flex;align-items:center;justify-content:space-between;gap:10px;animation:favorPulse 2s ease-in-out infinite;cursor:pointer;width:100%;box-sizing:border-box;" onclick="window.showQuestHub && window.showQuestHub(); window._questHubTab = 'favor'; setTimeout(function(){ if(window._renderQuestHubTab) window._renderQuestHubTab(); }, 50);"><div style="display:flex;align-items:center;gap:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span style="font-size:0.78rem;font-weight:800;color:var(--accent);letter-spacing:0.3px;">SATOSHI'S FAVOR</span></div><div style="display:flex;align-items:center;gap:8px;"><span style="font-size:0.7rem;color:var(--text-muted);">Mine now! Click to hash</span><span style="font-size:0.72rem;color:var(--accent);background:rgba(247,147,26,0.12);border:1px solid rgba(247,147,26,0.2);padding:2px 8px;border-radius:4px;font-family:monospace;font-weight:700;" id="${context}Countdown">--:--:--</span></div></div><style>@keyframes favorPulse{0%,100%{background:rgba(247,147,26,0.08)}50%{background:rgba(247,147,26,0.13)}}</style>`;
         } else {
             const pct = Math.min(100, (points / POINTS_TARGET) * 100);
             const remaining = POINTS_TARGET - points;
-            return `<div class="favor-banner-progress" style="${isCompact?'padding:6px 10px;':'padding:10px 14px;margin-bottom:16px;'}background:var(--card-bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:border-color 0.2s;" onclick="window.showQuestHub && window.showQuestHub(); window._questHubTab = 'favor'; setTimeout(function(){ if(window._renderQuestHubTab) window._renderQuestHubTab(); }, 50);" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;"><div style="display:flex;align-items:center;gap:6px;"><span style="font-size:${isCompact?'1rem':'1.2rem'};">✨⛏️</span><span style="font-size:${isCompact?'0.75rem':'0.85rem'};font-weight:700;color:var(--heading);">Satoshi's Favor</span></div><span style="font-size:${isCompact?'0.7rem':'0.75rem'};color:var(--text-muted);">${points}/${POINTS_TARGET} points · ${remaining} to go</span></div><div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="height:100%;background:linear-gradient(90deg,var(--accent),#ffd700);width:${pct}%;transition:width 0.5s;border-radius:3px;"></div></div></div>`;
+            return `<div class="favor-banner-progress" style="${isCompact?'padding:5px 12px;':'padding:6px 16px;'}background:rgba(0,0,0,0.2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;cursor:pointer;transition:background 0.2s;width:100%;box-sizing:border-box;" onclick="window.showQuestHub && window.showQuestHub(); window._questHubTab = 'favor'; setTimeout(function(){ if(window._renderQuestHubTab) window._renderQuestHubTab(); }, 50);" onmouseover="this.style.background='rgba(247,147,26,0.06)'" onmouseout="this.style.background='rgba(0,0,0,0.2)'"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text-faint)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span style="font-size:0.75rem;font-weight:700;color:var(--text-dim);white-space:nowrap;">Satoshi's Favor</span><div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;background:linear-gradient(90deg,var(--accent),#ffd700);width:${pct}%;transition:width 0.5s;border-radius:2px;"></div></div><span style="font-size:0.68rem;color:var(--text-muted);white-space:nowrap;">${points}/${POINTS_TARGET}</span></div>`;
         }
     }
 
