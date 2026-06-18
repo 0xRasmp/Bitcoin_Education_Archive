@@ -1347,6 +1347,12 @@ function _showBubble(text, pose) {
             var pos = JSON.parse(saved);
             var c = getContainer();
             if (!c) return;
+            // Discard positions saved under a meaningfully different viewport width —
+            // a drag saved on mobile/tablet should never be replayed at desktop size (or vice versa)
+            if (typeof pos.vw !== 'number' || Math.abs(window.innerWidth - pos.vw) > 80) {
+                localStorage.removeItem('btc_nacho_position');
+                return;
+            }
             // Validate position is on screen
             var maxX = window.innerWidth - 40;
             var maxY = window.innerHeight - 40;
@@ -1368,9 +1374,20 @@ function _showBubble(text, pose) {
             var pos = JSON.parse(saved);
             var c = getContainer();
             if (!c) return;
+            // If the resize crosses far enough from where this position was saved,
+            // drop it entirely so the responsive CSS defaults take back over
+            if (typeof pos.vw !== 'number' || Math.abs(window.innerWidth - pos.vw) > 80) {
+                localStorage.removeItem('btc_nacho_position');
+                c.style.left = '';
+                c.style.top = '';
+                c.style.bottom = '';
+                c.style.right = '';
+                return;
+            }
             // Clamp to viewport
             pos.left = Math.max(0, Math.min(pos.left, window.innerWidth - 60));
             pos.top = Math.max(0, Math.min(pos.top, window.innerHeight - 60));
+            pos.vw = window.innerWidth;
             c.style.left = pos.left + 'px';
             c.style.top = pos.top + 'px';
             localStorage.setItem('btc_nacho_position', JSON.stringify(pos));
@@ -1431,7 +1448,7 @@ function _showBubble(text, pose) {
             var clampedTop = Math.max(0, Math.min(Math.round(rect.top), window.innerHeight - 60));
             dragTarget.style.left = clampedLeft + 'px';
             dragTarget.style.top = clampedTop + 'px';
-            localStorage.setItem('btc_nacho_position', JSON.stringify({ left: clampedLeft, top: clampedTop }));
+            localStorage.setItem('btc_nacho_position', JSON.stringify({ left: clampedLeft, top: clampedTop, vw: window.innerWidth }));
             setTimeout(adjustBubbleForPosition, 50);
             e.preventDefault();
         }
@@ -1481,7 +1498,7 @@ function _showBubble(text, pose) {
             var clampedTop = Math.max(0, Math.min(Math.round(rect.top), window.innerHeight - 60));
             dragTarget.style.left = clampedLeft + 'px';
             dragTarget.style.top = clampedTop + 'px';
-            localStorage.setItem('btc_nacho_position', JSON.stringify({ left: clampedLeft, top: clampedTop }));
+            localStorage.setItem('btc_nacho_position', JSON.stringify({ left: clampedLeft, top: clampedTop, vw: window.innerWidth }));
             setTimeout(adjustBubbleForPosition, 50);
         }
         dragTarget = null;

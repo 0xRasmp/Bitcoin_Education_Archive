@@ -286,12 +286,18 @@
       }
 
       @media (max-width: 900px) {
-        .home-inner > div[style*="grid-template-columns:1fr 320px"] {
+        .home-inner > div[style*="grid-template-columns:1fr 300px"] {
           grid-template-columns: 1fr !important;
         }
-        .home-inner > div[style*="grid-template-columns:1fr 320px"] > div:last-child {
+        .home-inner > div[style*="grid-template-columns:1fr 300px"] > div:last-child {
           border-right: none !important;
           border-top: 1px solid var(--border);
+        }
+        .home-right-col {
+          position: static !important;
+          max-height: none !important;
+          overflow-y: visible !important;
+          height: auto !important;
         }
       }
 
@@ -3078,11 +3084,11 @@
       .home-right-col {
         position: sticky;
         top: 0;
-        height: 100vh;
+        max-height: 100vh;
         overflow-y: auto;
         scrollbar-width: thin;
         box-sizing: border-box;
-        padding: 24px 16px 60px;
+        padding: 24px 28px 60px;
         display: flex;
         flex-direction: column;
         gap: 0;
@@ -4732,7 +4738,7 @@
                 </button>
               </div>
 
-              <p class="home-subtitle" style="text-align:left;margin-bottom:20px;font-size:0.85rem;padding:0 28px;">A curated library of Bitcoin education — 146 channels, Timechain TV (24/7 streaming), 7 mini-apps, and Quests to test your knowledge.</p>
+              <p class="home-subtitle" style="text-align:left;margin-bottom:24px;font-size:0.88rem;line-height:1.65;padding:0 28px;max-width:460px;color:var(--text-dim);">A curated library of Bitcoin education — <span style="color:var(--accent);font-weight:600;">146 channels</span>, Timechain TV (<span style="color:var(--accent);font-weight:600;">24/7</span> streaming), <span style="color:var(--accent);font-weight:600;">7 mini-apps</span>, and Quests to test your knowledge.</p>
 
               <button
                 id="authBtn"
@@ -5444,11 +5450,11 @@
           </div>
 
               <!-- Bottom utility grid -->
-              <div class="rc-label">More</div>
+              <!-- <div class="rc-label">More</div> -->
               <div style="margin-top:4px;">
             <!-- 2x2 Grid -->
             <div
-              style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px"
+              style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 100%; margin: 0 auto;"
             >
               <button
                 onclick="
