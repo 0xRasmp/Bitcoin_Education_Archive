@@ -491,7 +491,7 @@ window.applySimplifiedHome = function() {
 
     var section = document.createElement('div');
     section.id = 'curatedStartSection';
-    section.style.cssText = 'width:100%;max-width:480px;margin:0 auto 28px;text-align:left;padding-top:8px;';
+    section.style.cssText = 'width:100%;margin:0 0 28px;text-align:left;padding-top:8px;padding-left:28px;padding-right:28px;box-sizing:border-box;';
 
     var visited = [];
     try { visited = JSON.parse(localStorage.getItem('btc_visited_channels') || '[]'); } catch(e) {}
@@ -680,7 +680,7 @@ window.showProgressBreadcrumb = function() {
 
     var bc = document.createElement('div');
     bc.id = 'progressBreadcrumb';
-    bc.style.cssText = 'max-width:480px;margin:0 auto 20px;cursor:pointer;';
+    bc.style.cssText = 'margin:0 28px 20px;cursor:pointer;';
     bc.innerHTML =
         '<div onclick="go(\'' + next.id + '\')" style="display:flex;align-items:center;gap:14px;padding:14px 18px;background:linear-gradient(135deg,rgba(249,115,22,0.06),rgba(249,115,22,0.02));border:1px solid rgba(249,115,22,0.2);border-radius:14px;transition:0.2s;">' +
             '<span style="font-size:1.4rem;width:44px;height:44px;border-radius:12px;background:rgba(249,115,22,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + emoji + '</span>' +
