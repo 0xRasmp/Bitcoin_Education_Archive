@@ -4475,7 +4475,7 @@ function updateUserDisplay(lv) {
     if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
       var container = document.createElement("div");
       container.id = "userDisplayContainer";
-      container.style.cssText = "padding:12px 14px 14px;border-bottom:1px solid var(--border);";
+      container.style.cssText = "padding:6px 14px 8px;border-bottom:1px solid var(--border);";
       sidebarHeader.parentNode.insertBefore(container, sidebarHeader.nextSibling);
       container.appendChild(el);
     }
@@ -4501,7 +4501,7 @@ function updateUserDisplay(lv) {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 10px 12px 8px;
+          padding: 6px 12px 4px;
         }
         #userDisplay[data-anon] .ud-label {
           font-size: 0.6rem;
@@ -4523,7 +4523,7 @@ function updateUserDisplay(lv) {
           font-family: var(--display-font, 'Outfit', sans-serif);
           letter-spacing: -0.5px;
           line-height: 1;
-          padding: 0 12px 4px;
+          padding: 0 12px 2px;
         }
         #userDisplay[data-anon] .ud-xp span {
           font-size: 0.7rem;
@@ -4537,7 +4537,7 @@ function updateUserDisplay(lv) {
           display: flex;
           align-items: center;
           gap: 12px;
-          padding: 6px 12px;
+          padding: 4px 12px;
           background: var(--secondary, rgba(0,0,0,0.04));
           border-top: 1px solid var(--border);
         }
@@ -4561,7 +4561,7 @@ function updateUserDisplay(lv) {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 8px 12px;
+          padding: 6px 10px;
           gap: 10px;
           border-top: 1px solid var(--border);
         }
@@ -4776,7 +4776,7 @@ function updateUserDisplay(lv) {
     if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
       var container = document.createElement("div");
       container.id = "userDisplayContainer";
-      container.style.cssText = "padding:12px 14px 14px;border-bottom:1px solid var(--border);";
+      container.style.cssText = "padding:6px 14px 8px;border-bottom:1px solid var(--border);";
       sidebarHeader.parentNode.insertBefore(container, sidebarHeader.nextSibling);
       container.appendChild(el);
     }
@@ -4819,7 +4819,10 @@ function updateUserDisplay(lv) {
       '</div>' +
       liveHtml +
       '<div class="ud-bell-row">' +
-        '<div id="notifBellPlaceholder" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;"></div>' +
+        '<button id="notifBellInline" onclick="event.stopPropagation();if(typeof toggleNotifOverlay===\'function\')toggleNotifOverlay();" style="position:relative;width:32px;height:32px;border-radius:8px;background:none;color:var(--text-muted);border:1px solid var(--border);font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.18s ease;touch-action:manipulation;padding:0;">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>' +
+          '<span id="notifBellInlineBadge" style="display:none;position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;font-size:0.55rem;font-weight:800;min-width:14px;height:14px;border-radius:7px;align-items:center;justify-content:center;padding:0 3px;line-height:14px;text-align:center;"></span>' +
+        '</button>' +
         '<span style="font-size:0.62rem;color:var(--text-faint);letter-spacing:0.3px;">Settings</span>' +
       '</div>';
   }
