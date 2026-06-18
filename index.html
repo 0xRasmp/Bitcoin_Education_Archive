@@ -285,6 +285,16 @@
         font-size: 1.1rem !important;
       }
 
+      @media (max-width: 900px) {
+        .home-inner > div[style*="grid-template-columns:1fr 320px"] {
+          grid-template-columns: 1fr !important;
+        }
+        .home-inner > div[style*="grid-template-columns:1fr 320px"] > div:last-child {
+          border-right: none !important;
+          border-top: 1px solid var(--border);
+        }
+      }
+
       body {
         background: var(--bg);
         color: var(--text);
@@ -905,7 +915,7 @@
 
       .hero {
         padding: 36px 40px 22px;
-        max-width: 1200px;
+        max-width: 860px;
         margin: 0 auto;
       }
       .hero .cat {
@@ -937,7 +947,7 @@
 
       /* Messages */
       .messages {
-        max-width: 1200px;
+        max-width: 860px;
         margin: 0 auto;
         padding: 8px 40px 56px;
         overflow-x: hidden;
@@ -2129,24 +2139,19 @@
 
       /* Home Page */
       .home-page {
-        display: flex;
+        display: block;
         animation: fadeSlideIn 0.4s ease-out;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        text-align: center;
-        padding: 48px 24px 80px;
+        width: 100%;
+        padding: 0;
         background: none;
       }
       .home-page.hidden {
         display: none;
       }
       .home-inner {
-        max-width: 560px;
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
+        display: block;
+        padding: 0;
       }
       .home-logos {
         display: flex;
@@ -3067,6 +3072,88 @@
       .sidebar-panel-inner {
         display: none;
         margin-top: 8px;
+      }
+
+      /* ── Home dashboard right column ── */
+      .home-right-col {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        box-sizing: border-box;
+        padding: 24px 16px 60px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        background: var(--bg-side);
+      }
+      .home-right-col .rc-label {
+        font-size: 0.58rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.4px;
+        color: var(--text-faint);
+        padding-bottom: 8px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid var(--border);
+        margin-top: 20px;
+      }
+      .home-right-col .rc-label:first-child {
+        margin-top: 0;
+      }
+      .home-daily-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      .home-daily-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 16px 6px;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        color: var(--text);
+        font-size: 0.72rem;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        transition: border-color 0.15s, color 0.15s;
+        text-align: center;
+        line-height: 1.3;
+        min-height: 88px;
+        box-sizing: border-box;
+        width: 100%;
+      }
+      .home-daily-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .home-action-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 10px 14px;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        color: var(--text);
+        font-size: 0.82rem;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        transition: border-color 0.15s, color 0.15s;
+        margin-bottom: 8px;
+        box-sizing: border-box;
+      }
+      .home-action-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
       }
     </style>
     <!-- LOCAL DEV: disabled Google Sign-In (CORS on localhost) -->
@@ -4622,64 +4709,41 @@
       <!-- Home / Landing -->
       <div id="home" class="home-page">
         <div class="home-inner">
-          <div class="hero-lockup">
-            <div class="hero-mark" onclick="goHome()" title="Home">
-              <svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true">
-                <circle cx="16" cy="16" r="16" fill="#f7931a" />
-                <path d="M21.5 14.2c.3-1.9-1.1-2.9-3-3.6l.6-2.4-1.5-.4-.6 2.3c-.4-.1-.8-.2-1.2-.3l.6-2.3-1.5-.4-.6 2.4c-.3-.1-.7-.2-1-.3v-.01l-2.1-.5-.4 1.6s1.1.3 1.1.3c.6.1.7.5.7.8l-.7 2.7-.1 4.4c-.05.3-.2.7-.5.6 0 0-1.1-.3-1.1-.3l-.7 1.7 2 .5c.4.1.7.2 1.1.3l-.6 2.4 1.5.4.6-2.4c.4.1.8.2 1.2.3l-.6 2.4 1.5.4.6-2.4c2.5.5 4.4.3 5.2-2 .65-1.85-.03-2.9-1.35-3.6.95-.22 1.68-.85 1.87-2.13zm-3.4 4.8c-.46 1.85-3.6.85-4.6.6l.8-3.3c1.05.25 4.3.75 3.8 2.7zm.46-4.85c-.43 1.7-3.04.83-3.9.62l.74-3c.85.2 3.6.6 3.16 2.38z" fill="#fff"/>
-              </svg>
-              <span class="hero-wordmark">Bitcoin Education<br />Archive</span>
-            </div>
-            <button class="hero-donate-btn" onclick="showDonateModal()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
-              Donate
-            </button>
-          </div>
-          <h1 class="home-title">Bitcoin Education<br />Archive</h1>
-          <p class="home-subtitle">
-            A curated library of Bitcoin education — 146 channels, Timechain TV
-            (24/7 streaming), 7 mini-apps, and Quests to test your knowledge.
-            Start your Quest today!
-          </p>
 
-          <button
-            id="authBtn"
-            class="home-cta"
-            onclick="showUsernamePrompt()"
-            style="display: none; width: 100%; max-width: 340px; align-self: center"
-          >
-            Create Free Account / Sign In
-          </button>
-          <!-- App Stats moved to bottom -->
+          <!-- ── DASHBOARD LAYOUT ── -->
+          <div style="display:grid;grid-template-columns:1fr 320px;gap:0;min-height:100vh;align-items:start;">
 
-          <div
-            id="dailySpinBanner"
-            style="display: none; margin-bottom: 16px"
-          ></div>
-          <div
-            id="welcomeBanner"
-            style="
-              display: none;
-              margin-bottom: 16px;
-              padding: 12px 20px;
-              background: var(--card-bg);
-              border: 1px solid var(--border);
-              border-radius: 12px;
-              text-align: center;
-              cursor: pointer;
-            "
-            onclick="showUsernamePrompt()"
-          ></div>
-          <!-- Quest Guide Banner — always visible, collapsible -->
-          <div
-            id="questGuideBanner"
-            style="
-              margin-bottom: 16px;
-              max-width: 500px;
-              margin-left: auto;
-              margin-right: auto;
-            "
-          >
+            <!-- LEFT COLUMN: main feed -->
+            <div style="padding:28px 32px 80px;border-right:1px solid var(--border);min-width:0;overflow-x:hidden;">
+
+              <!-- Hero -->
+              <div class="hero-lockup" style="margin-bottom:12px;">
+                <div class="hero-mark" onclick="goHome()" title="Home">
+                  <svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true">
+                    <circle cx="16" cy="16" r="16" fill="#f7931a"/>
+                    <path d="M21.5 14.2c.3-1.9-1.1-2.9-3-3.6l.6-2.4-1.5-.4-.6 2.3c-.4-.1-.8-.2-1.2-.3l.6-2.3-1.5-.4-.6 2.4c-.3-.1-.7-.2-1-.3v-.01l-2.1-.5-.4 1.6s1.1.3 1.1.3c.6.1.7.5.7.8l-.7 2.7-.1 4.4c-.05.3-.2.7-.5.6 0 0-1.1-.3-1.1-.3l-.7 1.7 2 .5c.4.1.7.2 1.1.3l-.6 2.4 1.5.4.6-2.4c.4.1.8.2 1.2.3l-.6 2.4 1.5.4.6-2.4c2.5.5 4.4.3 5.2-2 .65-1.85-.03-2.9-1.35-3.6.95-.22 1.68-.85 1.87-2.13zm-3.4 4.8c-.46 1.85-3.6.85-4.6.6l.8-3.3c1.05.25 4.3.75 3.8 2.7zm.46-4.85c-.43 1.7-3.04.83-3.9.62l.74-3c.85.2 3.6.6 3.16 2.38z" fill="#fff"/>
+                  </svg>
+                  <span class="hero-wordmark">Bitcoin Education<br/>Archive</span>
+                </div>
+                <button class="hero-donate-btn" onclick="showDonateModal()">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  Donate
+                </button>
+              </div>
+
+              <p class="home-subtitle" style="text-align:left;margin-bottom:20px;font-size:0.85rem;">A curated library of Bitcoin education — 146 channels, Timechain TV (24/7 streaming), 7 mini-apps, and Quests to test your knowledge.</p>
+
+              <button
+                id="authBtn"
+                class="home-cta"
+                onclick="showUsernamePrompt()"
+                style="display:none;width:auto;margin-bottom:16px;padding:9px 20px;font-size:0.82rem;"
+              >Create Free Account / Sign In</button>
+
+              <div id="dailySpinBanner" style="display:none;margin-bottom:16px;"></div>
+              <div id="welcomeBanner" style="display:none;margin-bottom:16px;padding:12px 20px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;cursor:pointer;" onclick="showUsernamePrompt()"></div>
+          <!-- Quest Guide Banner -->
+              <div id="questGuideBanner" style="margin-bottom:16px;">
             <div
               id="questGuideFull"
               onclick="if (typeof showGuide === 'function') showGuide();"
@@ -4857,51 +4921,38 @@
             </div>
           </div>
           <script>
-            if (localStorage.getItem("btc_guide_collapsed") === "1") {
-              var _gf = document.getElementById("questGuideFull");
-              var _gm = document.getElementById("questGuideMini");
-              if (_gf) _gf.style.display = "none";
-              if (_gm) _gm.style.display = "flex";
-            }
-          </script>
-          <div id="progressRings" style="margin-bottom: 16px"></div>
-          <div
-            style="
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              gap: 16px;
-              margin-top: 16px;
-              margin-bottom: 10px;
-            "
-          >
-            <!-- Learn (standalone, between Settings and Explore Apps) -->
-            <button
-              onclick="toggleSidebarMenu('homeLearnMenu')"
-              class="desktop-only-apps"
-              style="
-                display: block;
-                padding: 12px 30px;
-                width: 100%;
-                max-width: 340px;
-                background: none;
-                border: 2px solid var(--accent);
-                color: var(--accent);
-                border-radius: 12px;
-                font-size: 1rem;
-                font-weight: 700;
-                cursor: pointer;
-                font-family: inherit;
-                transition: 0.2s;
-              "
-              onmouseover="
-                this.style.background = 'var(--accent)';
-                this.style.color = '#fff';
-              "
-              onmouseout="
-                this.style.background = 'none';
-                this.style.color = 'var(--accent)';
-              "
+                if (localStorage.getItem("btc_guide_collapsed") === "1") {
+                  var _gf = document.getElementById("questGuideFull");
+                  var _gm = document.getElementById("questGuideMini");
+                  if (_gf) _gf.style.display = "none";
+                  if (_gm) _gm.style.display = "flex";
+                }
+              </script>
+
+              <div id="progressRings" style="margin-bottom:16px;"></div>
+              <div id="continueReading" style="display:none;margin-bottom:16px;"></div>
+              <div id="dailyChallengeCard" style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:16px;"></div>
+              <div id="raidBossHomeCard" style="margin-bottom:16px;"></div>
+              <div id="charityDonateHome" style="margin-bottom:16px;"></div>
+              <div class="daily-channel" id="dailyChannel"></div>
+              <div id="quoteOfDay" style="margin-top:16px;"></div>
+              <div id="explorationMap" style="margin-top:16px;"></div>
+
+            </div>
+            <!-- END LEFT COLUMN -->
+
+            <!-- RIGHT COLUMN: actions + tools -->
+            <div class="home-right-col">
+
+              <!-- Quick actions -->
+              <div class="rc-label">Quick Actions</div>
+
+              <button
+                onclick="toggleSidebarMenu('homeLearnMenu')"
+                class="desktop-only-apps"
+              style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;width:100%;background:var(--card-bg);border:1px solid var(--border);color:var(--text);border-radius:10px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;text-align:left;"
+              onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)';"
+              onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)';"
             >
               🎓 Learn ›
             </button>
@@ -4911,7 +4962,6 @@
               style="
                 display: none;
                 width: 100%;
-                max-width: 340px;
                 flex-direction: column;
                 gap: 8px;
                 padding: 15px;
@@ -5113,29 +5163,9 @@
             <button
               onclick="toggleSidebarMenu('homeAppsMenu')"
               class="desktop-only-apps"
-              style="
-                display: block;
-                padding: 12px 30px;
-                width: 100%;
-                max-width: 340px;
-                background: none;
-                border: 2px solid var(--accent);
-                color: var(--accent);
-                border-radius: 12px;
-                font-size: 1rem;
-                font-weight: 700;
-                cursor: pointer;
-                font-family: inherit;
-                transition: 0.2s;
-              "
-              onmouseover="
-                this.style.background = 'var(--accent)';
-                this.style.color = '#fff';
-              "
-              onmouseout="
-                this.style.background = 'none';
-                this.style.color = 'var(--accent)';
-              "
+              style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;width:100%;background:var(--card-bg);border:1px solid var(--border);color:var(--text);border-radius:10px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;text-align:left;"
+              onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)';"
+              onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)';"
             >
               🧭 Explore Apps ›
             </button>
@@ -5145,7 +5175,6 @@
               style="
                 display: none;
                 width: 100%;
-                max-width: 340px;
                 flex-direction: column;
                 gap: 10px;
                 padding: 15px;
@@ -5348,37 +5377,13 @@
             </div>
 
             <!-- Support moved to bottom -->
-          </div>
-          <div
-            style="
-              display: grid;
-              grid-template-columns: 1fr 1fr 1fr;
-              gap: 8px;
-              margin-top: 16px;
-              margin-bottom: 16px;
-            "
-          >
+
+              <!-- Daily tools -->
+              <div class="rc-label">Daily</div>
+              <div class="home-daily-grid">
             <button
-              onclick="
-                if (typeof showSpinWheel === 'function') showSpinWheel();
-              "
-              style="
-                padding: 12px 4px;
-                background: var(--card-bg);
-                border: 1px solid var(--border);
-                border-radius: 12px;
-                color: var(--text);
-                font-size: 0.8rem;
-                font-weight: 600;
-                cursor: pointer;
-                font-family: inherit;
-                touch-action: manipulation;
-                -webkit-tap-highlight-color: rgba(247, 147, 26, 0.2);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 6px;
-              "
+              onclick="if (typeof showSpinWheel === 'function') showSpinWheel();"
+              class="home-daily-btn"
             >
               <svg
                 width="20"
@@ -5394,27 +5399,8 @@
               >Daily Spin
             </button>
             <button
-              onclick="
-                if (typeof showPricePrediction === 'function')
-                  showPricePrediction();
-              "
-              style="
-                padding: 12px 4px;
-                background: var(--card-bg);
-                border: 1px solid var(--border);
-                border-radius: 12px;
-                color: var(--text);
-                font-size: 0.8rem;
-                font-weight: 600;
-                cursor: pointer;
-                font-family: inherit;
-                touch-action: manipulation;
-                -webkit-tap-highlight-color: rgba(247, 147, 26, 0.2);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 6px;
-              "
+              onclick="if (typeof showPricePrediction === 'function') showPricePrediction();"
+              class="home-daily-btn"
             >
               <svg
                 width="20"
@@ -5430,35 +5416,13 @@
               >Predict Price<span
                 id="predAccuracyLabel"
                 style="
-                  display: block;
-                  font-size: 0.65rem;
-                  color: var(--text-faint);
-                  font-weight: 500;
-                  margin-top: 2px;
+                  display: none;
                 "
               ></span>
             </button>
             <button
-              onclick="
-                if (typeof showNachoStory === 'function') showNachoStory();
-              "
-              style="
-                padding: 12px 4px;
-                background: var(--card-bg);
-                border: 1px solid var(--border);
-                border-radius: 12px;
-                color: var(--text);
-                font-size: 0.8rem;
-                font-weight: 600;
-                cursor: pointer;
-                font-family: inherit;
-                touch-action: manipulation;
-                -webkit-tap-highlight-color: rgba(247, 147, 26, 0.2);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 6px;
-              "
+              onclick="if (typeof showNachoStory === 'function') showNachoStory();"
+              class="home-daily-btn"
             >
               <svg
                 width="20"
@@ -5476,33 +5440,11 @@
               >Nacho's Story
             </button>
           </div>
-          <div
-            id="continueReading"
-            style="display: none; margin-bottom: 16px"
-          ></div>
-          <div
-            id="dailyChallengeCard"
-            style="
-              background: var(--card-bg);
-              border: 1px solid var(--border);
-              border-radius: 12px;
-              padding: 12px 16px;
-              margin-bottom: 16px;
-            "
-          ></div>
-          <div id="raidBossHomeCard" style="margin-bottom: 16px"></div>
-          <div id="charityDonateHome" style="margin-bottom: 16px"></div>
-          <div class="daily-channel" id="dailyChannel"></div>
-          <div id="quoteOfDay" style="margin-top: 16px"></div>
-          <div id="explorationMap" style="margin-top: 16px"></div>
-          <div
-            style="
-              margin-top: 20px;
-              max-width: 500px;
-              margin-left: auto;
-              margin-right: auto;
-            "
-          >
+          </div>
+
+              <!-- Bottom utility grid -->
+              <div class="rc-label">More</div>
+              <div style="margin-top:4px;">
             <!-- 2x2 Grid -->
             <div
               style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px"
@@ -5512,7 +5454,9 @@
                   var s = document.getElementById('sponsorPanel');
                   var open = s.style.display !== 'none';
                   s.style.display = open ? 'none' : 'block';
-                  document.getElementById('sponsorArrow').style.transform = open ? '' : 'rotate(90deg)';
+                  document.getElementById('sponsorArrow').style.transform = open
+                    ? ''
+                    : 'rotate(90deg)';
                 "
                 style="
                   background: none;
@@ -5543,8 +5487,23 @@
                   <path d="M1 9l4 3 4-10 4 10 4-3" />
                 </svg>
                 Sponsor
-                <span id="sponsorArrow" class="sidebar-panel-arrow" style="color: inherit; transition: transform 0.3s">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                <span
+                  id="sponsorArrow"
+                  class="sidebar-panel-arrow"
+                  style="color: inherit; transition: transform 0.3s"
+                >
+                  <svg
+                    width="10"
+                    height="10"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
                 </span>
               </button>
               <button
@@ -5552,7 +5511,9 @@
                   var s = document.getElementById('creditsPanel');
                   var open = s.style.display !== 'none';
                   s.style.display = open ? 'none' : 'block';
-                  document.getElementById('contribArrow').style.transform = open ? '' : 'rotate(90deg)';
+                  document.getElementById('contribArrow').style.transform = open
+                    ? ''
+                    : 'rotate(90deg)';
                 "
                 style="
                   background: none;
@@ -5586,8 +5547,23 @@
                   <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                 </svg>
                 Contributors
-                <span id="contribArrow" class="sidebar-panel-arrow" style="color: inherit; transition: transform 0.3s">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                <span
+                  id="contribArrow"
+                  class="sidebar-panel-arrow"
+                  style="color: inherit; transition: transform 0.3s"
+                >
+                  <svg
+                    width="10"
+                    height="10"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
                 </span>
               </button>
               <button
@@ -5625,7 +5601,18 @@
                 </svg>
                 Donate
                 <span style="display: inline-flex">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                  <svg
+                    width="10"
+                    height="10"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
                 </span>
               </button>
               <button
@@ -5633,7 +5620,9 @@
                   var s = document.getElementById('appStatsPanel');
                   var open = s.style.display !== 'none';
                   s.style.display = open ? 'none' : 'flex';
-                  document.getElementById('statsArrow').style.transform = open ? '' : 'rotate(90deg)';
+                  document.getElementById('statsArrow').style.transform = open
+                    ? ''
+                    : 'rotate(90deg)';
                 "
                 style="
                   background: none;
@@ -5665,8 +5654,23 @@
                   <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                 </svg>
                 App Stats
-                <span id="statsArrow" class="sidebar-panel-arrow" style="color: inherit; transition: transform 0.3s">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                <span
+                  id="statsArrow"
+                  class="sidebar-panel-arrow"
+                  style="color: inherit; transition: transform 0.3s"
+                >
+                  <svg
+                    width="10"
+                    height="10"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
                 </span>
               </button>
             </div>
@@ -6699,6 +6703,12 @@
               </div>
             </div>
           </div>
+          </div><!-- end More -->
+            </div>
+            <!-- END RIGHT COLUMN -->
+          </div>
+          <!-- END DASHBOARD GRID -->
+
           <div
             id="creditsPanel"
             style="display: none; margin-top: 10px"
