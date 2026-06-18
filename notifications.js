@@ -256,19 +256,6 @@ var _notifOverlayOpen = false;
 function createNotifOverlay() {
     if (document.getElementById('notifOverlayBtn')) return;
 
-    var btn = document.createElement('button');
-    btn.id = 'notifOverlayBtn';
-    btn.innerHTML = '🔔';
-    btn.title = 'Notifications';
-    btn.style.cssText = 'display:none;position:fixed;top:12px;right:20px;z-index:300;width:36px;height:36px;border-radius:8px;background:none;color:var(--text-muted);border:1px solid var(--border);font-size:1rem;cursor:pointer;box-shadow:none;transition:all 0.18s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent;';
-    btn.onclick = toggleNotifOverlay;
-
-    // Badge
-    var badge = document.createElement('span');
-    badge.id = 'notifOverlayBadge';
-    badge.style.cssText = 'display:none;position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;font-size:0.55rem;font-weight:800;padding:2px 5px;border-radius:8px;min-width:14px;text-align:center;';
-    btn.appendChild(badge);
-
     // Panel
     var panel = document.createElement('div');
     panel.id = 'notifPanel';
@@ -290,38 +277,13 @@ function createNotifOverlay() {
     body.id = 'notifPanelBody';
     body.style.cssText = 'flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;';
 
-    panel.appendChild(header);
+   panel.appendChild(header);
     panel.appendChild(body);
     document.body.appendChild(panel);
-    document.body.appendChild(btn);
 
     var style = document.createElement('style');
-    style.textContent = '@media(min-width:901px){#notifPanel{max-width:400px;right:16px;left:auto;border-radius:16px 16px 0 0;}}@media(max-width:900px){#notifOverlayBtn{display:none!important;}}';
+    style.textContent = '@media(min-width:901px){#notifPanel{max-width:400px;right:16px;left:auto;border-radius:16px 16px 0 0;}}';
     document.head.appendChild(style);
-
-    // Dock the bell inline inside the sidebar placeholder (signed-in users only).
-    // No placeholder (anonymous/guest, or mobile) = hide the bell entirely rather
-    // than floating it loose at a fixed coordinate.
-    function positionNotifBell() {
-        var placeholder = document.getElementById('notifBellPlaceholder');
-        var nb = document.getElementById('notifOverlayBtn');
-        if (!nb) return;
-
-        var signedIn = !!(window.auth && auth.currentUser && !auth.currentUser.isAnonymous);
-
-        if (placeholder && window.innerWidth > 900 && signedIn) {
-            nb.style.display = 'flex';
-            if (nb.parentElement !== placeholder) {
-                nb.style.cssText = 'position:static;width:32px;height:32px;border-radius:8px;background:none;color:var(--text-muted);border:1px solid var(--border);font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.18s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent;';
-                placeholder.appendChild(nb);
-            }
-        } else {
-            nb.style.display = 'none';
-        }
-    }
-    // Re-check periodically (userDisplay/auth state loads async)
-    setInterval(positionNotifBell, 1500);
-    setTimeout(positionNotifBell, 800);
 }
 
 window.toggleNotifOverlay = function() {
@@ -420,6 +382,18 @@ updateNotifBadge = function() {
     // Merge server notif count + local points count
     _updatePointsBadge();
 };
+
+// Keep the inline sidebar bell badge in sync (re-render-proof: looked up by ID each time)
+function _syncInlineBellBadge(total) {
+    var b = document.getElementById('notifBellInlineBadge');
+    if (!b) return;
+    if (total > 0) {
+        b.textContent = total > 9 ? '9+' : total;
+        b.style.display = 'flex';
+    } else {
+        b.style.display = 'none';
+    }
+}
 
 // ---- Self-Notifications (local events → Firestore) ----
 // Notify on level up (leaderboard rank)
@@ -623,15 +597,7 @@ function _updatePointsBadge() {
     var ptsCount = _getUnreadPointsCount();
     var serverCount = window._notifCount || 0;
     var total = serverCount + ptsCount;
-    var badge = document.getElementById('notifOverlayBadge');
-    if (badge) {
-        if (total > 0 && !_notifOverlayOpen) {
-            badge.textContent = total > 9 ? '9+' : total;
-            badge.style.display = 'block';
-        } else {
-            badge.style.display = 'none';
-        }
-    }
+    _syncInlineBellBadge(!_notifOverlayOpen ? total : 0);
     var bnavBadge = document.getElementById('bnavNotifBadge');
     if (bnavBadge) {
         if (total > 0 && !_notifOverlayOpen) {

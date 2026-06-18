@@ -3769,7 +3769,10 @@ function updateUserDisplay(lv) {
       '</div>' +
       liveHtml +
       '<div class="ud-bell-row">' +
-        '<div id="notifBellPlaceholder" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;"></div>' +
+        '<button id="notifBellInline" onclick="event.stopPropagation();if(typeof toggleNotifOverlay===\'function\')toggleNotifOverlay();" style="position:relative;width:32px;height:32px;border-radius:8px;background:none;color:var(--text-muted);border:1px solid var(--border);font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.18s ease;touch-action:manipulation;padding:0;">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>' +
+          '<span id="notifBellInlineBadge" style="display:none;position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;font-size:0.55rem;font-weight:800;min-width:14px;height:14px;border-radius:7px;align-items:center;justify-content:center;padding:0 3px;line-height:14px;text-align:center;"></span>' +
+        '</button>' +
         '<span style="font-size:0.62rem;color:var(--text-faint);letter-spacing:0.3px;">Settings</span>' +
       '</div>';
   }
