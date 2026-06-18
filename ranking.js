@@ -3425,7 +3425,7 @@ function updateUserDisplay(lv) {
     if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
       var container = document.createElement("div");
       container.id = "userDisplayContainer";
-      container.style.cssText = "padding:12px 14px 14px;border-bottom:1px solid var(--border);";
+      container.style.cssText = "padding:6px 14px 8px;border-bottom:1px solid var(--border);";
       sidebarHeader.parentNode.insertBefore(container, sidebarHeader.nextSibling);
       container.appendChild(el);
     }
@@ -3451,7 +3451,7 @@ function updateUserDisplay(lv) {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 10px 12px 8px;
+          padding: 6px 12px 4px;
         }
         #userDisplay[data-anon] .ud-label {
           font-size: 0.6rem;
@@ -3473,7 +3473,7 @@ function updateUserDisplay(lv) {
           font-family: var(--display-font, 'Outfit', sans-serif);
           letter-spacing: -0.5px;
           line-height: 1;
-          padding: 0 12px 4px;
+          padding: 0 12px 2px;
         }
         #userDisplay[data-anon] .ud-xp span {
           font-size: 0.7rem;
@@ -3487,7 +3487,7 @@ function updateUserDisplay(lv) {
           display: flex;
           align-items: center;
           gap: 12px;
-          padding: 6px 12px;
+          padding: 4px 12px;
           background: var(--secondary, rgba(0,0,0,0.04));
           border-top: 1px solid var(--border);
         }
@@ -3511,7 +3511,7 @@ function updateUserDisplay(lv) {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 8px 12px;
+          padding: 6px 10px;
           gap: 10px;
           border-top: 1px solid var(--border);
         }
@@ -3726,7 +3726,7 @@ function updateUserDisplay(lv) {
     if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
       var container = document.createElement("div");
       container.id = "userDisplayContainer";
-      container.style.cssText = "padding:12px 14px 14px;border-bottom:1px solid var(--border);";
+      container.style.cssText = "padding:6px 14px 8px;border-bottom:1px solid var(--border);";
       sidebarHeader.parentNode.insertBefore(container, sidebarHeader.nextSibling);
       container.appendChild(el);
     }
