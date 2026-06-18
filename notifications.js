@@ -260,7 +260,7 @@ function createNotifOverlay() {
     btn.id = 'notifOverlayBtn';
     btn.innerHTML = '🔔';
     btn.title = 'Notifications';
-    btn.style.cssText = 'position:fixed;top:12px;right:20px;z-index:300;width:44px;height:44px;border-radius:50%;background:var(--card-bg,#1a1a2e);color:#fff;border:1px solid var(--border);font-size:1.1rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.4);transition:transform 0.2s,opacity 0.2s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;';
+    btn.style.cssText = 'display:none;position:fixed;top:12px;right:20px;z-index:300;width:36px;height:36px;border-radius:8px;background:none;color:var(--text-muted);border:1px solid var(--border);font-size:1rem;cursor:pointer;box-shadow:none;transition:all 0.18s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent;';
     btn.onclick = toggleNotifOverlay;
 
     // Badge
@@ -299,41 +299,29 @@ function createNotifOverlay() {
     style.textContent = '@media(min-width:901px){#notifPanel{max-width:400px;right:16px;left:auto;border-radius:16px 16px 0 0;}}@media(max-width:900px){#notifOverlayBtn{display:none!important;}}';
     document.head.appendChild(style);
 
-    // Position notif bell to left of userDisplay on desktop, or inside branding dashboard
-// Position notif bell to left of userDisplay on desktop, or inside branding dashboard
+    // Dock the bell inline inside the sidebar placeholder (signed-in users only).
+    // No placeholder (anonymous/guest, or mobile) = hide the bell entirely rather
+    // than floating it loose at a fixed coordinate.
     function positionNotifBell() {
-        if (window.innerWidth <= 900) return;
         var placeholder = document.getElementById('notifBellPlaceholder');
         var nb = document.getElementById('notifOverlayBtn');
         if (!nb) return;
 
-        if (placeholder) {
-            // Tablet/Laptop: Move bell next to dashboard info
-            var rect = placeholder.getBoundingClientRect();
-            nb.style.position = 'fixed';
-            nb.style.top = (rect.top - 2) + 'px';
-            nb.style.left = (rect.left - 2) + 'px';
-            nb.style.right = 'auto';
-            nb.style.margin = '0';
-            nb.style.boxShadow = 'none';
-            nb.style.background = 'rgba(255,255,255,0.05)';
-        } else {
-            // Traditional position fallback
-            var ud = document.getElementById('userDisplay');
-            if (ud && ud.style.display !== 'none' && ud.offsetWidth > 0) {
-                nb.style.top = ud.style.top || '12px';
-                nb.style.right = (parseInt(ud.style.right || '20') + ud.offsetWidth + 12) + 'px';
-                nb.style.left = 'auto';
-            } else {
-                nb.style.top = '12px';
-                nb.style.right = '20px';
-                nb.style.left = 'auto';
+        var signedIn = !!(window.auth && auth.currentUser && !auth.currentUser.isAnonymous);
+
+        if (placeholder && window.innerWidth > 900 && signedIn) {
+            nb.style.display = 'flex';
+            if (nb.parentElement !== placeholder) {
+                nb.style.cssText = 'position:static;width:32px;height:32px;border-radius:8px;background:none;color:var(--text-muted);border:1px solid var(--border);font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.18s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent;';
+                placeholder.appendChild(nb);
             }
+        } else {
+            nb.style.display = 'none';
         }
     }
-    // Re-position periodically (userDisplay loads async)
-    setInterval(positionNotifBell, 2000);
-    setTimeout(positionNotifBell, 1500);
+    // Re-check periodically (userDisplay/auth state loads async)
+    setInterval(positionNotifBell, 1500);
+    setTimeout(positionNotifBell, 800);
 }
 
 window.toggleNotifOverlay = function() {
