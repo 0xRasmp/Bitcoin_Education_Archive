@@ -2806,7 +2806,7 @@ function _renderCharityTabInner(body) {
         '</div>';
 
         // Donate button
-        html += '<button onclick="window._submitCharityDonation()" style="width:100%;padding:14px;background:linear-gradient(135deg,#ef4444,#dc2626);border:none;border-radius:12px;color:#fff;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;transition:0.2s;">❤️ Donate XP for Charity</button>';
+        html += '<button onclick="window._submitCharityDonation()" style="width:100%;padding:14px;background:linear-gradient(135deg,#ef4444,#dc2626);border:none;border-radius:12px;color:#fff;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;transition:0.2s;display:flex;align-items:center;justify-content:center;gap:8px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Donate XP for Charity</button>';
 
         html += '</div>';
     }
@@ -3535,7 +3535,7 @@ function _raidVictoryBanner(boss) {
     return '<div style="padding:16px 0;margin-bottom:16px;border-bottom:1px solid var(--border);">' +
         '<div style="padding:14px;background:linear-gradient(135deg,rgba(34,197,94,0.12),rgba(34,197,94,0.04));border:2px solid #22c55e;border-radius:16px;text-align:center;">' +
             defeatedImgHtml +
-            '<div style="font-size:1.2rem;font-weight:900;color:#22c55e;letter-spacing:1.5px;margin-bottom:4px;">BOSS DEFEATED! \uD83C\uDF89</div>' +
+            '<div style="display:flex;align-items:center;gap:6px;font-size:1.2rem;font-weight:900;color:#22c55e;letter-spacing:1.5px;margin-bottom:4px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> BOSS DEFEATED!</div>' +
             '<div style="font-size:0.95rem;font-weight:700;color:var(--heading);margin-bottom:6px;">' + bossName + ' has fallen!</div>' +
             '<div style="color:var(--text-muted);font-size:0.82rem;line-height:1.5;margin-bottom:10px;">The community worked together and took it down! Great job everyone!</div>' +
             '<div style="padding:10px 14px;background:rgba(247,147,26,0.1);border:1px solid rgba(247,147,26,0.3);border-radius:10px;">' +

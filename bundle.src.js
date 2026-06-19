@@ -6496,13 +6496,13 @@ function showSettingsPage(tab) {
     html +=
       '<div style="display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid var(--border);margin-top:8px;position:sticky;top:0;background:var(--bg-side,#1a1a2e);z-index:10;padding-top:4px;overflow:hidden;">';
     ["account", "scholar", "sats", "prefs", "security", "data"].forEach((t) => {
-      const icons = {
-        account: "👤",
-        scholar: "🎓",
-        sats: "⚡",
-        prefs: "🎨",
-        security: "🔒",
-        data: "📊",
+      const faIcons = {
+        account: "fa-user",
+        scholar: "fa-graduation-cap",
+        sats: "fa-bolt",
+        prefs: "fa-palette",
+        security: "fa-lock",
+        data: "fa-chart-column",
       };
       const names = {
         account: "Acct",
@@ -6524,9 +6524,9 @@ function showSettingsPage(tab) {
         (active ? "700" : "500") +
         ";cursor:pointer;font-family:inherit;border-bottom:" +
         (active ? "2px solid var(--accent)" : "2px solid transparent") +
-        ';margin-bottom:-2px;display:flex;flex-direction:column;align-items:center;gap:1px;white-space:nowrap;touch-action:manipulation;"><span style="font-size:1.3rem;line-height:1;">' +
-        icons[t] +
-        "</span>" +
+        ';margin-bottom:-2px;display:flex;flex-direction:column;align-items:center;gap:3px;white-space:nowrap;touch-action:manipulation;"><i class="fa-solid ' +
+        faIcons[t] +
+        '" style="font-size:1.1rem;"></i>' +
         names[t] +
         "</button>";
     });
@@ -6540,9 +6540,7 @@ function showSettingsPage(tab) {
         ? '<img src="' +
           escapeHtml(_pfpUrl) +
           '" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);box-shadow:0 0 20px rgba(247,147,26,0.3);cursor:pointer;" onclick="document.getElementById(\'pfpFileInput\').click()" title="Change profile picture">'
-        : '<div style="font-size:2.5rem;margin-bottom:0;">' +
-          settingsEmoji +
-          "</div>";
+        : '<div style="width:72px;height:72px;border-radius:50%;background:var(--accent-bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;margin:0 auto;" onclick="document.getElementById(\'pfpFileInput\').click()" title="Add profile picture"><i class="fa-solid fa-user" style="font-size:1.8rem;color:var(--accent);"></i></div>';
       html +=
         '<div style="text-align:center;margin-bottom:20px;">' +
         '<div style="margin-bottom:8px;position:relative;display:inline-block;">' +
@@ -6568,24 +6566,25 @@ function showSettingsPage(tab) {
       // Country selector (custom autocomplete — datalist broken on iOS Safari)
       var _userCountry = currentUser ? currentUser.country || "" : "";
       var _countryXpNudge = !_userCountry
-        ? ' <span style="color:#22c55e;font-size:0.7rem;font-weight:700;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;padding:2px 7px;margin-left:4px;">+100 XP + badge</span>'
+        ? ' <span style="display:inline-flex;align-items:center;gap:5px;color:#22c55e;font-size:0.7rem;font-weight:700;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;padding:3px 9px;margin-left:4px;"><i class="fa-solid fa-star" style="font-size:0.62rem;"></i>+100 XP + Badge</span>'
         : "";
       html +=
         '<div style="background:var(--card-bg);border:1px solid ' +
         (!_userCountry ? "rgba(34,197,94,0.3)" : "var(--border)") +
         ';border-radius:12px;padding:16px;margin-bottom:16px;">' +
-        '<div style="font-size:0.75rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;">🌍 Country' +
+        '<div style="font-size:0.75rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px;"><i class="fa-solid fa-earth-americas"></i>Country' +
         _countryXpNudge +
         "</div>" +
         '<div style="position:relative;" id="countryAutocomplete">' +
+        '<i class="fa-solid fa-magnifying-glass" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-faint);font-size:0.8rem;pointer-events:none;"></i>' +
         '<input type="text" id="countryInput" value="' +
         escapeHtml(_userCountry) +
-        '" placeholder="Start typing your country..." autocomplete="off" style="width:100%;padding:12px 14px;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:16px;font-family:inherit;outline:none;box-sizing:border-box;-webkit-appearance:none;" oninput="window._filterCountryList()" onfocus="window._filterCountryList()">' +
+        '" placeholder="Start typing your country..." autocomplete="off" style="width:100%;padding:12px 14px 12px 38px;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:16px;font-family:inherit;outline:none;box-sizing:border-box;-webkit-appearance:none;" oninput="window._filterCountryList()" onfocus="window._filterCountryList()">' +
         '<div id="countryDropdown" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:200px;overflow-y:auto;background:var(--bg-side,#1a1a2e);border:1px solid var(--accent);border-radius:0 0 10px 10px;z-index:50;box-shadow:0 8px 24px rgba(0,0,0,0.4);"></div>' +
         "</div>" +
-        '<div style="color:var(--text-faint);font-size:0.7rem;margin-top:4px;">' +
+        '<div style="color:var(--text-faint);font-size:0.7rem;margin-top:6px;display:flex;align-items:flex-start;gap:6px;line-height:1.5;">' +
         (!_userCountry
-          ? "🌟 Add your country → earn +100 XP + 🌍 Global Citizen badge"
+          ? '<i class="fa-solid fa-gift" style="color:#eab308;margin-top:1px;flex-shrink:0;"></i><span>Add your country to earn +100 XP and the <i class="fa-solid fa-earth-americas" style="color:#3b82f6;"></i> Global Citizen badge</span>'
           : "Optional · Shown on your public profile") +
         "</div>" +
         "</div>";
@@ -6594,7 +6593,7 @@ function showSettingsPage(tab) {
       var _userFaction = currentUser ? currentUser.faction || "" : "";
       html +=
         '<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">' +
-        '<div style="font-size:0.75rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">⚔️ Faction</div>' +
+        '<div style="font-size:0.75rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;display:flex;align-items:center;gap:6px;"><i class="fa-solid fa-flag"></i>Faction</div>' +
         '<div style="color:var(--text-faint);font-size:0.7rem;margin-bottom:12px;">Choose your allegiance! New faction features coming soon — no competitive advantage to either choice.</div>' +
         '<div style="display:flex;gap:10px;">' +
         '<div onclick="window._selectFaction(\'cyber_hornets\')" style="flex:1;padding:14px 10px;border-radius:12px;border:2px solid ' +
@@ -18602,7 +18601,7 @@ function _renderCharityTabInner(body) {
         '</div>';
 
         // Donate button
-        html += '<button onclick="window._submitCharityDonation()" style="width:100%;padding:14px;background:linear-gradient(135deg,#ef4444,#dc2626);border:none;border-radius:12px;color:#fff;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;transition:0.2s;">❤️ Donate XP for Charity</button>';
+        html += '<button onclick="window._submitCharityDonation()" style="width:100%;padding:14px;background:linear-gradient(135deg,#ef4444,#dc2626);border:none;border-radius:12px;color:#fff;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;transition:0.2s;display:flex;align-items:center;justify-content:center;gap:8px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Donate XP for Charity</button>';
 
         html += '</div>';
     }
@@ -19331,7 +19330,7 @@ function _raidVictoryBanner(boss) {
     return '<div style="padding:16px 0;margin-bottom:16px;border-bottom:1px solid var(--border);">' +
         '<div style="padding:14px;background:linear-gradient(135deg,rgba(34,197,94,0.12),rgba(34,197,94,0.04));border:2px solid #22c55e;border-radius:16px;text-align:center;">' +
             defeatedImgHtml +
-            '<div style="font-size:1.2rem;font-weight:900;color:#22c55e;letter-spacing:1.5px;margin-bottom:4px;">BOSS DEFEATED! \uD83C\uDF89</div>' +
+            '<div style="display:flex;align-items:center;gap:6px;font-size:1.2rem;font-weight:900;color:#22c55e;letter-spacing:1.5px;margin-bottom:4px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> BOSS DEFEATED!</div>' +
             '<div style="font-size:0.95rem;font-weight:700;color:var(--heading);margin-bottom:6px;">' + bossName + ' has fallen!</div>' +
             '<div style="color:var(--text-muted);font-size:0.82rem;line-height:1.5;margin-bottom:10px;">The community worked together and took it down! Great job everyone!</div>' +
             '<div style="padding:10px 14px;background:rgba(247,147,26,0.1);border:1px solid rgba(247,147,26,0.3);border-radius:10px;">' +

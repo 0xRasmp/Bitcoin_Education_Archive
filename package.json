@@ -2,7 +2,7 @@
   "name": "btc-gh-pages",
   "private": true,
   "scripts": {
-    "build": "vite build",
+    "build": "node scripts/build-dist.mjs",
     "dev": "vite"
   },
   "devDependencies": {
