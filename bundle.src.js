@@ -29848,7 +29848,7 @@ window._startHalvingTicker = function() {
                     });
                     var msgIdx = startIdx + bi;
                     var isBookmarked = safeJSON('btc_bookmarks', []).some(function(b) { return b.channel === id && b.idx === msgIdx; });
-                    html += '<button onclick="toggleBookmark(\'' + id + '\',' + msgIdx + ',this)" style="background:none;border:none;cursor:pointer;font-size:0.8rem;opacity:' + (isBookmarked ? '1' : '0.3') + ';padding:4px;margin-top:4px;transition:0.2s;touch-action:manipulation;" title="Bookmark">' + (isBookmarked ? '🔖' : '🔖') + '</button>';
+                    html += '<div style="display:flex;justify-content:flex-end;margin-top:2px;"><button onclick="toggleBookmark(\'' + id + '\',' + msgIdx + ',this)" style="background:none;border:none;cursor:pointer;font-size:0.7rem;opacity:' + (isBookmarked ? '0.8' : '0.18') + ';padding:2px 4px;transition:opacity 0.2s;touch-action:manipulation;color:var(--text-faint);line-height:1;" title="Bookmark" onmouseover="this.style.opacity=\'0.7\'" onmouseout="this.style.opacity=\'' + (isBookmarked ? '0.8' : '0.18') + '\'">' + (isBookmarked ? '<i class="fa-solid fa-bookmark"></i>' : '<i class="fa-regular fa-bookmark"></i>') + '</button></div>';
                     html += '</div>';
                 });
                 return html;

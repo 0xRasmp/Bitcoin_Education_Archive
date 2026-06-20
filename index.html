@@ -5310,203 +5310,25 @@
             <div
               id="homeLearnMenu"
               class="desktop-only-apps"
-              style="
-                display: none;
-                width: 100%;
-                flex-direction: column;
-                gap: 8px;
-                padding: 15px;
-                background: rgba(255, 255, 255, 0.03);
-                border: 1px solid var(--border);
-                border-radius: 16px;
-                animation: nachoPop 0.2s ease-out;
-              "
+              style="display:none;width:100%;flex-direction:column;gap:2px;padding:6px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;"
             >
-              <button
-                onclick="go('one-stop-shop')"
-                title="Start here if you're new to Bitcoin"
-                data-tooltip="Start here if you're new to Bitcoin"
-                style="
-                  padding: 10px 12px;
-                  background: linear-gradient(
-                    135deg,
-                    rgba(59, 130, 246, 0.15),
-                    rgba(37, 99, 235, 0.08)
-                  );
-                  border: 1px solid #3b82f6;
-                  color: #3b82f6;
-                  border-radius: 8px;
-                  font-weight: 800;
-                  cursor: pointer;
-                  font-size: 0.85rem;
-                  text-align: left;
-                  font-family: inherit;
-                  display: flex;
-                  align-items: center;
-                  gap: 6px;
-                "
-              >
-                🟢 Brand New to Bitcoin?
+              <button onclick="go('one-stop-shop')" title="Start here if you're new to Bitcoin" style="padding:9px 12px;background:none;border:none;border-radius:8px;color:var(--text);font-size:0.83rem;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;width:100%;text-align:left;transition:background 0.15s;" onmouseover="this.style.background='var(--secondary)'" onmouseout="this.style.background='none'">
+                <i class="fa-solid fa-circle-dot" style="color:var(--accent);width:14px;font-size:0.8rem;"></i> Brand New to Bitcoin?
               </button>
-              <button
-                onclick="go('trails')"
-                title="Guided learning path with topics and flashcards"
-                data-tooltip="Guided learning path with topics and flashcards"
-                style="
-                  padding: 10px 12px;
-                  background: linear-gradient(
-                    135deg,
-                    rgba(247, 147, 26, 0.1),
-                    rgba(234, 88, 12, 0.05)
-                  );
-                  border: 1px solid var(--accent);
-                  color: var(--accent);
-                  border-radius: 8px;
-                  font-weight: 800;
-                  cursor: pointer;
-                  font-size: 0.85rem;
-                  text-align: left;
-                  font-family: inherit;
-                  display: flex;
-                  align-items: center;
-                  gap: 6px;
-                "
-              >
-                🦌🗺️ Nacho's Trails: Guided Learning
+              <button onclick="go('trails')" title="Guided learning path with topics and flashcards" style="padding:9px 12px;background:none;border:none;border-radius:8px;color:var(--text);font-size:0.83rem;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;width:100%;text-align:left;transition:background 0.15s;" onmouseover="this.style.background='var(--secondary)'" onmouseout="this.style.background='none'">
+                <i class="fa-solid fa-map" style="color:var(--accent);width:14px;font-size:0.8rem;"></i> Nacho's Trails: Guided Learning
               </button>
-              <button
-                onclick="
-                  if (typeof showQuestHub === 'function') showQuestHub();
-                "
-                title="Play daily quizzes, trivia & polls for XP"
-                data-tooltip="Play daily quizzes, trivia & polls for XP"
-                style="
-                  padding: 10px 12px;
-                  background: linear-gradient(
-                    135deg,
-                    rgba(139, 92, 246, 0.15),
-                    rgba(109, 40, 217, 0.08)
-                  );
-                  border: 1px solid #8b5cf6;
-                  color: #a78bfa;
-                  border-radius: 8px;
-                  font-weight: 800;
-                  cursor: pointer;
-                  font-size: 0.85rem;
-                  text-align: left;
-                  font-family: inherit;
-                  display: flex;
-                  align-items: center;
-                  gap: 6px;
-                "
-              >
-                🎯 Daily Quests
+              <button onclick="if(typeof showQuestHub==='function')showQuestHub()" title="Play daily quizzes, trivia & polls for XP" style="padding:9px 12px;background:none;border:none;border-radius:8px;color:var(--text);font-size:0.83rem;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;width:100%;text-align:left;transition:background 0.15s;" onmouseover="this.style.background='var(--secondary)'" onmouseout="this.style.background='none'">
+                <i class="fa-solid fa-bullseye" style="color:var(--accent);width:14px;font-size:0.8rem;"></i> Daily Quests
               </button>
-              <button
-                onclick="go('first-purchase')"
-                title="Learn how to buy Bitcoin safely"
-                data-tooltip="Learn how to buy Bitcoin safely"
-                style="
-                  padding: 10px 12px;
-                  background: linear-gradient(
-                    135deg,
-                    rgba(34, 197, 94, 0.12),
-                    rgba(22, 163, 74, 0.06)
-                  );
-                  border: 1px solid #22c55e;
-                  color: #22c55e;
-                  border-radius: 8px;
-                  font-weight: 800;
-                  cursor: pointer;
-                  font-size: 0.85rem;
-                  text-align: left;
-                  font-family: inherit;
-                  display: flex;
-                  align-items: center;
-                  gap: 6px;
-                "
-              >
-                🛒 Your First Bitcoin Purchase
+              <button onclick="go('first-purchase')" title="Learn how to buy Bitcoin safely" style="padding:9px 12px;background:none;border:none;border-radius:8px;color:var(--text);font-size:0.83rem;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;width:100%;text-align:left;transition:background 0.15s;" onmouseover="this.style.background='var(--secondary)'" onmouseout="this.style.background='none'">
+                <i class="fa-solid fa-cart-shopping" style="color:var(--accent);width:14px;font-size:0.8rem;"></i> Your First Bitcoin Purchase
               </button>
-              <button
-                onclick="
-                  window._mbRouted = true;
-                  window._skipIRLRules = true;
-                  localStorage.setItem('btc_irl_rules_accepted', 'true');
-                  go('irl-sync');
-                  setTimeout(function () {
-                    var ro = document.getElementById('irlRulesOverlay');
-                    if (ro) ro.remove();
-                    var _t = 0;
-                    var _i = setInterval(function () {
-                      var ro2 = document.getElementById('irlRulesOverlay');
-                      if (ro2) ro2.remove();
-                      var el = document.getElementById('meetupBuilderSection');
-                      if (el) {
-                        clearInterval(_i);
-                        el.scrollIntoView({
-                          behavior: 'smooth',
-                          block: 'start',
-                        });
-                      }
-                      if (++_t > 30) clearInterval(_i);
-                    }, 300);
-                  }, 1500);
-                "
-                title="Create or find local Bitcoin meetups"
-                data-tooltip="Create or find local Bitcoin meetups"
-                style="
-                  padding: 10px 12px;
-                  background: linear-gradient(
-                    135deg,
-                    rgba(234, 179, 8, 0.12),
-                    rgba(202, 138, 4, 0.06)
-                  );
-                  border: 1px solid #eab308;
-                  color: #eab308;
-                  border-radius: 8px;
-                  font-weight: 800;
-                  cursor: pointer;
-                  font-size: 0.85rem;
-                  text-align: left;
-                  font-family: inherit;
-                  display: flex;
-                  align-items: center;
-                  gap: 6px;
-                "
-              >
-                🔨 Meetup Builder
+              <button onclick="window._mbRouted=true;window._skipIRLRules=true;localStorage.setItem('btc_irl_rules_accepted','true');go('irl-sync');setTimeout(function(){var ro=document.getElementById('irlRulesOverlay');if(ro)ro.remove();var _t=0;var _i=setInterval(function(){var ro2=document.getElementById('irlRulesOverlay');if(ro2)ro2.remove();var el=document.getElementById('meetupBuilderSection');if(el){clearInterval(_i);el.scrollIntoView({behavior:'smooth',block:'start'});}if(++_t>30)clearInterval(_i);},300);},1500);" title="Create or find local Bitcoin meetups" style="padding:9px 12px;background:none;border:none;border-radius:8px;color:var(--text);font-size:0.83rem;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;width:100%;text-align:left;transition:background 0.15s;" onmouseover="this.style.background='var(--secondary)'" onmouseout="this.style.background='none'">
+                <i class="fa-solid fa-hammer" style="color:var(--accent);width:14px;font-size:0.8rem;"></i> Meetup Builder
               </button>
-              <button
-                onclick="
-                  go('marketplace');
-                  setTimeout(function () {
-                    renderMarketplace({ section: 'merchants' });
-                  }, 500);
-                "
-                title="Explore merchants and spend your sats"
-                data-tooltip="Explore merchants and spend your sats"
-                style="
-                  padding: 10px 12px;
-                  background: linear-gradient(
-                    135deg,
-                    rgba(239, 68, 68, 0.15),
-                    rgba(220, 38, 38, 0.08)
-                  );
-                  border: 1px solid #ef4444;
-                  color: #ef4444;
-                  border-radius: 8px;
-                  font-weight: 800;
-                  cursor: pointer;
-                  font-size: 0.85rem;
-                  text-align: left;
-                  font-family: inherit;
-                  display: flex;
-                  align-items: center;
-                  gap: 6px;
-                "
-              >
-                ₿ Spend Bitcoin
+              <button onclick="go('marketplace');setTimeout(function(){renderMarketplace({section:'merchants'})},500)" title="Explore merchants and spend your sats" style="padding:9px 12px;background:none;border:none;border-radius:8px;color:var(--text);font-size:0.83rem;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;width:100%;text-align:left;transition:background 0.15s;" onmouseover="this.style.background='var(--secondary)'" onmouseout="this.style.background='none'">
+                <i class="fa-solid fa-bitcoin-sign" style="color:var(--accent);width:14px;font-size:0.8rem;"></i> Spend Bitcoin
               </button>
             </div>
 
