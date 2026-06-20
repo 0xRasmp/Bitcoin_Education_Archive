@@ -2248,9 +2248,9 @@ function _renderFavorTab(body) {
     var pct = Math.min(100, (points / 21) * 100);
 
     var html = '<div style="text-align:center;padding:16px 0;">' +
-        '<div style="font-size:2.5rem;margin-bottom:8px;">✨⛏️</div>' +
+        '<div style="font-size:2.2rem;margin-bottom:8px;color:var(--accent);"><i class="fa-solid fa-hammer"></i></div>' +
         '<div style="font-size:1.1rem;font-weight:800;color:var(--heading);margin-bottom:4px;">Satoshi\'s Favor</div>' +
-        '<div style="color:var(--text-muted);font-size:0.82rem;margin-bottom:16px;">Community mining when the community earns 21 points.<br><span style="color:#f7931a;font-weight:600;">Chance to win 21,000 sats! ⚡</span></div>';
+        '<div style="color:var(--text-muted);font-size:0.82rem;margin-bottom:16px;">Community mining when the community earns 21 points.<br><span style="color:#f7931a;font-weight:600;">Chance to win 21,000 sats <i class="fa-solid fa-bolt"></i></span></div>';
 
 
     if (isActive) {
@@ -2261,13 +2261,16 @@ function _renderFavorTab(body) {
         var remainingSec = Math.floor((remainingMs % 60000) / 1000);
 
         html += '<div style="background:linear-gradient(135deg,rgba(247,147,26,0.15),rgba(247,147,26,0.05));border:2px solid var(--accent);border-radius:12px;padding:16px;margin-bottom:16px;animation:favorPulse 2s ease-in-out infinite;">' +
-            '<div style="font-size:1.2rem;font-weight:800;color:var(--accent);margin-bottom:8px;">🎉 SATOSHI\'S FAVOR IS ACTIVE!</div>' +
-            '<div style="font-size:2rem;font-weight:900;color:#fff;font-family:monospace;" id="favorTabTimer">' + remainingMin + 'm ' + remainingSec + 's</div>' +
-            '<div style="color:var(--text-muted);font-size:0.8rem;margin-top:8px;">Mine below 1,000 to win 21,000 sats!</div>' +
+            '<div style="font-size:0.95rem;font-weight:800;color:var(--accent);margin-bottom:10px;letter-spacing:0.3px;"><i class="fa-solid fa-circle-check" style="margin-right:6px;"></i>SATOSHI\'S FAVOR IS ACTIVE!</div>' +
+            '<div id="favorTabTimer" style="display:flex;align-items:baseline;justify-content:center;gap:8px;">' +
+                '<span style="display:flex;align-items:baseline;gap:4px;"><span style="font-size:2rem;font-weight:900;color:#fff;font-family:monospace;">' + remainingMin + '</span><span style="font-size:0.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">min</span></span>' +
+                '<span style="display:flex;align-items:baseline;gap:4px;"><span style="font-size:2rem;font-weight:900;color:#fff;font-family:monospace;">' + remainingSec + '</span><span style="font-size:0.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">sec</span></span>' +
+            '</div>' +
+            '<div style="color:var(--text-muted);font-size:0.8rem;margin-top:10px;">Mine below 1,000 to win 21,000 sats!</div>' +
             '</div>' +
             '<style>@keyframes favorPulse{0%,100%{box-shadow:0 0 0 0 rgba(247,147,26,0.4)}50%{box-shadow:0 0 0 10px rgba(247,147,26,0)}}</style>';
 
-        html += '<button onclick="window.closeQuestHubForFavor && window.closeQuestHubForFavor();window.openSatoshiFavorMiner && window.openSatoshiFavorMiner()" style="padding:14px 32px;background:linear-gradient(135deg,var(--accent),#e8720c);border:none;border-radius:14px;color:#fff;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;margin-bottom:12px;">✨⛏️ Start Mining</button>';
+        html += '<button onclick="window.closeQuestHubForFavor && window.closeQuestHubForFavor();window.openSatoshiFavorMiner && window.openSatoshiFavorMiner()" style="padding:14px 32px;background:linear-gradient(135deg,var(--accent),#e8720c);border:none;border-radius:14px;color:#fff;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;margin-bottom:12px;"><i class="fa-solid fa-hammer" style="margin-right:8px;"></i>Start Mining</button>';
     } else {
         html += '<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">' +
             '<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;">' +
@@ -2370,7 +2373,8 @@ function _renderFavorTab(body) {
                 if (remaining <= 0) { timerEl.textContent = '00:00'; return; }
                 var mins = Math.floor(remaining / 60000);
                 var secs = Math.floor((remaining % 60000) / 1000);
-                timerEl.textContent = mins + 'm ' + secs + 's';
+                timerEl.innerHTML = '<span style="display:flex;align-items:baseline;gap:4px;"><span style="font-size:2rem;font-weight:900;color:#fff;font-family:monospace;">' + mins + '</span><span style="font-size:0.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">min</span></span>' +
+                    '<span style="display:flex;align-items:baseline;gap:4px;"><span style="font-size:2rem;font-weight:900;color:#fff;font-family:monospace;">' + secs + '</span><span style="font-size:0.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">sec</span></span>';
             }, 1000);
         }
     }
@@ -2607,40 +2611,31 @@ window.showQuestHub = function() {
     var modal = document.createElement('div');
     modal.style.cssText = 'background:var(--bg-side,#141425);border:1px solid var(--border);width:100%;max-width:520px;max-height:85vh;border-radius:24px;overflow:hidden;display:flex;flex-direction:column;position:relative;';
 
-    // Desktop font-size boost - everything in the modal reads larger on wide screens
+    // Scrollbar styling only — desktop font-size boost removed (was inflating all text)
     var qhStyle = document.createElement('style');
-    qhStyle.textContent = '@media(min-width:600px){' +
-        '#questHubOverlay [style*="font-size:0.6"]{font-size:0.82rem!important}' +
-        '#questHubOverlay [style*="font-size:0.7"]{font-size:0.88rem!important}' +
-        '#questHubOverlay [style*="font-size:0.75"]{font-size:0.9rem!important}' +
-        '#questHubOverlay [style*="font-size:0.78"]{font-size:0.92rem!important}' +
-        '#questHubOverlay [style*="font-size:0.8"]{font-size:0.95rem!important}' +
-        '#questHubOverlay [style*="font-size:0.82"]{font-size:0.97rem!important}' +
-        '#questHubOverlay [style*="font-size:0.85"]{font-size:1rem!important}' +
-        '#questHubOverlay [style*="font-size:0.9"]{font-size:1.05rem!important}' +
-        '#questHubOverlay [style*="font-size:0.95"]{font-size:1.08rem!important}' +
-        '#questHubOverlay p,[id="questHubBody"] div{font-size:inherit}' +
-        '#questHubBody{font-size:1rem}' +
-        '#questHubTabs button{font-size:0.88rem!important;padding:12px 0!important}' +
-    '}';
+    qhStyle.textContent = '#questHubBody{scrollbar-width:thin;scrollbar-color:rgba(247,147,26,0.3) transparent;}' +
+    '#questHubBody::-webkit-scrollbar{width:6px;}' +
+    '#questHubBody::-webkit-scrollbar-track{background:transparent;}' +
+    '#questHubBody::-webkit-scrollbar-thumb{background:rgba(247,147,26,0.3);border-radius:4px;}' +
+    '#questHubBody::-webkit-scrollbar-thumb:hover{background:rgba(247,147,26,0.5);}';
     modal.appendChild(qhStyle);
 
     // Header
     var header = document.createElement('div');
     header.style.cssText = 'padding:20px 24px 0;flex-shrink:0;';
     header.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">' +
-        '<div><h2 style="margin:0;color:var(--heading);font-size:1.3rem;">⚔️ Quest Hub</h2>' +
-        '<div style="color:var(--text-muted);font-size:0.8rem;margin-top:4px;">Earn XP by testing your Bitcoin knowledge</div></div>' +
-        '<button onclick="window._cleanupRaidBoss();document.getElementById(\'questHubOverlay\').remove()" style="background:none;border:none;color:var(--text-muted);font-size:1.5rem;cursor:pointer;padding:4px;">✕</button></div>' +
+        '<div><h2 style="margin:0;color:var(--heading);font-size:1.05rem;font-weight:700;letter-spacing:-0.2px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-bolt" style="color:var(--accent);font-size:0.95rem;"></i> Quest Hub</h2>' +
+        '<div style="color:var(--text-muted);font-size:0.76rem;margin-top:3px;">Earn XP by testing your Bitcoin knowledge</div></div>' +
+        '<button onclick="window._cleanupRaidBoss();document.getElementById(\'questHubOverlay\').remove()" style="background:none;border:none;color:var(--text-muted);font-size:1.3rem;cursor:pointer;padding:4px;display:flex;align-items:center;"><i class="fa-solid fa-xmark"></i></button></div>' +
         // Tabs
-        '<div id="questHubTabs" style="display:flex;gap:8px;margin-bottom:16px;">' +
-        '<button id="qhTabQuiz" onclick="window._questHubTab=\'quiz\';_renderQuestHubTab()" style="flex:1;padding:10px 0;border-radius:12px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.82rem;font-weight:700;cursor:pointer;font-family:inherit;transition:0.2s;">📝 Quiz</button>' +
-        '<button id="qhTabTrivia" onclick="window._questHubTab=\'trivia\';_renderQuestHubTab()" style="flex:1;padding:10px 0;border-radius:12px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.82rem;font-weight:700;cursor:pointer;font-family:inherit;transition:0.2s;">🧠 Trivia</button>' +
-        '<button id="qhTabPoll" onclick="window._questHubTab=\'poll\';_renderQuestHubTab()" style="flex:1;padding:10px 0;border-radius:12px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.82rem;font-weight:700;cursor:pointer;font-family:inherit;transition:0.2s;">📊 Poll</button>' +
-        '<button id="qhTabFlex" onclick="window._questHubTab=\'flex\';_renderQuestHubTab()" style="flex:1;padding:10px 0;border-radius:12px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.82rem;font-weight:700;cursor:pointer;font-family:inherit;transition:0.2s;">💪 Flex</button>' +
-        '<button id="qhTabRaid" onclick="window._questHubTab=\'raid\';_renderQuestHubTab()" style="flex:1;padding:10px 0;border-radius:12px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.82rem;font-weight:700;cursor:pointer;font-family:inherit;transition:0.2s;">⚔️ Raid</button>' +
-        '<button id="qhTabFavor" onclick="window._questHubTab=\'favor\';_renderQuestHubTab()" style="flex:1;padding:10px 0;border-radius:12px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.82rem;font-weight:700;cursor:pointer;font-family:inherit;transition:0.2s;">✨⛏️ Favor</button>' +
-        '<button id="qhTabCharity" onclick="window._questHubTab=\'charity\';_renderQuestHubTab()" style="flex:1;padding:10px 0;border-radius:12px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.82rem;font-weight:700;cursor:pointer;font-family:inherit;transition:0.2s;">❤️ Charity</button>' +
+        '<div id="questHubTabs" style="display:flex;gap:5px;margin-bottom:16px;">' +
+        '<button id="qhTabQuiz" onclick="window._questHubTab=\'quiz\';_renderQuestHubTab()" style="flex:1;padding:8px 2px;border-radius:9px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-pen-to-square"></i> Quiz</button>' +
+        '<button id="qhTabTrivia" onclick="window._questHubTab=\'trivia\';_renderQuestHubTab()" style="flex:1;padding:8px 2px;border-radius:9px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-brain"></i> Trivia</button>' +
+        '<button id="qhTabPoll" onclick="window._questHubTab=\'poll\';_renderQuestHubTab()" style="flex:1;padding:8px 2px;border-radius:9px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-square-poll-vertical"></i> Poll</button>' +
+        '<button id="qhTabFlex" onclick="window._questHubTab=\'flex\';_renderQuestHubTab()" style="flex:1;padding:8px 2px;border-radius:9px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-dumbbell"></i> Flex</button>' +
+        '<button id="qhTabRaid" onclick="window._questHubTab=\'raid\';_renderQuestHubTab()" style="flex:1;padding:8px 2px;border-radius:9px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-khanda"></i> Raid</button>' +
+        '<button id="qhTabFavor" onclick="window._questHubTab=\'favor\';_renderQuestHubTab()" style="flex:1;padding:8px 2px;border-radius:9px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-hammer"></i> Favor</button>' +
+        '<button id="qhTabCharity" onclick="window._questHubTab=\'charity\';_renderQuestHubTab()" style="flex:1;padding:8px 2px;border-radius:9px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-heart"></i> Charity</button>' +
                 '</div>';
 
     var body = document.createElement('div');
@@ -2665,8 +2660,8 @@ function _renderQuestHubTab() {
         var raidActive = t === 'Raid' && isActive;
         var charityActive = t === 'Charity' && isActive;
         var flexActive = t === 'Flex' && isActive;
-        btn.style.background = raidActive ? 'linear-gradient(135deg,#8b5cf6,#7c3aed)' : charityActive ? 'linear-gradient(135deg,#ef4444,#dc2626)' : flexActive ? 'linear-gradient(135deg,#f7931a,#22c55e)' : (isActive ? 'var(--accent)' : 'none');
-        btn.style.color = isActive ? '#fff' : 'var(--text-muted)';
+        btn.style.background = raidActive ? 'rgba(139,92,246,0.08)' : charityActive ? 'rgba(239,68,68,0.08)' : flexActive ? 'rgba(247,147,26,0.08)' : (isActive ? 'var(--accent-bg)' : 'none');
+        btn.style.color = raidActive ? '#8b5cf6' : charityActive ? '#ef4444' : flexActive ? '#f7931a' : (isActive ? 'var(--accent)' : 'var(--text-muted)');
         btn.style.borderColor = raidActive ? '#8b5cf6' : charityActive ? '#ef4444' : flexActive ? '#f7931a' : (isActive ? 'var(--accent)' : 'var(--border)');
     });
 
@@ -3057,16 +3052,16 @@ function _renderTriviaTab(body) {
     var answered = state.date === todayKey;
     var t = today.trivia;
 
-    var html = '<div style="text-align:center;padding:8px 0 16px;">' +
-        '<div style="font-size:2.5rem;margin-bottom:8px;">🧠</div>' +
-        '<div style="font-size:1.1rem;font-weight:800;color:var(--heading);margin-bottom:4px;">Trivia Quest</div>' +
-        '<div style="color:var(--text-muted);font-size:0.82rem;margin-bottom:4px;">1 new question every day</div>' +
-        '<div style="padding:4px 12px;background:rgba(247,147,26,0.1);border-radius:8px;font-size:0.72rem;color:#f7931a;font-weight:700;display:inline-block;margin-bottom:16px;">+50 XP correct · +10 XP for trying</div>' +
+    var html = '<div style="text-align:center;padding:6px 0 14px;">' +
+        '<div style="font-size:1.8rem;margin-bottom:6px;">🧠</div>' +
+        '<div style="font-size:0.95rem;font-weight:700;color:var(--heading);margin-bottom:3px;">Trivia Quest</div>' +
+        '<div style="color:var(--text-muted);font-size:0.76rem;margin-bottom:4px;">1 new question every day</div>' +
+        '<div style="padding:3px 10px;background:rgba(247,147,26,0.08);border-radius:7px;font-size:0.66rem;color:#f7931a;font-weight:600;display:inline-block;margin-bottom:14px;">+50 XP correct · +10 XP for trying</div>' +
     '</div>';
 
     // Question card
-    html += '<div style="background:var(--card-bg,#1a1a2e);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;">' +
-        '<div style="color:var(--text);font-size:0.95rem;font-weight:700;line-height:1.6;text-align:center;">' + (typeof escapeHtml === 'function' ? escapeHtml(t.q) : t.q) + '</div>' +
+    html += '<div style="background:var(--card-bg,#1a1a2e);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px;">' +
+        '<div style="color:var(--text);font-size:0.85rem;font-weight:600;line-height:1.55;text-align:center;">' + (typeof escapeHtml === 'function' ? escapeHtml(t.q) : t.q) + '</div>' +
     '</div>';
 
     // Options
@@ -3079,16 +3074,16 @@ function _renderTriviaTab(body) {
             var bg = isCorrect ? 'rgba(34,197,94,0.15)' : (wasChosen && !isCorrect ? 'rgba(239,68,68,0.15)' : 'var(--card-bg,#1a1a2e)');
             var border = isCorrect ? '#22c55e' : (wasChosen && !isCorrect ? '#ef4444' : 'var(--border)');
             var icon = isCorrect ? '✅' : (wasChosen && !isCorrect ? '❌' : '');
-            html += '<div style="padding:12px 16px;background:' + bg + ';border:2px solid ' + border + ';border-radius:12px;color:var(--text);font-size:0.85rem;font-weight:600;display:flex;align-items:center;gap:10px;opacity:' + (isCorrect || wasChosen ? '1' : '0.5') + ';position:relative;overflow:hidden;">' +
-                '<div id="triviaBar_' + i + '" style="position:absolute;left:0;top:0;bottom:0;width:0;background:' + (isCorrect ? 'rgba(34,197,94,0.1)' : (wasChosen && !isCorrect ? 'rgba(239,68,68,0.1)' : 'rgba(255,255,255,0.03)')) + ';transition:width 0.6s ease-out;border-radius:10px;"></div>' +
-                '<span style="min-width:22px;height:22px;border-radius:50%;border:2px solid ' + border + ';display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:800;color:var(--text-faint);position:relative;z-index:1;">' + String.fromCharCode(65 + i) + '</span>' +
+            html += '<div style="padding:10px 14px;background:' + bg + ';border:1px solid ' + border + ';border-radius:10px;color:var(--text);font-size:0.8rem;font-weight:500;display:flex;align-items:center;gap:8px;opacity:' + (isCorrect || wasChosen ? '1' : '0.5') + ';position:relative;overflow:hidden;">' +
+                '<div id="triviaBar_' + i + '" style="position:absolute;left:0;top:0;bottom:0;width:0;background:' + (isCorrect ? 'rgba(34,197,94,0.1)' : (wasChosen && !isCorrect ? 'rgba(239,68,68,0.1)' : 'rgba(255,255,255,0.03)')) + ';transition:width 0.6s ease-out;border-radius:9px;"></div>' +
+                '<span style="min-width:18px;height:18px;border-radius:50%;border:1px solid ' + border + ';display:flex;align-items:center;justify-content:center;font-size:0.58rem;font-weight:600;color:var(--text-faint);position:relative;z-index:1;">' + String.fromCharCode(65 + i) + '</span>' +
                 '<span style="position:relative;z-index:1;flex:1;">' + optText + '</span>' +
-                '<span id="triviaPct_' + i + '" style="position:relative;z-index:1;margin-left:auto;font-size:0.75rem;color:var(--text-muted);font-weight:700;min-width:36px;text-align:right;"></span>' +
+                '<span id="triviaPct_' + i + '" style="position:relative;z-index:1;margin-left:auto;font-size:0.68rem;color:var(--text-muted);font-weight:600;min-width:32px;text-align:right;"></span>' +
                 (icon ? '<span style="position:relative;z-index:1;">' + icon + '</span>' : '') +
             '</div>';
         } else {
-            html += '<button onclick="triviaAnswer(' + i + ')" style="padding:12px 16px;background:var(--card-bg,#1a1a2e);border:2px solid var(--border);border-radius:12px;color:var(--text);font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;transition:all 0.2s;display:flex;align-items:center;gap:10px;">' +
-                '<span style="min-width:22px;height:22px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:800;color:var(--text-faint);">' + String.fromCharCode(65 + i) + '</span>' +
+            html += '<button onclick="triviaAnswer(' + i + ')" style="padding:10px 14px;background:var(--card-bg,#1a1a2e);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.8rem;font-weight:500;cursor:pointer;font-family:inherit;text-align:left;transition:all 0.2s;display:flex;align-items:center;gap:8px;">' +
+                '<span style="min-width:18px;height:18px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.58rem;font-weight:600;color:var(--text-faint);">' + String.fromCharCode(65 + i) + '</span>' +
                 optText +
             '</button>';
         }
@@ -4236,7 +4231,7 @@ function _renderFlexTab(body) {
         '.flex-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;transition:0.2s;position:relative;overflow:hidden;}' +
         '.flex-card.done{border-color:#22c55e;background:rgba(34,197,94,0.07);}' +
         '.flex-card.done::after{content:"✅";position:absolute;top:10px;right:12px;font-size:1.3rem;}' +
-        '.flex-card-name{font-size:0.95rem;font-weight:800;color:var(--heading);margin-bottom:2px;}' +
+        '.flex-card-name{font-size:0.9rem;font-weight:600;color:var(--heading);margin-bottom:2px;}' +
         '.flex-card-desc{font-size:0.75rem;color:var(--text-muted);margin-bottom:10px;}' +
         '.flex-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 18px;border-radius:20px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:inherit;border:1px solid var(--accent);background:var(--accent-bg);color:var(--accent);transition:0.2s;user-select:none;-webkit-user-select:none;touch-action:manipulation;}' +
         '.flex-btn:active{transform:scale(0.96);}' +
@@ -4245,7 +4240,7 @@ function _renderFlexTab(body) {
         '.flex-counter{font-size:0.68rem;color:var(--text-faint);margin-top:6px;}' +
         '@keyframes flexPop{0%{transform:scale(1)}40%{transform:scale(1.18)}70%{transform:scale(0.94)}100%{transform:scale(1)}}' +
         '@keyframes flexShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}' +
-        '.flex-seq-key{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:2px solid var(--border);border-radius:8px;font-size:0.9rem;font-weight:800;font-family:monospace;cursor:pointer;transition:0.1s;background:var(--card-bg);color:var(--text);user-select:none;touch-action:manipulation;}' +
+        '.flex-seq-key{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid var(--border);border-radius:7px;font-size:0.82rem;font-weight:600;font-family:monospace;cursor:pointer;transition:0.1s;background:var(--card-bg);color:var(--text);user-select:none;touch-action:manipulation;}' +
         '.flex-seq-key.hit{background:var(--accent);border-color:var(--accent);color:#fff;transform:scale(1.15);}' +
         '.flex-drag-zone{width:100%;height:44px;border:2px dashed var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--text-muted);position:relative;overflow:hidden;user-select:none;cursor:grab;touch-action:none;}' +
         '.flex-drag-thumb{position:absolute;left:8px;width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:1.1rem;cursor:grab;transition:none;box-shadow:0 2px 8px rgba(247,147,26,0.4);}' +
@@ -4256,8 +4251,8 @@ function _renderFlexTab(body) {
 
     // Header
     html += '<div style="text-align:center;margin-bottom:16px;">' +
-        '<div style="font-size:1.8rem;margin-bottom:4px;">💪</div>' +
-        '<div style="font-size:1.1rem;font-weight:900;color:var(--heading);">Daily Flex</div>' +
+        '<div style="font-size:1.6rem;margin-bottom:4px;">💪</div>' +
+        '<div style="font-size:1rem;font-weight:700;color:var(--heading);">Daily Flex</div>' +
         '<div style="font-size:0.8rem;color:var(--text-muted);margin-top:2px;">Healthy Bitcoiner habits. 5 XP each. Resets daily.</div>' +
         '<div style="margin-top:8px;background:var(--bg-side);border:1px solid var(--border);border-radius:10px;height:8px;overflow:hidden;">' +
         '<div style="background:linear-gradient(90deg,#f7931a,#22c55e);height:100%;width:' + Math.round(doneCount/FLEX_ACTIONS.length*100) + '%;border-radius:10px;transition:width 0.4s;"></div></div>' +
@@ -4427,11 +4422,11 @@ function _renderFlexInteraction(action) {
         displayKeys.sort(function(){ kSeed = (kSeed * 1664525 + 1013904223)|0; return (kSeed & 1) ? 1 : -1; });
         return '<div id="seq-wrap-' + action.id + '" data-id="' + action.id + '" data-seq="' + seq.join(',') + '" data-progress="0">' +
             '<div style="margin-bottom:8px;">' +
-            '<div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-faint);margin-bottom:4px;">Today&#39;s code</div>' +
+            '<div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:0.6px;color:var(--text-faint);margin-bottom:4px;font-weight:500;">Today&#39;s code</div>' +
             '<div style="display:inline-flex;gap:4px;">' +
-            seq.map(function(k){ return '<span style="display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:28px;background:rgba(247,147,26,0.15);border:1px solid var(--accent);border-radius:6px;font-family:monospace;font-size:0.95rem;font-weight:900;color:var(--accent);padding:0 4px;">' + k + '</span>'; }).join('') +
+            seq.map(function(k){ return '<span style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:24px;background:rgba(247,147,26,0.1);border:1px solid var(--accent);border-radius:5px;font-family:monospace;font-size:0.82rem;font-weight:600;color:var(--accent);padding:0 3px;">' + k + '</span>'; }).join('') +
             '</div></div>' +
-            '<div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:6px;">Enter it below: <span id="seq-display-' + action.id + '" style="font-family:monospace;color:var(--accent);letter-spacing:3px;">' + seq.map(function(){ return '\u00b7'; }).join(' ') + '</span></div>' +
+            '<div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:6px;">Enter it below: <span id="seq-display-' + action.id + '" style="font-family:monospace;color:var(--accent);letter-spacing:3px;">' + seq.map(function(){ return '\u00b7'; }).join(' ') + '</span></div>' +
             '<div style="display:flex;flex-wrap:wrap;gap:6px;">' +
             displayKeys.map(function(k) {
                 return '<div class="flex-seq-key" data-id="' + action.id + '" data-key="' + k + '" onclick="_flexSeqTap(this)">' + k + '</div>';
