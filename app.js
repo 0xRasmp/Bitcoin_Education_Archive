@@ -175,10 +175,10 @@
         let favs = getFavs();
         if (favs.includes(id)) {
             favs = favs.filter(f => f !== id);
-            if (btn) btn.innerHTML = '☆ Save';
+            if (btn) btn.innerHTML = '<i class="fa-regular fa-star"></i> Save';
         } else {
             favs.push(id);
-            if (btn) btn.innerHTML = '⭐ Saved';
+            if (btn) btn.innerHTML = '<i class="fa-solid fa-star"></i> Saved';
             // Track in session for daily progress
             try { var _t = new Date().toISOString().split('T')[0]; localStorage.setItem('btc_fav_added_' + _t, 'true'); } catch(e) {}
         }
@@ -297,9 +297,9 @@
                     }
                     if (m.imgs) m.imgs.forEach(img => {
                         if (m.link) {
-                            html += '<a href="' + m.link + '" target="_blank" style="display:block;"><img class="msg-img" src="' + img + '" loading="lazy" decoding="async" title="Click to open source"></a>';
+                            html += '<a href="' + m.link + '" target="_blank" style="display:block;"><img class="msg-img" src="' + img + '" loading="lazy" decoding="async" title="Click to open source" onerror="this.parentElement.style.display=\'none\'"></a>';
                         } else {
-                            html += '<img class="msg-img" src="' + img + '" onclick="openImg(this.src)" loading="lazy" decoding="async">';
+                            html += '<img class="msg-img" src="' + img + '" onclick="openImg(this.src)" loading="lazy" decoding="async" onerror="this.style.display=\'none\'">';
                         }
                     });
                     var msgIdx = startIdx + bi;
@@ -977,7 +977,7 @@
         navigator.clipboard.writeText(url).then(() => {
             btn.classList.add('copied');
             btn.textContent = '✅ Copied!';
-            setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '🔗 Copy Link'; }, 2000);
+            setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '<i class="fa-solid fa-link"></i> Copy Link'; }, 2000);
         });
     }
 
@@ -3717,7 +3717,7 @@ window.nachoQuizAnswer = function(btn, correct) {
             nextBatch.forEach((m, bi) => {
                 html += '<div class="msg" id="msg-' + (offset + bi) + '">';
                 if (m.text) { let t = m.text; let yt=[],tw=[]; t=t.replace(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([\w-]+)(?:[&?][^\s]*)?/g,function(m,id){yt.push(id);return '%%YT'+(yt.length-1)+'%%';}); t=t.replace(/(?:https?:\/\/)?youtu\.be\/([\w-]+)(?:\?[^\s]*)?/g,function(m,id){yt.push(id);return '%%YT'+(yt.length-1)+'%%';}); t=t.replace(/(?:https?:\/\/)?(?:twitter\.com|x\.com)\/([\w]+)\/status\/(\d+)(?:[^\s]*)?/g,function(m){var u=m.startsWith('http')?m:'https://'+m;tw.push(u);return '%%TW'+(tw.length-1)+'%%';}); t=t.replace(/(https?:\/\/[^\s<>"]+)/g,'<a class="msg-link" href="$1" target="_blank">$1</a>'); t=t.replace(/%%YT(\d+)%%/g,function(m,i){return '<div class="yt-embed"><iframe src="https://www.youtube-nocookie.com/embed/'+yt[parseInt(i)]+'" frameborder="0" allowfullscreen loading="lazy" decoding="async"></iframe></div>';}); t=t.replace(/%%TW(\d+)%%/g,function(m,i){var u=tw[parseInt(i)],tid='tw_'+Math.random().toString(36).substr(2,8),mob=typeof isMobile==='function'&&isMobile(),hm=u.match(/(?:twitter\.com|x\.com)\/([\w]+)\//),dh=hm?'@'+hm[1]:u.replace(/https?:\/\/(www\.)?/,'');return '<div class="tw-preview" id="'+tid+'" onclick="loadTweetEmbed(\''+tid+'\',\''+u+'\')"><div class="tw-preview-icon">𝕏</div><div class="tw-preview-content"><div class="tw-preview-url">'+dh+'</div><div class="tw-preview-hint">'+(mob?'› Tap to display tweet':'› Click to display tweet')+'</div></div><div class="tw-preview-arrow">→</div></div>';}); t=t.replace(/🟠 (.+)/g,'<span class="orange-glow">$1</span>'); html += '<div class="msg-text">' + t + '</div>'; }
-                if (m.imgs) m.imgs.forEach(img => { if (m.link) { html += '<a href="' + m.link + '" target="_blank" style="display:block;"><img class="msg-img" src="' + img + '" loading="lazy" decoding="async" title="Click to open source"></a>'; } else { html += '<img class="msg-img" src="' + img + '" onclick="openImg(this.src)" loading="lazy" decoding="async">'; } });
+                if (m.imgs) m.imgs.forEach(img => { if (m.link) { html += '<a href="' + m.link + '" target="_blank" style="display:block;"><img class="msg-img" src="' + img + '" loading="lazy" decoding="async" title="Click to open source" onerror="this.parentElement.style.display=\'none\'"></a>'; } else { html += '<img class="msg-img" src="' + img + '" onclick="openImg(this.src)" loading="lazy" decoding="async" onerror="this.style.display=\'none\'">'; } });
                 html += '</div>';
             });
             btn.insertAdjacentHTML('beforebegin', html);
