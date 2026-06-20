@@ -5347,208 +5347,32 @@
             <div
               id="homeAppsMenu"
               class="desktop-only-apps"
-              style="
-                display: none;
-                width: 100%;
-                flex-direction: column;
-                gap: 10px;
-                padding: 15px;
-                background: rgba(255, 255, 255, 0.03);
-                border: 1px solid var(--border);
-                border-radius: 16px;
-                animation: nachoPop 0.2s ease-out;
-              "
+              style="display:none;width:100%;flex-direction:column;gap:2px;padding:6px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;"
             >
-              <!-- Apps grid -->
-              <div
-                style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px"
-              >
-                <button
-                  onclick="enterNachoMode()"
-                  title="Chat with our AI Bitcoin tutor"
-                  data-tooltip="Chat with our AI Bitcoin tutor"
-                  style="
-                    padding: 12px 10px;
-                    background: var(--card-bg);
-                    border: 1px solid var(--border);
-                    border-radius: 10px;
-                    color: var(--text);
-                    font-size: 0.8rem;
-                    font-weight: 700;
-                    cursor: pointer;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    text-align: left;
-                    gap: 4px;
-                  "
-                >
-                  🦌 Nacho Mode
-                </button>
-                <button
-                  onclick="
-                    if (typeof enterProofOfPlay === 'function')
-                      enterProofOfPlay();
-                  "
-                  title="Bitcoin gaming hub — Arcade + PVP"
-                  data-tooltip="Bitcoin gaming hub — Arcade + PVP"
-                  style="
-                    padding: 12px 10px;
-                    background: var(--card-bg);
-                    border: 1px solid var(--border);
-                    border-radius: 10px;
-                    color: var(--text);
-                    font-size: 0.8rem;
-                    font-weight: 700;
-                    cursor: pointer;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    text-align: left;
-                    gap: 4px;
-                  "
-                >
-                  🕹️ Proof of Play
-                </button>
-                <button
-                  onclick="go('forum')"
-                  title="Community discussion board for Bitcoin topics"
-                  data-tooltip="Community discussion board for Bitcoin topics"
-                  data-tier="explorer"
-                  data-unlock-name="🗣️ Pleb Talk"
-                  style="
-                    padding: 12px 10px;
-                    background: var(--card-bg);
-                    border: 1px solid var(--border);
-                    border-radius: 10px;
-                    color: var(--text);
-                    font-size: 0.8rem;
-                    font-weight: 700;
-                    cursor: pointer;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    text-align: left;
-                    gap: 4px;
-                  "
-                >
-                  🗣️ Pleb Talk
-                </button>
-                <button
-                  onclick="go('marketplace')"
-                  title="Buy and sell with Lightning sats"
-                  data-tooltip="Buy and sell with Lightning sats"
-                  data-tier="full"
-                  data-unlock-name="⚡ Lightning Mart"
-                  style="
-                    padding: 12px 10px;
-                    background: var(--card-bg);
-                    border: 1px solid var(--border);
-                    border-radius: 10px;
-                    color: var(--text);
-                    font-size: 0.8rem;
-                    font-weight: 700;
-                    cursor: pointer;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    text-align: left;
-                    gap: 4px;
-                  "
-                >
-                  ⚡ Lightning Mart
-                </button>
-                <button
-                  onclick="go('irl-sync')"
-                  title="Find or host local Bitcoin meetups"
-                  data-tooltip="Find or host local Bitcoin meetups"
-                  data-tier="community"
-                  data-unlock-name="🤝 IRL Sync"
-                  style="
-                    padding: 12px 10px;
-                    background: var(--card-bg);
-                    border: 1px solid var(--border);
-                    border-radius: 10px;
-                    color: var(--text);
-                    font-size: 0.8rem;
-                    font-weight: 700;
-                    cursor: pointer;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    text-align: left;
-                    gap: 4px;
-                  "
-                >
-                  🤝 IRL Sync
-                </button>
-                <button
-                  onclick="go('bitcoin-beats')"
-                  title="Community music player"
-                  data-tooltip="Community music player"
-                  style="
-                    padding: 12px 10px;
-                    background: var(--card-bg);
-                    border: 1px solid var(--border);
-                    border-radius: 10px;
-                    color: var(--text);
-                    font-size: 0.8rem;
-                    font-weight: 700;
-                    cursor: pointer;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    text-align: left;
-                    gap: 4px;
-                  "
-                >
-                  🎵 Bitcoin Beats
-                </button>
-                <button
-                  onclick="go('timechain-tv')"
-                  title="Live Bitcoin television"
-                  data-tooltip="21 channels of Bitcoin video content"
-                  style="
-                    padding: 12px 10px;
-                    background: var(--card-bg);
-                    border: 1px solid var(--border);
-                    border-radius: 10px;
-                    color: var(--text);
-                    font-size: 0.8rem;
-                    font-weight: 700;
-                    cursor: pointer;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    text-align: left;
-                    gap: 4px;
-                  "
-                >
-                  📺 Timechain TV
-                </button>
-                <button
-                  onclick="showProofOfWalk()"
-                  title="Earn XP for steps via Strava"
-                  data-tooltip="Earn XP by walking — connect Strava"
-                  style="
-                    padding: 12px 10px;
-                    background: var(--card-bg);
-                    border: 1px solid var(--border);
-                    border-radius: 10px;
-                    color: var(--text);
-                    font-size: 0.8rem;
-                    font-weight: 700;
-                    cursor: pointer;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    text-align: left;
-                    gap: 4px;
-                  "
-                >
-                  👟 Proof of Walk
-                </button>
-              </div>
+              <button onclick="enterNachoMode()" title="Chat with our AI Bitcoin tutor" style="padding:9px 12px;background:none;border:none;border-radius:8px;color:var(--text);font-size:0.83rem;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;width:100%;text-align:left;transition:background 0.15s;" onmouseover="this.style.background='var(--secondary)'" onmouseout="this.style.background='none'">
+                <i class="fa-solid fa-comment" style="color:var(--accent);width:14px;font-size:0.8rem;"></i> Nacho Mode
+              </button>
+              <button onclick="if(typeof enterProofOfPlay==='function')enterProofOfPlay()" title="Bitcoin gaming hub — Arcade + PVP" style="padding:9px 12px;background:none;border:none;border-radius:8px;color:var(--text);font-size:0.83rem;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;width:100%;text-align:left;transition:background 0.15s;" onmouseover="this.style.background='var(--secondary)'" onmouseout="this.style.background='none'">
+                <i class="fa-solid fa-gamepad" style="color:var(--accent);width:14px;font-size:0.8rem;"></i> Proof of Play
+              </button>
+              <button onclick="go('forum')" title="Community discussion board" data-tier="explorer" data-unlock-name="Pleb Talk" style="padding:9px 12px;background:none;border:none;border-radius:8px;color:var(--text);font-size:0.83rem;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;width:100%;text-align:left;transition:background 0.15s;" onmouseover="this.style.background='var(--secondary)'" onmouseout="this.style.background='none'">
+                <i class="fa-solid fa-users" style="color:var(--accent);width:14px;font-size:0.8rem;"></i> Pleb Talk
+              </button>
+              <button onclick="go('marketplace')" title="Buy and sell with Lightning sats" data-tier="full" data-unlock-name="Lightning Mart" style="padding:9px 12px;background:none;border:none;border-radius:8px;color:var(--text);font-size:0.83rem;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;width:100%;text-align:left;transition:background 0.15s;" onmouseover="this.style.background='var(--secondary)'" onmouseout="this.style.background='none'">
+                <i class="fa-solid fa-bolt" style="color:var(--accent);width:14px;font-size:0.8rem;"></i> Lightning Mart
+              </button>
+              <button onclick="go('irl-sync')" title="Find or host local Bitcoin meetups" data-tier="community" data-unlock-name="IRL Sync" style="padding:9px 12px;background:none;border:none;border-radius:8px;color:var(--text);font-size:0.83rem;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;width:100%;text-align:left;transition:background 0.15s;" onmouseover="this.style.background='var(--secondary)'" onmouseout="this.style.background='none'">
+                <i class="fa-solid fa-handshake" style="color:var(--accent);width:14px;font-size:0.8rem;"></i> IRL Sync
+              </button>
+              <button onclick="go('bitcoin-beats')" title="Community music player" style="padding:9px 12px;background:none;border:none;border-radius:8px;color:var(--text);font-size:0.83rem;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;width:100%;text-align:left;transition:background 0.15s;" onmouseover="this.style.background='var(--secondary)'" onmouseout="this.style.background='none'">
+                <i class="fa-solid fa-music" style="color:var(--accent);width:14px;font-size:0.8rem;"></i> Bitcoin Beats
+              </button>
+              <button onclick="go('timechain-tv')" title="Live Bitcoin television" style="padding:9px 12px;background:none;border:none;border-radius:8px;color:var(--text);font-size:0.83rem;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;width:100%;text-align:left;transition:background 0.15s;" onmouseover="this.style.background='var(--secondary)'" onmouseout="this.style.background='none'">
+                <i class="fa-solid fa-tv" style="color:var(--accent);width:14px;font-size:0.8rem;"></i> Timechain TV
+              </button>
+              <button onclick="showProofOfWalk()" title="Earn XP by walking — connect Strava" style="padding:9px 12px;background:none;border:none;border-radius:8px;color:var(--text);font-size:0.83rem;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;width:100%;text-align:left;transition:background 0.15s;" onmouseover="this.style.background='var(--secondary)'" onmouseout="this.style.background='none'">
+                <i class="fa-solid fa-person-walking" style="color:var(--accent);width:14px;font-size:0.8rem;"></i> Proof of Walk
+              </button>
             </div>
 
             <!-- Support moved to bottom -->
