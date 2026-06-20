@@ -2267,6 +2267,22 @@
           padding-bottom: 0;
           z-index: 200100;
         }
+        @media (max-width: 900px) {
+          aside.open ~ .mobile-bar,
+          body:has(aside.open) .mobile-bar {
+            display: none !important;
+          }
+          #userdisplaycontainer {
+            display: none !important;
+          }
+          aside.open {
+            top: 0 !important;
+            padding-top: 0 !important;
+          }
+          body:has(aside.open) main {
+            padding-top: 0 !important;
+          }
+        }
         aside.open > * {
           opacity: 1 !important;
           pointer-events: auto !important;
