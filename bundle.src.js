@@ -29783,12 +29783,12 @@ window._startHalvingTicker = function() {
                 if (startIdx === 0) {
                     const meta = typeof CHANNELS !== 'undefined' ? CHANNELS[id] : null;
                     if (meta && meta.desc) {
-                        html += '<div class="ai-summary-box" style="margin:20px 0;padding:20px;background:var(--accent-bg);border:1px dashed var(--accent);border-radius:16px;">' +
-                            '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">' +
-                                '<span style="font-size:1.5rem;">🦌</span>' +
-                                '<div style="font-size:0.7rem;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:1px;">Nacho\'s Summary</div>' +
+                        html += '<div class="ai-summary-box" style="margin:16px 0 24px;padding:18px 20px;background:linear-gradient(135deg,rgba(247,147,26,0.08),rgba(247,147,26,0.04));border:1px solid rgba(247,147,26,0.25);border-left:3px solid var(--accent);border-radius:14px;box-shadow:0 2px 12px rgba(247,147,26,0.07);">' +
+                            '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">' +
+                                '<div style="width:28px;height:28px;border-radius:8px;background:var(--accent-bg);border:1px solid rgba(247,147,26,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-deer" style="color:var(--accent);font-size:0.85rem;"></i></div>' +
+                                '<div style="font-size:0.62rem;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:1.4px;">Nacho\'s Summary</div>' +
                             '</div>' +
-                            '<div style="color:var(--text);font-size:0.95rem;line-height:1.6;font-weight:500;">' + meta.desc + '</div>' +
+                            '<div style="color:var(--text);font-size:0.92rem;line-height:1.65;font-weight:400;letter-spacing:0.1px;">' + meta.desc + '</div>' +
                         '</div>';
                     }
                 }
@@ -33154,18 +33154,18 @@ window.nachoQuizAnswer = function(btn, correct) {
         const shareUrl = 'https://bitcoineducation.quest/#' + id;
         const shareText = meta.title + ' — Bitcoin Education Archive';
         document.getElementById('hero').innerHTML =
-            '<div class="channel-logos" style="display:flex;align-items:center;gap:12px;">' +
+            '<div class="channel-logos" style="display:flex;align-items:center;gap:10px;padding-bottom:4px;">' +
                 '<button onclick="history.back()" style="background:none;border:none;color:var(--text-muted);font-size:1.4rem;cursor:pointer;padding:4px 8px;touch-action:manipulation;display:none;" class="mobile-back-btn" title="Back">←</button>' +
-                '<img src="images/btc-grad-logo-sm.jpg" alt="Home" class="channel-logo-img" onclick="goHome()" style="cursor:pointer;" title="Home — Long-press for Nacho Mode 🦌">' +
-                '<span class="donate-circle" onclick="showDonateModal()"><svg viewBox="0 0 64 64" width="50" height="50" style="cursor:pointer;" title="Donate"><circle cx="32" cy="32" r="30" fill="#f7931a"/><polygon points="36,10 22,38 30,38 28,54 42,26 34,26" fill="#fff"/></svg></span>' +
+                '<img src="images/btc-grad-logo-sm.jpg" alt="Home" class="channel-logo-img" onclick="goHome()" style="cursor:pointer;width:36px;height:36px;" title="Home">' +
+                '<button onclick="goHome()" style="background:none;border:none;color:var(--text-faint);font-size:0.72rem;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;cursor:pointer;font-family:inherit;padding:0;display:flex;align-items:center;gap:4px;"><i class="fa-solid fa-house" style="font-size:0.65rem;"></i> Home</button>' +
             '</div>' +
             '<div class="cat">' + meta.cat + '</div>' +
             '<h1>' + meta.title + '</h1>' +
             '<div class="share-bar">' +
-                '<a class="share-btn" href="https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(shareUrl) + '" target="_blank">𝕏 Share</a>' +
-                '<button class="share-btn" onclick="shareNostr(\''+ shareText.replace(/[\\'"]/g, "") + '\', \''+ shareUrl + '\')">🟣 Nostr</button>' +
-                '<button class="share-btn" onclick="copyLink(\''+ shareUrl + '\', this)">🔗 Copy Link</button>' +
-                '<button class="share-btn" id="favBtn" onclick="toggleFav(\''+ id + '\', this)">' + (getFavs().includes(id) ? '⭐ Saved' : '☆ Save') + '</button>' +
+                '<a class="share-btn" href="https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(shareUrl) + '" target="_blank"><i class="fa-brands fa-x-twitter"></i> Share</a>' +
+                '<button class="share-btn" onclick="shareNostr(\''+ shareText.replace(/[\\'"]/g, "") + '\', \''+ shareUrl + '\')"><i class="fa-solid fa-circle-nodes"></i> Nostr</button>' +
+                '<button class="share-btn" onclick="copyLink(\''+ shareUrl + '\', this)"><i class="fa-solid fa-link"></i> Copy Link</button>' +
+                '<button class="share-btn" id="favBtn" onclick="toggleFav(\''+ id + '\', this)">' + (getFavs().includes(id) ? '<i class="fa-solid fa-star"></i> Saved' : '<i class="fa-regular fa-star"></i> Save') + '</button>' +
             '</div>' +
             (isGallery ? '<button class="gallery-toggle" id="galleryBtn" style="display:inline-block;" onclick="toggleGallery(\''+ id + '\')">🖼️ Gallery View</button>' : '');
         document.getElementById('hero').classList.remove('fade-in');
