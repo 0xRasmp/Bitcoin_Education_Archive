@@ -616,14 +616,14 @@
               '<div style="display:flex;gap:10px;margin-bottom:20px;text-align:center;">';
             cards.forEach(function (c) {
               row +=
-                "<div style=\"flex:1;padding:14px 8px;background:none;border:1px solid var(--border);border-radius:12px;color:var(--text-muted);transition:border-color 0.18s,color 0.18s;\" onmouseover=\"this.style.borderColor='var(--accent)';this.style.color='var(--accent)'\" onmouseout=\"this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'\">" +
+                "<div style=\"flex:1;padding:14px 8px;background:none;border:1px solid #1e293b;border-radius:12px;color:#94a3b8;transition:border-color 0.18s,color 0.18s;\" onmouseover=\"this.style.borderColor='var(--accent)';this.style.color='var(--accent)'\" onmouseout=\"this.style.borderColor='#1e293b';this.style.color='#94a3b8'\">" +
                 '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
                 c.svg +
                 "</svg>" +
                 '<div style="font-size:0.7rem;font-weight:800;margin-top:6px;letter-spacing:0.5px;">' +
                 c.label +
                 "</div>" +
-                '<div style="color:var(--text-faint);font-size:0.65rem;margin-top:2px;">' +
+                '<div style="color:#475569;font-size:0.65rem;margin-top:2px;">' +
                 c.sub +
                 "</div>" +
                 "</div>";
@@ -631,8 +631,8 @@
             return row + "</div>";
           })() +
           // Earn Real Bitcoin — quiet bordered row, accent as 2px left border only
-          '<div style="background:var(--card-bg);border:1px solid var(--border);border-left:2px solid var(--accent);border-radius:12px;padding:14px 16px;margin-bottom:20px;">' +
-          '<div style="color:var(--heading);font-size:0.85rem;font-weight:800;">Earn Real Bitcoin</div>' +
+          '<div style="background:rgba(255,255,255,0.03);border:1px solid #1e293b;border-left:2px solid var(--accent);border-radius:12px;padding:14px 16px;margin-bottom:20px;">' +
+          '<div style="color:#fff;font-size:0.85rem;font-weight:800;">Earn Real Bitcoin</div>' +
           '<div style="color:#94a3b8;font-size:0.72rem;line-height:1.5;margin-top:2px;">Your XP converts to real sats. Read, learn, and claim Bitcoin directly to your Lightning wallet. 1,000 XP = 100 sats.</div>' +
           "</div>" +
           '<div style="font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:1.5px;font-weight:800;margin-bottom:10px;">How deep down the rabbit hole are you?</div>';
@@ -663,9 +663,9 @@
           html +=
             "<button onclick=\"window._obSelectLevel('" +
             lv.value +
-            '\')" style="display:flex;align-items:center;gap:14px;padding:15px 10px;background:none;border:none;border-top:1px solid var(--border);' +
+            '\')" style="display:flex;align-items:center;gap:14px;padding:15px 10px;background:none;border:none;border-top:1px solid #1e293b;' +
             (idx === levels.length - 1
-              ? "border-bottom:1px solid var(--border);"
+              ? "border-bottom:1px solid #1e293b;"
               : "") +
             "border-left:2px solid " +
             (sel ? "var(--accent)" : "transparent") +
@@ -673,7 +673,7 @@
             (sel ? "var(--accent)" : "#e2e8f0") +
             ';font-family:inherit;transition:color 0.18s,border-color 0.18s;">' +
             '<span style="flex-shrink:0;display:flex;color:' +
-            (sel ? "var(--accent)" : "var(--text-muted)") +
+            (sel ? "var(--accent)" : "#94a3b8") +
             ';"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">' +
             lv.icon +
             "</svg></span>" +

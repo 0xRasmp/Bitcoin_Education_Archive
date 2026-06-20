@@ -508,7 +508,7 @@ window.renderProgressRings = function() {
                 '<circle cx="36" cy="36" r="' + r + '" fill="none" stroke="' + color + '" stroke-width="5" stroke-linecap="round" stroke-dasharray="' + c + '" stroke-dashoffset="' + offset + '" transform="rotate(-90 36 36)" style="transition:stroke-dashoffset 1s;"/>' +
                 '<text x="36" y="40" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">' + value + '</text>' +
             '</svg>' +
-            '<div style="color:var(--text-faint);font-size:0.65rem;margin-top:2px;">' + label + '</div></div>';
+            '<div style="color:#475569;font-size:0.65rem;margin-top:2px;">' + label + '</div></div>';
     }
 
     el.innerHTML = '<div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;">' +
