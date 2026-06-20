@@ -5418,6 +5418,7 @@ document.addEventListener("click", function (e) {
 
 function showSettingsPage(tab) {
   try {
+    var _prevSettingsTab = settingsTab;
     settingsTab = tab || "account";
     const modal = document.getElementById("usernameModal");
     const box = modal.querySelector(".username-box");
@@ -7976,8 +7977,10 @@ function showSettingsPage(tab) {
 
     html +=
       '<span class="skip" onclick="hideUsernamePrompt()" style="color:var(--text-faint);font-size:0.85rem;margin-top:12px;cursor:pointer;display:block;text-align:center;">Close</span>';
+    var _wasModalOpen = modal.classList.contains("open");
     box.innerHTML = html;
     modal.classList.add("open");
+    if (!_wasModalOpen || _prevSettingsTab !== settingsTab) modal.scrollTop = 0;
 
     // Load sats history if on sats tab
     if (settingsTab === "sats" && typeof loadSatsHistory === "function") {

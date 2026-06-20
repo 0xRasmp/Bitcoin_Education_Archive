@@ -127,17 +127,17 @@ function patchSearchInputs() {
 
 setTimeout(patchSearchInputs, 1000);
 
-// ─── [F8] System Theme Auto-Detection ───────────────────
+// ─── [F8] Default Theme: Dark (unless user saved 'light') ──
 (function() {
     var savedTheme = localStorage.getItem('theme');
-    if (!savedTheme && window.matchMedia) {
-        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        // Site defaults to dark, so only change if user prefers light
-        if (!prefersDark) {
-            document.body.setAttribute('data-theme', 'light');
-            var icon = document.getElementById('themeBtn');
-            if (icon) icon.textContent = '☀️';
-        }
+    if (savedTheme === 'light') {
+        document.body.setAttribute('data-theme', 'light');
+        var icon = document.getElementById('themeBtn');
+        if (icon) icon.textContent = '☀️';
+    } else {
+        // No saved preference, or saved 'dark' — default/restore to dark.
+        // This also fixes saved 'dark' not persisting across reloads.
+        document.body.setAttribute('data-theme', 'dark');
     }
 })();
 
