@@ -116,7 +116,7 @@ function initTicker() {
         @media(max-width:900px) { 
             body.ticker-visible .mobile-bar { top: 32px !important; }
             body.ticker-visible main { padding-top: 130px !important; }
-            body.ticker-visible aside { top: 130px !important; z-index: 10006; }
+            body.ticker-visible aside { top: 130px !important; z-index: 10006; } @media (max-width: 900px) { body.ticker-visible aside.open { top: 0 !important; } }
             body.ticker-visible #nachoModeScreen { height: calc(100vh - 32px) !important; margin-top: 32px; }
             #btcTicker { font-size: 0.65rem; height: 32px; }
             body.ticker-visible .progress-bar { top: 118px !important; }

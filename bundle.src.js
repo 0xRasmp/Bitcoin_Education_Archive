@@ -26690,11 +26690,13 @@ window.awardOrangeTickets = function(amount, reason) {
 
 // setFloatingElementsVisible — show/hide floating buttons when sidebar opens
 window.setFloatingElementsVisible = function(visible) {
-    var ids = ['floatingRandomBtn','lbFloatBtn','mobileSearchBtn','backToTop','scrollToBottom','chatOverlayBtn','aiToolsBtn','dashboardFloatBtn'];
+    var ids = ['floatingRandomBtn','lbFloatBtn','mobileSearchBtn','backToTop','scrollToBottom','chatOverlayBtn','aiToolsBtn','dashboardFloatBtn','btcTicker','guestPointsBanner'];
     ids.forEach(function(id) {
         var el = document.getElementById(id);
         if (el) el.style.display = visible ? '' : 'none';
     });
+    var mbar = document.querySelector('.mobile-bar');
+    if (mbar) mbar.style.display = visible ? 'flex' : 'none';
 };
 
 // ========== CELEBRATION SYSTEM ==========
