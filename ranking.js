@@ -3686,17 +3686,12 @@ function updateUserDisplay(lv) {
     };
 
     el.innerHTML =
-      '<button class="ud-dismiss" onclick="event.stopPropagation();minimizeSignUpBanner();" title="Dismiss">✕</button>' +
-      '<div class="ud-top">' +
-        '<span class="ud-label">Guest</span>' +
-        '<span class="ud-rank">' + lv.name + '</span>' +
-      '</div>' +
-      '<div class="ud-xp">' + pts.toLocaleString() + '<span>XP</span></div>' +
-      (lv.next ? '<div style="height:3px;background:rgba(255,255,255,0.07);border-radius:10px;margin:4px 12px 0;overflow:hidden;"><div style="height:100%;width:' + Math.min(100,Math.round(((pts-lv.min)/(lv.next.min-lv.min))*100)) + '%;background:linear-gradient(90deg,#f7931a,#ffb347);border-radius:10px;"></div></div>' : '') +
-      liveHtml +
-      '<div class="ud-cta">' +
-        '<span class="ud-cta-text">Sign in to save your progress &amp; earn sats</span>' +
-        '<button class="ud-cta-btn" onclick="event.stopPropagation();showUsernamePrompt();">Sign Up</button>' +
+      '<div style="display:flex;align-items:center;gap:8px;padding:6px 10px;">' +
+        '<span style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.3px;">' + lv.name + '</span>' +
+        '<span style="font-size:0.82rem;font-weight:800;color:var(--accent);">' + pts.toLocaleString() + ' XP</span>' +
+        '<span style="flex:1;"></span>' +
+        '<button class="ud-cta-btn" onclick="event.stopPropagation();showUsernamePrompt();" style="padding:4px 10px;font-size:0.65rem;">Sign Up</button>' +
+        '<button onclick="event.stopPropagation();minimizeSignUpBanner();" style="background:none;border:none;color:var(--text-faint);font-size:0.75rem;cursor:pointer;padding:2px 4px;line-height:1;">✕</button>' +
       '</div>';
 
   // ── SIGNED-IN USER ─────────────────────────────────────────────────────────
