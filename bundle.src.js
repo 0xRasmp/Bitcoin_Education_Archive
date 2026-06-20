@@ -18407,7 +18407,7 @@ window.showQuestHub = function() {
     overlay.onclick = function(e) { if (e.target === overlay) { window._cleanupRaidBoss(); overlay.remove(); } };
 
     var modal = document.createElement('div');
-    modal.style.cssText = 'background:var(--bg-side,#141425);border:1px solid var(--border);width:100%;max-width:520px;max-height:85vh;border-radius:24px;overflow:hidden;display:flex;flex-direction:column;position:relative;';
+    modal.style.cssText = 'background:var(--bg-side,#141425);border:1px solid var(--border);width:100%;max-width:480px;max-height:82vh;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;position:relative;box-shadow:0 24px 56px rgba(0,0,0,0.5),0 8px 20px rgba(0,0,0,0.3);';
 
     // Scrollbar styling only — desktop font-size boost removed (was inflating all text)
     var qhStyle = document.createElement('style');
@@ -18420,25 +18420,25 @@ window.showQuestHub = function() {
 
     // Header
     var header = document.createElement('div');
-    header.style.cssText = 'padding:20px 24px 0;flex-shrink:0;';
+    header.style.cssText = 'padding:14px 18px 0;flex-shrink:0;';
     header.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">' +
-        '<div><h2 style="margin:0;color:var(--heading);font-size:1.05rem;font-weight:700;letter-spacing:-0.2px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-bolt" style="color:var(--accent);font-size:0.95rem;"></i> Quest Hub</h2>' +
-        '<div style="color:var(--text-muted);font-size:0.76rem;margin-top:3px;">Earn XP by testing your Bitcoin knowledge</div></div>' +
+        '<div><h2 style="margin:0;color:var(--heading);font-size:0.95rem;font-weight:700;letter-spacing:-0.2px;display:flex;align-items:center;gap:7px;"><i class="fa-solid fa-bolt" style="color:var(--accent);font-size:0.85rem;"></i> Quest Hub</h2>' +
+        '<div style="color:var(--text-muted);font-size:0.72rem;margin-top:2px;">Earn XP by testing your Bitcoin knowledge</div></div>' +
         '<button onclick="window._cleanupRaidBoss();document.getElementById(\'questHubOverlay\').remove()" style="background:none;border:none;color:var(--text-muted);font-size:1.3rem;cursor:pointer;padding:4px;display:flex;align-items:center;"><i class="fa-solid fa-xmark"></i></button></div>' +
         // Tabs
-        '<div id="questHubTabs" style="display:flex;gap:5px;margin-bottom:16px;">' +
-        '<button id="qhTabQuiz" onclick="window._questHubTab=\'quiz\';_renderQuestHubTab()" style="flex:1;padding:8px 2px;border-radius:9px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-pen-to-square"></i> Quiz</button>' +
-        '<button id="qhTabTrivia" onclick="window._questHubTab=\'trivia\';_renderQuestHubTab()" style="flex:1;padding:8px 2px;border-radius:9px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-brain"></i> Trivia</button>' +
-        '<button id="qhTabPoll" onclick="window._questHubTab=\'poll\';_renderQuestHubTab()" style="flex:1;padding:8px 2px;border-radius:9px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-square-poll-vertical"></i> Poll</button>' +
-        '<button id="qhTabFlex" onclick="window._questHubTab=\'flex\';_renderQuestHubTab()" style="flex:1;padding:8px 2px;border-radius:9px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-dumbbell"></i> Flex</button>' +
-        '<button id="qhTabRaid" onclick="window._questHubTab=\'raid\';_renderQuestHubTab()" style="flex:1;padding:8px 2px;border-radius:9px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-khanda"></i> Raid</button>' +
-        '<button id="qhTabFavor" onclick="window._questHubTab=\'favor\';_renderQuestHubTab()" style="flex:1;padding:8px 2px;border-radius:9px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-hammer"></i> Favor</button>' +
-        '<button id="qhTabCharity" onclick="window._questHubTab=\'charity\';_renderQuestHubTab()" style="flex:1;padding:8px 2px;border-radius:9px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-heart"></i> Charity</button>' +
+        '<div id="questHubTabs" style="display:flex;gap:4px;margin-bottom:12px;">' +
+        '<button id="qhTabQuiz" onclick="window._questHubTab=\'quiz\';_renderQuestHubTab()" style="flex:1;padding:6px 1px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.63rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-pen-to-square"></i> Quiz</button>' +
+        '<button id="qhTabTrivia" onclick="window._questHubTab=\'trivia\';_renderQuestHubTab()" style="flex:1;padding:6px 1px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.63rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-brain"></i> Trivia</button>' +
+        '<button id="qhTabPoll" onclick="window._questHubTab=\'poll\';_renderQuestHubTab()" style="flex:1;padding:6px 1px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.63rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-square-poll-vertical"></i> Poll</button>' +
+        '<button id="qhTabFlex" onclick="window._questHubTab=\'flex\';_renderQuestHubTab()" style="flex:1;padding:6px 1px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.63rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-dumbbell"></i> Flex</button>' +
+        '<button id="qhTabRaid" onclick="window._questHubTab=\'raid\';_renderQuestHubTab()" style="flex:1;padding:6px 1px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.63rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-khanda"></i> Raid</button>' +
+        '<button id="qhTabFavor" onclick="window._questHubTab=\'favor\';_renderQuestHubTab()" style="flex:1;padding:6px 1px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.63rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-hammer"></i> Favor</button>' +
+        '<button id="qhTabCharity" onclick="window._questHubTab=\'charity\';_renderQuestHubTab()" style="flex:1;padding:6px 1px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.63rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;"><i class="fa-solid fa-heart"></i> Charity</button>' +
                 '</div>';
 
     var body = document.createElement('div');
     body.id = 'questHubBody';
-    body.style.cssText = 'padding:0 24px 24px;overflow-y:auto;flex:1;';
+    body.style.cssText = 'padding:0 18px 20px;overflow-y:auto;flex:1;';
 
     modal.appendChild(header);
     modal.appendChild(body);
