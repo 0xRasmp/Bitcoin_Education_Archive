@@ -3690,6 +3690,7 @@ function updateUserDisplay(lv) {
         '<span class="ud-rank">' + lv.name + '</span>' +
       '</div>' +
       '<div class="ud-xp">' + pts.toLocaleString() + '<span>XP</span></div>' +
+      (lv.next ? '<div style="height:3px;background:rgba(255,255,255,0.07);border-radius:10px;margin:4px 12px 0;overflow:hidden;"><div style="height:100%;width:' + Math.min(100,Math.round(((pts-lv.min)/(lv.next.min-lv.min))*100)) + '%;background:linear-gradient(90deg,#f7931a,#ffb347);border-radius:10px;"></div></div>' : '') +
       liveHtml +
       '<div class="ud-cta">' +
         '<span class="ud-cta-text">Sign in to save your progress &amp; earn sats</span>' +
@@ -3765,6 +3766,7 @@ function updateUserDisplay(lv) {
       '<div class="ud-xp-row">' +
         '<span class="ud-xp-big">' + pts.toLocaleString() + '</span>' +
         '<span class="ud-xp-label">XP</span>' +
+        (lv.next ? '<div style="height:3px;background:rgba(255,255,255,0.07);border-radius:10px;margin-left:auto;width:60px;overflow:hidden;align-self:center;"><div style="height:100%;width:' + Math.min(100,Math.round(((pts-lv.min)/(lv.next.min-lv.min))*100)) + '%;background:linear-gradient(90deg,#f7931a,#ffb347);border-radius:10px;"></div></div>' : '') +
         streakHtml +
       '</div>' +
       liveHtml +

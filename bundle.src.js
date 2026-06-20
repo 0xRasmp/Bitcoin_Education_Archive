@@ -4740,6 +4740,7 @@ function updateUserDisplay(lv) {
         '<span class="ud-rank">' + lv.name + '</span>' +
       '</div>' +
       '<div class="ud-xp">' + pts.toLocaleString() + '<span>XP</span></div>' +
+      (lv.next ? '<div style="height:3px;background:rgba(255,255,255,0.07);border-radius:10px;margin:4px 12px 0;overflow:hidden;"><div style="height:100%;width:' + Math.min(100,Math.round(((pts-lv.min)/(lv.next.min-lv.min))*100)) + '%;background:linear-gradient(90deg,#f7931a,#ffb347);border-radius:10px;"></div></div>' : '') +
       liveHtml +
       '<div class="ud-cta">' +
         '<span class="ud-cta-text">Sign in to save your progress &amp; earn sats</span>' +
@@ -4815,6 +4816,7 @@ function updateUserDisplay(lv) {
       '<div class="ud-xp-row">' +
         '<span class="ud-xp-big">' + pts.toLocaleString() + '</span>' +
         '<span class="ud-xp-label">XP</span>' +
+        (lv.next ? '<div style="height:3px;background:rgba(255,255,255,0.07);border-radius:10px;margin-left:auto;width:60px;overflow:hidden;align-self:center;"><div style="height:100%;width:' + Math.min(100,Math.round(((pts-lv.min)/(lv.next.min-lv.min))*100)) + '%;background:linear-gradient(90deg,#f7931a,#ffb347);border-radius:10px;"></div></div>' : '') +
         streakHtml +
       '</div>' +
       liveHtml +
@@ -18047,7 +18049,7 @@ function _renderFavorTab(body) {
 
     var html = '<div style="text-align:center;padding:16px 0;">' +
         '<div style="font-size:2.2rem;margin-bottom:8px;color:var(--accent);"><i class="fa-solid fa-hammer"></i></div>' +
-        '<div style="font-size:1.1rem;font-weight:800;color:var(--heading);margin-bottom:4px;">Satoshi\'s Favor</div>' +
+        '<div style="font-size:0.88rem;font-weight:700;color:var(--heading);margin-bottom:3px;font-family:var(--display-font);">Satoshi\'s Favor</div>' +
         '<div style="color:var(--text-muted);font-size:0.82rem;margin-bottom:16px;">Community mining when the community earns 21 points.<br><span style="color:#f7931a;font-weight:600;">Chance to win 21,000 sats <i class="fa-solid fa-bolt"></i></span></div>';
 
 
@@ -18061,14 +18063,14 @@ function _renderFavorTab(body) {
         html += '<div style="background:linear-gradient(135deg,rgba(247,147,26,0.15),rgba(247,147,26,0.05));border:2px solid var(--accent);border-radius:12px;padding:16px;margin-bottom:16px;animation:favorPulse 2s ease-in-out infinite;">' +
             '<div style="font-size:0.95rem;font-weight:800;color:var(--accent);margin-bottom:10px;letter-spacing:0.3px;"><i class="fa-solid fa-circle-check" style="margin-right:6px;"></i>SATOSHI\'S FAVOR IS ACTIVE!</div>' +
             '<div id="favorTabTimer" style="display:flex;align-items:baseline;justify-content:center;gap:8px;">' +
-                '<span style="display:flex;align-items:baseline;gap:4px;"><span style="font-size:2rem;font-weight:900;color:#fff;font-family:monospace;">' + remainingMin + '</span><span style="font-size:0.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">min</span></span>' +
-                '<span style="display:flex;align-items:baseline;gap:4px;"><span style="font-size:2rem;font-weight:900;color:#fff;font-family:monospace;">' + remainingSec + '</span><span style="font-size:0.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">sec</span></span>' +
+                '<span style="display:flex;align-items:baseline;gap:3px;"><span style="font-size:1.25rem;font-weight:700;color:var(--heading);font-family:var(--display-font);">' + remainingMin + '</span><span style="font-size:0.58rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.4px;">min</span></span>' +
+                '<span style="display:flex;align-items:baseline;gap:3px;"><span style="font-size:1.25rem;font-weight:700;color:var(--heading);font-family:var(--display-font);">' + remainingSec + '</span><span style="font-size:0.58rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.4px;">sec</span></span>' +
             '</div>' +
             '<div style="color:var(--text-muted);font-size:0.8rem;margin-top:10px;">Mine below 1,000 to win 21,000 sats!</div>' +
             '</div>' +
             '<style>@keyframes favorPulse{0%,100%{box-shadow:0 0 0 0 rgba(247,147,26,0.4)}50%{box-shadow:0 0 0 10px rgba(247,147,26,0)}}</style>';
 
-        html += '<button onclick="window.closeQuestHubForFavor && window.closeQuestHubForFavor();window.openSatoshiFavorMiner && window.openSatoshiFavorMiner()" style="padding:14px 32px;background:linear-gradient(135deg,var(--accent),#e8720c);border:none;border-radius:14px;color:#fff;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;margin-bottom:12px;"><i class="fa-solid fa-hammer" style="margin-right:8px;"></i>Start Mining</button>';
+        html += '<button onclick="window.closeQuestHubForFavor && window.closeQuestHubForFavor();window.openSatoshiFavorMiner && window.openSatoshiFavorMiner()" style="padding:8px 22px;background:linear-gradient(135deg,var(--accent),#e8720c);border:none;border-radius:9px;color:#fff;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:var(--display-font),inherit;margin-bottom:10px;letter-spacing:0.2px;"><i class="fa-solid fa-hammer" style="margin-right:6px;"></i>Start Mining</button>';
     } else {
         html += '<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">' +
             '<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;">' +
@@ -18171,8 +18173,8 @@ function _renderFavorTab(body) {
                 if (remaining <= 0) { timerEl.textContent = '00:00'; return; }
                 var mins = Math.floor(remaining / 60000);
                 var secs = Math.floor((remaining % 60000) / 1000);
-                timerEl.innerHTML = '<span style="display:flex;align-items:baseline;gap:4px;"><span style="font-size:2rem;font-weight:900;color:#fff;font-family:monospace;">' + mins + '</span><span style="font-size:0.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">min</span></span>' +
-                    '<span style="display:flex;align-items:baseline;gap:4px;"><span style="font-size:2rem;font-weight:900;color:#fff;font-family:monospace;">' + secs + '</span><span style="font-size:0.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">sec</span></span>';
+                timerEl.innerHTML = '<span style="display:flex;align-items:baseline;gap:3px;"><span style="font-size:1.25rem;font-weight:700;color:var(--heading);font-family:var(--display-font);">' + mins + '</span><span style="font-size:0.58rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.4px;">min</span></span>' +
+                    '<span style="display:flex;align-items:baseline;gap:3px;"><span style="font-size:1.25rem;font-weight:700;color:var(--heading);font-family:var(--display-font);">' + secs + '</span><span style="font-size:0.58rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.4px;">sec</span></span>';
             }, 1000);
         }
     }
