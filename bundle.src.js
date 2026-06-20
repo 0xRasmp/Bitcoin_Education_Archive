@@ -26598,9 +26598,9 @@ window.renderDailyQuote = function() {
     if (!quote) return;
 
     el.innerHTML = '<div onclick="if(typeof go===\'function\')go(\'' + (quote.channel || 'one-stop-shop') + '\')" style="padding:16px 20px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">' +
-        '<div style="font-size:0.7rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">💬 Quote of the Day</div>' +
-        '<div style="color:var(--text);font-size:0.95rem;font-style:italic;line-height:1.6;margin-bottom:8px;">"' + quote.text + '"</div>' +
-        '<div style="color:var(--accent);font-size:0.8rem;font-weight:600;">— ' + quote.author + '</div>' +
+        '<div style="display:flex;align-items:center;gap:6px;font-size:0.62rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1.2px;font-weight:800;margin-bottom:10px;"><i class="fa-solid fa-quote-left" style="font-size:0.65rem;opacity:0.7;"></i> Quote of the Day</div>' +
+        '<div style="color:var(--text);font-size:0.88rem;font-style:italic;line-height:1.7;margin-bottom:10px;font-weight:400;">\u201C' + quote.text + '\u201D</div>' +
+        '<div style="color:var(--accent);font-size:0.78rem;font-weight:700;letter-spacing:0.1px;">— ' + quote.author + '</div>' +
     '</div>';
 };
 
@@ -27101,17 +27101,17 @@ function renderDailyChallenge() {
     if (completed) {
         el.style.borderColor = '#22c55e';
         el.style.background = 'rgba(34,197,94,0.05)';
-        el.innerHTML = '<div style="display:flex;align-items:center;gap:10px;">' +
-            '<span style="font-size:1.3rem;">✅</span>' +
-            '<div><div style="color:#22c55e;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Today\'s Challenge ✔️</div>' +
-            '<div style="color:var(--text-faint);font-size:0.8rem;"><s>' + challenge.text + '</s> — Done! +100 XP 🎉</div></div></div>';
+        el.innerHTML = '<div style="display:flex;align-items:center;gap:12px;">' +
+            '<span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9px;background:rgba(34,197,94,0.12);flex-shrink:0;"><i class="fa-solid fa-circle-check" style="color:#22c55e;font-size:1rem;"></i></span>' +
+            '<div><div style="color:#22c55e;font-size:0.62rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:2px;">Today\'s Challenge</div>' +
+            '<div style="color:var(--text-faint);font-size:0.8rem;font-weight:500;"><s>' + challenge.text + '</s> — Done! +100 XP</div></div></div>';
     } else {
         el.style.borderColor = 'var(--border)';
         el.style.background = 'var(--card-bg)';
-        el.innerHTML = '<div style="display:flex;align-items:center;gap:10px;">' +
-            '<span style="font-size:1.3rem;">🎯</span>' +
-            '<div><div style="color:var(--accent);font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Today\'s Challenge</div>' +
-            '<div style="color:var(--text);font-size:0.85rem;font-weight:600;">' + challenge.text + '</div></div></div>';
+        el.innerHTML = '<div style="display:flex;align-items:center;gap:12px;">' +
+            '<span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9px;background:var(--accent-bg);flex-shrink:0;"><i class="fa-solid fa-bullseye" style="color:var(--accent);font-size:1rem;"></i></span>' +
+            '<div><div style="color:var(--accent);font-size:0.62rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:2px;">Today\'s Challenge</div>' +
+            '<div style="color:var(--text);font-size:0.84rem;font-weight:600;line-height:1.4;">' + challenge.text + '</div></div></div>';
     }
 }
 
@@ -27240,9 +27240,9 @@ function _renderRaidHomeCard(el, activeBoss, upcomingBoss, defeatedBoss) {
 
         html += '<div onclick="' + openQH + '" style="' + (activeBoss ? 'margin-top:8px;' : '') + 'background:rgba(139,92,246,0.04);border:1px solid rgba(139,92,246,0.2);border-radius:10px;padding:8px 14px;cursor:pointer;">' +
             '<div style="display:flex;align-items:center;gap:8px;">' +
-                '<span style="font-size:1rem;">\u2694\uFE0F</span>' +
-                '<div style="flex:1;"><div style="color:var(--text-muted);font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">NEXT BOSS</div>' +
-                '<div style="color:var(--text);font-size:0.8rem;font-weight:600;">' + (upcomingBoss.name || 'TBD') + ' \u2014 ' + dateStr + '</div>' +
+                '<span style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:rgba(139,92,246,0.1);flex-shrink:0;"><i class="fa-solid fa-sword" style="color:#8b5cf6;font-size:0.85rem;"></i></span>' +
+                '<div style="flex:1;"><div style="color:var(--text-muted);font-size:0.62rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:2px;">Next Boss</div>' +
+                '<div style="color:var(--text);font-size:0.82rem;font-weight:600;line-height:1.4;">' + (upcomingBoss.name || 'TBD') + ' \u2014 ' + dateStr + '</div>' +
                 '<div id="raidHomeUpcomingCountdown" style="color:#8b5cf6;font-size:0.7rem;font-weight:600;margin-top:1px;">Starts in ' + _fmtDiff(startMs2) + '</div></div>' +
                 '<span style="font-size:0.9rem;color:var(--text-faint);">\u203A</span>' +
             '</div></div>';
@@ -27257,9 +27257,9 @@ function _renderRaidHomeCard(el, activeBoss, upcomingBoss, defeatedBoss) {
             '<div style="display:flex;align-items:center;gap:10px;">' +
                 '<span style="font-size:1.5rem;">\uD83D\uDC80</span>' +
                 '<div style="flex:1;min-width:0;">' +
-                    '<div style="color:#22c55e;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;">\uD83C\uDF89 BOSS DEFEATED!</div>' +
-                    '<div style="color:var(--text);font-size:0.85rem;font-weight:700;">' + dName + ' has fallen!</div>' +
-                    '<div style="color:var(--accent);font-size:0.72rem;font-weight:600;margin-top:2px;">\uD83C\uDFC6 Orange ticket drawing this Friday!</div>' +
+                    '<div style="color:#22c55e;font-size:0.62rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:2px;display:flex;align-items:center;gap:5px;"><i class="fa-solid fa-trophy" style="font-size:0.7rem;"></i> BOSS DEFEATED!</div>' +
+                    '<div style="color:var(--text);font-size:0.84rem;font-weight:700;line-height:1.4;">' + dName + ' has fallen!</div>' +
+                    '<div style="color:var(--accent);font-size:0.72rem;font-weight:600;margin-top:3px;display:flex;align-items:center;gap:5px;"><i class="fa-solid fa-ticket" style="font-size:0.65rem;"></i> Orange ticket drawing this Friday!</div>' +
                 '</div>' +
                 '<span style="font-size:1rem;color:var(--text-muted);flex-shrink:0;">\u203A</span>' +
             '</div></div>' + html;
@@ -33764,9 +33764,9 @@ window.nachoQuizAnswer = function(btn, correct) {
         const ch = CHANNELS[dailyKey];
         if (ch) {
             const el = document.getElementById('dailyChannel');
-            el.innerHTML = '<div class="daily-label">📅 Channel of the Day</div>' +
-                '<div class="daily-title">' + ch.title + '</div>' +
-                '<div class="daily-desc">' + ch.desc + '</div>';
+            el.innerHTML = '<div style="display:flex;align-items:center;gap:6px;font-size:0.62rem;color:var(--accent);text-transform:uppercase;letter-spacing:1.2px;font-weight:800;margin-bottom:8px;"><i class="fa-solid fa-calendar-day" style="font-size:0.7rem;"></i> Channel of the Day</div>' +
+                '<div style="font-size:0.95rem;font-weight:700;color:var(--heading);margin-bottom:4px;line-height:1.3;">' + ch.title + '</div>' +
+                '<div style="font-size:0.82rem;color:var(--text-muted);line-height:1.5;">' + ch.desc + '</div>';
             el.onclick = () => go(dailyKey);
         }
     })();

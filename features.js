@@ -1055,9 +1055,9 @@ window.renderDailyQuote = function() {
     if (!quote) return;
 
     el.innerHTML = '<div onclick="if(typeof go===\'function\')go(\'' + (quote.channel || 'one-stop-shop') + '\')" style="padding:16px 20px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">' +
-        '<div style="font-size:0.7rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">💬 Quote of the Day</div>' +
-        '<div style="color:var(--text);font-size:0.95rem;font-style:italic;line-height:1.6;margin-bottom:8px;">"' + quote.text + '"</div>' +
-        '<div style="color:var(--accent);font-size:0.8rem;font-weight:600;">— ' + quote.author + '</div>' +
+        '<div style="display:flex;align-items:center;gap:6px;font-size:0.62rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1.2px;font-weight:800;margin-bottom:10px;"><i class="fa-solid fa-quote-left" style="font-size:0.65rem;opacity:0.7;"></i> Quote of the Day</div>' +
+        '<div style="color:var(--text);font-size:0.88rem;font-style:italic;line-height:1.7;margin-bottom:10px;font-weight:400;">\u201C' + quote.text + '\u201D</div>' +
+        '<div style="color:var(--accent);font-size:0.78rem;font-weight:700;letter-spacing:0.1px;">— ' + quote.author + '</div>' +
     '</div>';
 };
 

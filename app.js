@@ -4220,9 +4220,9 @@ window.nachoQuizAnswer = function(btn, correct) {
         const ch = CHANNELS[dailyKey];
         if (ch) {
             const el = document.getElementById('dailyChannel');
-            el.innerHTML = '<div class="daily-label">📅 Channel of the Day</div>' +
-                '<div class="daily-title">' + ch.title + '</div>' +
-                '<div class="daily-desc">' + ch.desc + '</div>';
+            el.innerHTML = '<div style="display:flex;align-items:center;gap:6px;font-size:0.62rem;color:var(--accent);text-transform:uppercase;letter-spacing:1.2px;font-weight:800;margin-bottom:8px;"><i class="fa-solid fa-calendar-day" style="font-size:0.7rem;"></i> Channel of the Day</div>' +
+                '<div style="font-size:0.95rem;font-weight:700;color:var(--heading);margin-bottom:4px;line-height:1.3;">' + ch.title + '</div>' +
+                '<div style="font-size:0.82rem;color:var(--text-muted);line-height:1.5;">' + ch.desc + '</div>';
             el.onclick = () => go(dailyKey);
         }
     })();
