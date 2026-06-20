@@ -464,11 +464,27 @@
         .hero-donate-btn {
           position: static;
           transform: none;
-          margin-top: 10px;
+          margin-top: 0;
+          padding: 5px 10px;
+          font-size: 0.68rem;
         }
         .hero-lockup {
-          flex-direction: column;
+          flex-direction: row;
           gap: 8px;
+          justify-content: space-between;
+          align-items: center;
+          padding: 16px 16px 0 !important;
+          margin-bottom: 8px !important;
+        }
+        .hero-mark {
+          flex-shrink: 1;
+          min-width: 0;
+        }
+        .hero-wordmark {
+          font-size: 0.75rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
       .home-logos::before {
@@ -2679,6 +2695,39 @@
         .home-page {
           padding: 30px 16px;
           min-height: auto;
+        }
+        #homeleftcol {
+          border-right: none !important;
+          padding: 0 0 120px !important;
+        }
+        #homeleftcol .hero-lockup {
+          padding: 16px 16px 0 !important;
+        }
+        #homeleftcol .home-subtitle {
+          padding: 0 16px !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+        }
+        #progressrings,
+        #continuereading,
+        #dailychallengecard,
+        #raidbosshomecard,
+        #charitydonatehome,
+        #dailychannel,
+        #quoteofday,
+        #explorationmap,
+        #dailyspinbanner,
+        #welcomebanner,
+        #questguidebanner,
+        #authbtn {
+          padding-left: 16px !important;
+          padding-right: 16px !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+        }
+        #dailychannel {
+          margin-left: 0 !important;
+          margin-right: 0 !important;
         }
         .home-title {
           font-size: 2rem;
@@ -5014,7 +5063,7 @@
           <div style="display:grid;grid-template-columns:1fr 300px;gap:0;min-height:100vh;align-items:start;">
 
             <!-- LEFT COLUMN: main feed -->
-            <div style="padding:0 0 80px;border-right:1px solid var(--border);min-width:0;overflow-x:hidden;">
+            <div style="padding:0 0 80px;border-right:1px solid var(--border);min-width:0;overflow-x:hidden;" id="homeleftcol">
 
               <!-- Hero -->
               <div class="hero-lockup" style="margin-bottom:12px;padding:28px 28px 0;">
@@ -5031,7 +5080,7 @@
                 </button>
               </div>
 
-              <p class="home-subtitle" style="text-align:left;margin-bottom:24px;font-size:0.88rem;line-height:1.65;padding:0 28px;max-width:460px;color:var(--text-dim);">A curated library of Bitcoin education — <span style="color:var(--accent);font-weight:600;">146 channels</span>, Timechain TV (<span style="color:var(--accent);font-weight:600;">24/7</span> streaming), <span style="color:var(--accent);font-weight:600;">7 mini-apps</span>, and Quests to test your knowledge.</p>
+              <p class="home-subtitle" style="text-align:left;margin-bottom:16px;font-size:0.82rem;line-height:1.55;padding:0 16px;max-width:460px;color:var(--text-dim);">A curated library of Bitcoin education — <span style="color:var(--accent);font-weight:600;">146 channels</span>, Timechain TV (<span style="color:var(--accent);font-weight:600;">24/7</span> streaming), <span style="color:var(--accent);font-weight:600;">7 mini-apps</span>, and Quests to test your knowledge.</p>
 
               <button
                 id="authBtn"
