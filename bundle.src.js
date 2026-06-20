@@ -4470,14 +4470,16 @@ function updateUserDisplay(lv) {
     el.classList.remove("user-hidden");
     el.setAttribute("data-anon", "1");
 
-    // Position under sidebar header
-    var sidebarHeader = document.querySelector(".sidebar-header");
-    if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
-      var container = document.createElement("div");
-      container.id = "userDisplayContainer";
-      container.style.cssText = "padding:6px 14px 8px;border-bottom:1px solid var(--border);";
-      sidebarHeader.parentNode.insertBefore(container, sidebarHeader.nextSibling);
-      container.appendChild(el);
+    // Position under sidebar header — desktop only
+    if (!_isMob) {
+      var sidebarHeader = document.querySelector(".sidebar-header");
+      if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
+        var container = document.createElement("div");
+        container.id = "userDisplayContainer";
+        container.style.cssText = "padding:6px 14px 8px;border-bottom:1px solid var(--border);";
+        sidebarHeader.parentNode.insertBefore(container, sidebarHeader.nextSibling);
+        container.appendChild(el);
+      }
     }
 
     // Inject card styles once
@@ -4772,14 +4774,16 @@ function updateUserDisplay(lv) {
       return;
     }
 
-    // Position under sidebar header
-    var sidebarHeader = document.querySelector(".sidebar-header");
-    if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
-      var container = document.createElement("div");
-      container.id = "userDisplayContainer";
-      container.style.cssText = "padding:6px 14px 8px;border-bottom:1px solid var(--border);";
-      sidebarHeader.parentNode.insertBefore(container, sidebarHeader.nextSibling);
-      container.appendChild(el);
+    // Position under sidebar header — desktop only
+    if (!_isMob) {
+      var sidebarHeader = document.querySelector(".sidebar-header");
+      if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
+        var container = document.createElement("div");
+        container.id = "userDisplayContainer";
+        container.style.cssText = "padding:6px 14px 8px;border-bottom:1px solid var(--border);";
+        sidebarHeader.parentNode.insertBefore(container, sidebarHeader.nextSibling);
+        container.appendChild(el);
+      }
     }
 
     el.style.cssText = "";
@@ -26896,7 +26900,8 @@ function initBottomNav() {
         '.bnav-btn:active .bnav-icon{transform:scale(1.2);}' +
         '.bnav-btn.active{color:var(--accent);}' +
         '@media(min-width:901px){#bottomNav{display:none!important;}}' +
-        '@media(max-width:900px){#bottomNav{display:block!important;visibility:visible!important;opacity:1!important;}.messages{padding-bottom:140px!important;}.home-page{padding-bottom:100px!important;}}';
+        '@media(max-width:900px){#bottomNav{display:block!important;visibility:visible!important;opacity:1!important;}.messages{padding-bottom:140px!important;}.home-page{padding-bottom:100px!important;}}' +
+'@media(max-width:900px){aside.open~* #bottomNav,aside.open+* #bottomNav,body:has(aside.open) #bottomNav{display:none!important;}}';
     document.head.appendChild(style);
     document.body.appendChild(nav);
 }
@@ -27582,6 +27587,19 @@ function initMobileUX() {
     console.log('[MobileUX] Initializing...');
     initBottomNav();
     initScrollNav();
+
+    // Hide bottom nav when sidebar is open on mobile
+    var _origToggleMenu = window.toggleMenu;
+    if (typeof _origToggleMenu === 'function') {
+        window.toggleMenu = function() {
+            _origToggleMenu.apply(this, arguments);
+            var bnav = document.getElementById('bottomNav');
+            if (bnav && window.innerWidth <= 900) {
+                var sidebar = document.getElementById('sidebar');
+                bnav.style.display = (sidebar && sidebar.classList.contains('open')) ? 'none' : '';
+            }
+        };
+    }
 
     // Wait for user data to load
     setTimeout(function() {

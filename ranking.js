@@ -3420,14 +3420,16 @@ function updateUserDisplay(lv) {
     el.classList.remove("user-hidden");
     el.setAttribute("data-anon", "1");
 
-    // Position under sidebar header
-    var sidebarHeader = document.querySelector(".sidebar-header");
-    if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
-      var container = document.createElement("div");
-      container.id = "userDisplayContainer";
-      container.style.cssText = "padding:6px 14px 8px;border-bottom:1px solid var(--border);";
-      sidebarHeader.parentNode.insertBefore(container, sidebarHeader.nextSibling);
-      container.appendChild(el);
+    // Position under sidebar header — desktop only
+    if (!_isMob) {
+      var sidebarHeader = document.querySelector(".sidebar-header");
+      if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
+        var container = document.createElement("div");
+        container.id = "userDisplayContainer";
+        container.style.cssText = "padding:6px 14px 8px;border-bottom:1px solid var(--border);";
+        sidebarHeader.parentNode.insertBefore(container, sidebarHeader.nextSibling);
+        container.appendChild(el);
+      }
     }
 
     // Inject card styles once
@@ -3722,14 +3724,16 @@ function updateUserDisplay(lv) {
       return;
     }
 
-    // Position under sidebar header
-    var sidebarHeader = document.querySelector(".sidebar-header");
-    if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
-      var container = document.createElement("div");
-      container.id = "userDisplayContainer";
-      container.style.cssText = "padding:6px 14px 8px;border-bottom:1px solid var(--border);";
-      sidebarHeader.parentNode.insertBefore(container, sidebarHeader.nextSibling);
-      container.appendChild(el);
+    // Position under sidebar header — desktop only
+    if (!_isMob) {
+      var sidebarHeader = document.querySelector(".sidebar-header");
+      if (sidebarHeader && !document.getElementById("userDisplayContainer")) {
+        var container = document.createElement("div");
+        container.id = "userDisplayContainer";
+        container.style.cssText = "padding:6px 14px 8px;border-bottom:1px solid var(--border);";
+        sidebarHeader.parentNode.insertBefore(container, sidebarHeader.nextSibling);
+        container.appendChild(el);
+      }
     }
 
     el.style.cssText = "";
