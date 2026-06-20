@@ -2777,7 +2777,7 @@
     <div class="mobile-bar">
       <div
         onclick="goHome()"
-        style="cursor: pointer; display: flex; align-items: center; gap: 10px"
+        style="cursor: pointer; display: flex; align-items: center; gap: 8px; min-width: 0; flex-shrink: 1; overflow: hidden;"
       >
         <svg viewBox="0 0 64 64" width="28" height="28" style="flex-shrink: 0">
           <circle cx="32" cy="32" r="30" fill="#f7931a" />
@@ -2811,8 +2811,8 @@
             />
           </g>
         </svg>
-        <h2 style="margin: 0; line-height: 1.2">
-          BITCOIN<br />EDUCATION ARCHIVE
+        <h2 style="margin: 0; line-height: 1.15; font-size: 0.72rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+          BTC ARCHIVE
         </h2>
       </div>
       <div
@@ -2882,6 +2882,7 @@
           <button
             onclick="toggleTheme()"
             id="mobileThemeBtn"
+            style="display: none !important;"
             style="
               background: none;
               border: 1px solid var(--border);
