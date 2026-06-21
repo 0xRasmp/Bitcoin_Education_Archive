@@ -151,21 +151,28 @@ window.beatsEnsureGlobalPlayer = function() {
         '<div id="beatsProgressWrap" onclick="beatsSeek(event)" style="height:4px;background:rgba(255,255,255,0.1);cursor:pointer;position:relative;">' +
             '<div id="beatsProgressBar" style="height:100%;background:linear-gradient(90deg,var(--accent),#ea580c);width:0%;transition:width 0.3s linear;border-radius:0 2px 2px 0;"></div>' +
         '</div>' +
-        '<div style="display:flex;align-items:center;gap:8px;padding:10px 16px;">' +
-            '<div id="beatsNowArt" onclick="if(window._beatsCurrentAuthorId&&typeof showUserProfile===\'function\')showUserProfile(window._beatsCurrentAuthorId)" style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#1a1a2e,#0f172a);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;overflow:hidden;cursor:pointer;">🎵</div>' +
-            '<div onclick="if(window._beatsQueueIdx>=0){beatsShowTrackDetail(window._beatsQueueIdx)}else if(typeof go===\'function\'){go(\'bitcoin-beats\')}" style="min-width:0;max-width:140px;cursor:pointer;flex-shrink:1;">' +
-                '<div id="beatsNowTitle" style="color:#fff;font-size:0.85rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Not Playing</div>' +
-                '<div id="beatsNowArtist" onclick="event.stopPropagation();if(window._beatsCurrentAuthorId&&typeof showUserProfile===\'function\')showUserProfile(window._beatsCurrentAuthorId)" style="color:rgba(255,255,255,0.4);font-size:0.7rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;">Bitcoin Beats</div>' +
+        '<div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:10px 16px;min-height:64px;">' +
+            '<div style="display:flex;align-items:center;gap:10px;min-width:0;justify-self:start;">' +
+                '<div id="beatsNowArt" onclick="if(window._beatsCurrentAuthorId&&typeof showUserProfile===\'function\')showUserProfile(window._beatsCurrentAuthorId)" style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#1a1a2e,#0f172a);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;overflow:hidden;cursor:pointer;">🎵</div>' +
+                '<div onclick="if(window._beatsQueueIdx>=0){beatsShowTrackDetail(window._beatsQueueIdx)}else if(typeof go===\'function\'){go(\'bitcoin-beats\')}" style="min-width:0;cursor:pointer;">' +
+                    '<div id="beatsNowTitle" style="color:#fff;font-size:0.85rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Not Playing</div>' +
+                    '<div id="beatsNowArtist" onclick="event.stopPropagation();if(window._beatsCurrentAuthorId&&typeof showUserProfile===\'function\')showUserProfile(window._beatsCurrentAuthorId)" style="color:rgba(255,255,255,0.4);font-size:0.7rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;">Bitcoin Beats</div>' +
+                '</div>' +
             '</div>' +
-            '<div id="beatsTime" style="color:rgba(255,255,255,0.4);font-size:0.65rem;white-space:nowrap;">0:00 / 0:00</div>' +
-            '<button onclick="beatsPrevTrack()" style="background:none;border:none;color:#fff;font-size:1rem;cursor:pointer;padding:4px;">⏮</button>' +
-            '<button id="beatsPlayBtn" onclick="beatsTogglePlay()" style="background:var(--accent);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">›</button>' +
-            '<button onclick="beatsNextTrack()" style="background:none;border:none;color:#fff;font-size:1rem;cursor:pointer;padding:4px;">⏭</button>' +
-            '<input type="range" id="beatsVolume" min="0" max="100" value="80" oninput="beatsSetVolume(this.value)" style="width:50px;accent-color:var(--accent);cursor:pointer;" title="Volume">' +
-            '<button onclick="beatsShowComments()" style="background:none;border:none;color:rgba(255,255,255,0.4);font-size:0.9rem;cursor:pointer;padding:4px;" title="Comments">💬</button>' +
-            '<button onclick="if(typeof go===\'function\')go(\'bitcoin-beats\')" style="background:none;border:none;color:var(--accent);font-size:0.85rem;cursor:pointer;padding:4px;" title="Open Bitcoin Beats">🎵</button>' +
-            '<button onclick="beatsCollapsePlayer()" style="background:none;border:none;color:rgba(255,255,255,0.3);font-size:0.9rem;cursor:pointer;padding:4px;" title="Minimize">›</button>' +
-            '<button onclick="beatsClosePlayer()" style="background:none;border:none;color:rgba(255,255,255,0.3);font-size:0.9rem;cursor:pointer;padding:4px;" title="Close">✕</button>' +
+            '<div style="display:flex;align-items:center;gap:2px;justify-self:center;">' +
+                '<button class="beats-action-btn" onclick="beatsPrevTrack()" style="background:none;border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">⏮</button>' +
+                '<button id="beatsPlayBtn" class="beats-action-btn" onclick="beatsTogglePlay()" style="background:var(--accent);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">▶</button>' +
+                '<button class="beats-action-btn" onclick="beatsNextTrack()" style="background:none;border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">⏭</button>' +
+            '</div>' +
+            '<div style="display:flex;align-items:center;gap:10px;justify-self:end;min-width:0;">' +
+                '<div id="beatsTime" style="color:rgba(255,255,255,0.4);font-size:0.65rem;white-space:nowrap;flex-shrink:0;">0:00 / 0:00</div>' +
+                '<input type="range" id="beatsVolume" min="0" max="100" value="80" oninput="beatsSetVolume(this.value)" style="width:50px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;" title="Volume">' +
+                '<div style="width:1px;height:22px;background:rgba(255,255,255,0.1);flex-shrink:0;"></div>' +
+                '<button class="beats-action-btn" onclick="beatsShowComments()" style="background:none;border:none;color:rgba(255,255,255,0.5);width:32px;height:32px;border-radius:8px;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="Comments">💬</button>' +
+                '<button class="beats-action-btn" onclick="if(typeof go===\'function\')go(\'bitcoin-beats\')" style="background:none;border:none;color:var(--accent);width:32px;height:32px;border-radius:8px;font-size:0.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="Open Bitcoin Beats">🎵</button>' +
+                '<button class="beats-action-btn" onclick="beatsCollapsePlayer()" style="background:none;border:none;color:rgba(255,255,255,0.4);width:32px;height:32px;border-radius:8px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="Minimize">⌄</button>' +
+                '<button class="beats-action-btn" onclick="beatsClosePlayer()" style="background:none;border:none;color:rgba(255,255,255,0.4);width:32px;height:32px;border-radius:8px;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="Close">✕</button>' +
+            '</div>' +
         '</div>';
     document.body.appendChild(gp);
 
@@ -221,7 +228,7 @@ window.beatsCollapsePlayer = function() {
         var miniTitle = document.getElementById('beatsMiniTitle');
         if (title && miniTitle) miniTitle.textContent = title.textContent;
         var miniBtn = document.getElementById('beatsMiniPlayBtn');
-        if (miniBtn) miniBtn.textContent = (window._beatsAudio && !window._beatsAudio.paused) ? '⏸' : '›';
+        if (miniBtn) miniBtn.textContent = (window._beatsAudio && !window._beatsAudio.paused) ? '⏸' : '▶';
         mini.style.display = 'flex';
     }
     // Close comments panel if open
@@ -543,8 +550,8 @@ window.beatsTogglePlay = function() {
         if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
     } else {
         window._beatsAudio.pause();
-        if (btn) btn.textContent = '›';
-        if (miniBtn) miniBtn.textContent = '›';
+        if (btn) btn.textContent = '▶';
+        if (miniBtn) miniBtn.textContent = '▶';
         if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
     }
 };
