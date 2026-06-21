@@ -30673,8 +30673,8 @@ window._startHalvingTicker = function() {
                     /* Left: back + avatar + title */
                     '<div style="display:flex;align-items:center;gap:8px;">' +
                         '<button onclick="exitNachoMode()" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;padding:4px;touch-action:manipulation;" title="Back">←</button>' +
-                        '<div id="nachoHeroAvatar" class="nm-hero-avatar" style="position:relative;display:inline-block;width:40px;height:40px;" onclick="nachoModeAvatarTap()">' +
-                            '<img src="nacho-fly.svg" alt="Nacho" style="width:40px;height:40px;pointer-events:none;">' +
+                        '<div id="nachoHeroAvatar" class="nm-hero-avatar" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--accent-bg);border:1px solid rgba(247,147,26,0.3);" onclick="nachoModeAvatarTap()">' +
+                            '<i class="fa-solid fa-deer" style="font-size:1.1rem;color:var(--accent);pointer-events:none;"></i>' +
                             '<div id="nachoModeOverlay" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3;"></div>' +
                         '</div>' +
                         '<div style="min-width:0;overflow:hidden;">' +
@@ -30684,10 +30684,10 @@ window._startHalvingTicker = function() {
                     '</div>' +
                     /* Right: tools — flex-shrink:0 so they don't get squished */
                     '<div class="nm-hero-bar" style="display:flex;align-items:center;gap:4px;flex-shrink:0;margin-left:auto;">' +
-                        '<button id="nachoEli5Btn" onclick="showEli5Prompt()" style="background:none;border:none;cursor:pointer;padding:2px;width:24px;height:24px;opacity:' + (window._nachoEli5 ? '1' : '0.5') + ';touch-action:manipulation;font-size:0.95rem;" title="ELI5 Mode">🧒</button>' +
-                        '<button onclick="nachoChatExport()" style="background:none;border:none;cursor:pointer;padding:2px;width:24px;height:24px;touch-action:manipulation;font-size:0.95rem;" title="Save chat">💾</button>' +
-                        '<button onclick="nachoChatClear()" style="background:none;border:none;cursor:pointer;padding:2px;width:24px;height:24px;touch-action:manipulation;font-size:0.95rem;" title="Clear chat">🗑️</button>' +
-                        '<img src="images/btc-grad-logo-sm.jpg" alt="Home" style="width:24px;height:24px;border-radius:50%;cursor:pointer;box-shadow:0 0 6px rgba(247,147,26,0.3);object-fit:cover;" onclick="exitNachoMode()" title="Go to Home">' +
+                        '<button id="nachoEli5Btn" onclick="showEli5Prompt()" style="background:none;border:none;cursor:pointer;padding:2px;width:28px;height:28px;opacity:' + (window._nachoEli5 ? '1' : '0.45') + ';touch-action:manipulation;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:color 0.15s,opacity 0.15s;border-radius:6px;" title="ELI5 Mode" onmouseover="this.style.color=\'var(--accent)\';this.style.opacity=\'1\'" onmouseout="this.style.color=\'var(--text-muted)\';this.style.opacity=\'' + (window._nachoEli5 ? '1' : '0.45') + '\'"><i class="fa-solid fa-child" style="font-size:0.85rem;"></i></button>' +
+                        '<button onclick="nachoChatExport()" style="background:none;border:none;cursor:pointer;padding:2px;width:28px;height:28px;touch-action:manipulation;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:color 0.15s;border-radius:6px;" title="Save chat" onmouseover="this.style.color=\'var(--accent)\'" onmouseout="this.style.color=\'var(--text-muted)\'"><i class="fa-solid fa-download" style="font-size:0.85rem;"></i></button>' +
+                        '<button onclick="nachoChatClear()" style="background:none;border:none;cursor:pointer;padding:2px;width:28px;height:28px;touch-action:manipulation;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:color 0.15s;border-radius:6px;" title="Clear chat" onmouseover="this.style.color=\'#ef4444\'" onmouseout="this.style.color=\'var(--text-muted)\'"><i class="fa-solid fa-trash" style="font-size:0.85rem;"></i></button>' +
+                        '<button onclick="exitNachoMode()" title="Go to Home" style="background:none;border:none;cursor:pointer;padding:2px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:color 0.15s;" onmouseover="this.style.color=\'var(--accent)\'" onmouseout="this.style.color=\'var(--text-muted)\'"><i class="fa-solid fa-house" style="font-size:0.9rem;"></i></button>' +
                     '</div>' +
                 '</div>' +
             '</div>' +
@@ -31669,7 +31669,7 @@ window.nachoQuizAnswer = function(btn, correct) {
                     /* Avatar + greeting row */
                     '<div style="display:flex;align-items:center;gap:20px;margin-bottom:24px;">' +
                         '<div id="nachoModeAvatar" style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,rgba(247,147,26,0.18),rgba(247,147,26,0.06));border:2px solid rgba(247,147,26,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;box-shadow:0 0 24px rgba(247,147,26,0.2);" onclick="nachoModeAvatarTap()">' +
-                            '<img src="nacho-fly.svg" alt="Nacho" style="width:56px;height:56px;pointer-events:none;" onerror="this.style.display=\'none\';var _fi=document.createElement(\'i\');_fi.className=\'fa-solid fa-deer\';_fi.style.cssText=\'font-size:2rem;color:var(--accent);\';this.parentElement.appendChild(_fi);">' +
+                            '<i class="fa-solid fa-deer" style="font-size:2.2rem;color:var(--accent);pointer-events:none;"></i>' +
                         '</div>' +
                         '<div style="text-align:left;">' +
                             '<div style="font-size:0.6rem;color:var(--accent);text-transform:uppercase;letter-spacing:2.5px;font-weight:800;margin-bottom:4px;opacity:0.85;">Nacho Mode</div>' +
