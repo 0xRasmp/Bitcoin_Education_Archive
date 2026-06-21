@@ -20617,23 +20617,23 @@ var FORUM_CATEGORIES = [
 
 // ---- Forum Rules ----
 var FORUM_RULES = [
-    { emoji: '🤝', title: 'Be Respectful', desc: 'Treat everyone with respect. No hate speech, harassment, bullying, threats, discrimination, racism, sexism, or sexual content. Attack ideas, not people.' },
-    { emoji: '🎯', title: 'Stay On Topic', desc: 'Keep posts relevant to Bitcoin and the category you\'re posting in. Self-promotion belongs in the Self-Promotion category only.' },
-    { emoji: '🚫', title: 'No Spam or Scams', desc: 'No repetitive posts, spam, phishing links, pump-and-dump schemes, fake giveaways, or scam promotions. One post per topic.' },
-    { emoji: '🔒', title: 'Protect Privacy', desc: 'Never share personal information about yourself or others — no real names, addresses, phone numbers, or private keys. Stay pseudonymous.' },
-    { emoji: '⚠️', title: 'No Financial Advice', desc: 'Don\'t tell others to buy, sell, or invest. Share knowledge and resources, not financial directives. Always add "not financial advice" disclaimers.' },
-    { emoji: '🪙', title: 'Bitcoin Only', desc: 'This is a Bitcoin education forum. Altcoin shilling, ICO promotion, and "next Bitcoin" posts will be removed.' },
-    { emoji: '📝', title: 'Quality Content', desc: 'Put effort into your posts. No low-effort single-word posts, all-caps titles, or clickbait. Ask clear questions and provide context.' },
-    { emoji: '🤖', title: 'No Bot Activity', desc: 'Automated posting, bot accounts, and AI-generated spam are not allowed. Be a real human participating in real conversations.' },
-    { emoji: '⚖️', title: 'No Illegal Content', desc: 'Nothing illegal, including but not limited to: piracy, hacking services, drug markets, weapons, or any content that violates applicable laws.' },
-    { emoji: '👮', title: 'Moderators Have Final Say', desc: 'Posts that violate these rules will be removed without notice. Repeat offenders may be banned. If you see a rule violation, report it.' },
+    { emoji: '<i class="fa-solid fa-handshake"></i>', title: 'Be Respectful', desc: 'Treat everyone with respect. No hate speech, harassment, bullying, threats, discrimination, racism, sexism, or sexual content. Attack ideas, not people.' },
+    { emoji: '<i class="fa-solid fa-bullseye"></i>', title: 'Stay On Topic', desc: 'Keep posts relevant to Bitcoin and the category you\'re posting in. Self-promotion belongs in the Self-Promotion category only.' },
+    { emoji: '<i class="fa-solid fa-ban"></i>', title: 'No Spam or Scams', desc: 'No repetitive posts, spam, phishing links, pump-and-dump schemes, fake giveaways, or scam promotions. One post per topic.' },
+    { emoji: '<i class="fa-solid fa-lock"></i>', title: 'Protect Privacy', desc: 'Never share personal information about yourself or others — no real names, addresses, phone numbers, or private keys. Stay pseudonymous.' },
+    { emoji: '<i class="fa-solid fa-triangle-exclamation"></i>', title: 'No Financial Advice', desc: 'Don\'t tell others to buy, sell, or invest. Share knowledge and resources, not financial directives. Always add "not financial advice" disclaimers.' },
+    { emoji: '<i class="fa-solid fa-bitcoin-sign"></i>', title: 'Bitcoin Only', desc: 'This is a Bitcoin education forum. Altcoin shilling, ICO promotion, and "next Bitcoin" posts will be removed.' },
+    { emoji: '<i class="fa-solid fa-star"></i>', title: 'Quality Content', desc: 'Put effort into your posts. No low-effort single-word posts, all-caps titles, or clickbait. Ask clear questions and provide context.' },
+    { emoji: '<i class="fa-solid fa-robot"></i>', title: 'No Bot Activity', desc: 'Automated posting, bot accounts, and AI-generated spam are not allowed. Be a real human participating in real conversations.' },
+    { emoji: '<i class="fa-solid fa-scale-balanced"></i>', title: 'No Illegal Content', desc: 'Nothing illegal, including but not limited to: piracy, hacking services, drug markets, weapons, or any content that violates applicable laws.' },
+    { emoji: '<i class="fa-solid fa-shield-halved"></i>', title: 'Moderators Have Final Say', desc: 'Posts that violate these rules will be removed without notice. Repeat offenders may be banned. If you see a rule violation, report it.' },
 ];
 
 function showForumRules(force) {
     var html = '<div style="position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;" onclick="if(event.target===this){acceptForumRules()}">' +
         '<div style="background:rgba(15,23,42,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:24px;max-width:480px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.5);animation:fadeSlideIn 0.3s;-webkit-overflow-scrolling:touch;">' +
             '<div style="text-align:center;margin-bottom:16px;">' +
-                '<div style="font-size:2rem;margin-bottom:6px;">📜</div>' +
+                '<div style="font-size:1.5rem;margin-bottom:6px;color:var(--accent);"><i class="fa-solid fa-scroll"></i></div>' +
                 '<h2 style="color:var(--heading);font-size:1.2rem;font-weight:800;margin:0 0 4px;">PlebTalk Rules</h2>' +
                 '<div style="color:var(--text-muted);font-size:0.8rem;">Please read before posting</div>' +
             '</div>';
@@ -20641,7 +20641,7 @@ function showForumRules(force) {
     for (var i = 0; i < FORUM_RULES.length; i++) {
         var r = FORUM_RULES[i];
         html += '<div style="display:flex;gap:10px;margin-bottom:12px;align-items:flex-start;">' +
-            '<span style="font-size:1.2rem;flex-shrink:0;margin-top:2px;">' + r.emoji + '</span>' +
+            '<span style="width:28px;flex-shrink:0;margin-top:2px;color:var(--accent);font-size:0.95rem;display:flex;align-items:center;justify-content:center;">' + r.emoji + '</span>' +
             '<div>' +
                 '<div style="color:var(--heading);font-size:0.85rem;font-weight:700;margin-bottom:2px;">' + r.title + '</div>' +
                 '<div style="color:var(--text-muted);font-size:0.8rem;line-height:1.4;">' + r.desc + '</div>' +
@@ -20726,28 +20726,33 @@ window.renderForum = function() {
     fc.innerHTML = '';
 
     var html = '<div style="max-width:700px;margin:0 auto;padding:16px 12px;">';
-    html += '<div class="channel-logos" style="display:flex;justify-content:center;gap:20px;margin-bottom:20px;">' + 
-        '<img src="images/btc-grad-logo-sm.jpg" alt="Home" class="channel-logo-img" onclick="goHome()" style="width:50px;height:50px;border-radius:50%;cursor:pointer;box-shadow:0 0 15px rgba(247,147,26,0.3);object-fit:cover;" title="Home">' + 
-        '<span class="donate-circle" onclick="showDonateModal()" style="width:50px;height:50px;background:#f7931a;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 15px rgba(247,147,26,0.3);"><svg viewBox="0 0 64 64" width="32" height="32"><polygon points="36,10 22,38 30,38 28,54 42,26 34,26" fill="#fff"/></svg></span>' + 
+    html += '<div style="display:flex;justify-content:center;gap:16px;margin-bottom:20px;align-items:center;">' +
+        '<div onclick="goHome()" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:6px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;transition:border-color 0.2s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">' +
+            '<svg viewBox="0 0 64 64" width="22" height="22"><circle cx="32" cy="32" r="30" fill="#f7931a"/><g transform="rotate(14,32,32)"><text x="32" y="44" text-anchor="middle" font-size="36" font-weight="bold" fill="#fff" font-family="Arial,sans-serif">B</text><line x1="28" y1="12" x2="28" y2="52" stroke="#fff" stroke-width="3"/><line x1="36" y1="12" x2="36" y2="52" stroke="#fff" stroke-width="3"/></g></svg>' +
+            '<span style="font-size:0.72rem;font-weight:700;color:var(--text-muted);">Home</span>' +
+        '</div>' +
+        '<button onclick="showDonateModal()" style="display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--accent-bg);border:1px solid var(--accent-glow);border-radius:10px;color:var(--accent);font-size:0.72rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.18s;" onmouseover="this.style.background=\'var(--accent)\';this.style.color=\'#fff\'" onmouseout="this.style.background=\'var(--accent-bg)\';this.style.color=\'var(--accent)\'">' +
+            '<i class="fa-solid fa-bolt"></i> Donate' +
+        '</button>' +
         '</div>';
 
     // Header
     html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:10px;">' +
         '<div style="min-width:0;">' +
-            '<h2 style="color:var(--heading);font-size:1.3rem;font-weight:800;margin:0;">🗣️ Pleb Talk</h2>' +
+            '<h2 style="color:var(--heading);font-size:1.3rem;font-weight:800;margin:0;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-comments" style="color:var(--accent);font-size:1.1rem;"></i> Pleb Talk</h2>' +
             '<div style="color:var(--text-muted);font-size:0.75rem;margin-top:2px;">Discuss Bitcoin with fellow learners</div>' +
         '</div>' +
         '<div style="display:flex;gap:8px;flex-shrink:0;">' +
-            '<button onclick="showForumRulesBtn()" style="padding:10px 14px;background:none;border:1px solid var(--border);color:var(--text-muted);border-radius:10px;font-size:0.85rem;cursor:pointer;font-family:inherit;touch-action:manipulation;white-space:nowrap;">📜 Rules</button>' +
+            '<button onclick="showForumRulesBtn()" style="padding:10px 14px;background:none;border:1px solid var(--border);color:var(--text-muted);border-radius:10px;font-size:0.85rem;cursor:pointer;font-family:inherit;touch-action:manipulation;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;"><i class="fa-solid fa-scroll"></i> Rules</button>' +
             '<button onclick="forumNewPost()" style="padding:10px 18px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;touch-action:manipulation;white-space:nowrap;">+ New Post</button>' +
         '</div>' +
     '</div>';
 
     // Tab switcher
     html += '<div style="display:flex;gap:0;margin-bottom:16px;border:1px solid var(--border);border-radius:10px;overflow:hidden;">' +
-        '<button onclick="forumSwitchTab(\'discussions\')" style="flex:1;padding:10px;background:' + (forumTab === 'discussions' ? 'var(--accent)' : 'none') + ';color:' + (forumTab === 'discussions' ? '#fff' : 'var(--text-muted)') + ';border:none;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;">💬 Discussions</button>' +
-        '<button onclick="forumSwitchTab(\'articles\')" style="flex:1;padding:10px;background:' + (forumTab === 'articles' ? 'var(--accent)' : 'none') + ';color:' + (forumTab === 'articles' ? '#fff' : 'var(--text-muted)') + ';border:none;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;">📝 Articles</button>' +
-        '<button onclick="forumSwitchTab(\'stacker\')" style="flex:1;padding:10px;background:' + (forumTab === 'stacker' ? 'var(--accent)' : 'none') + ';color:' + (forumTab === 'stacker' ? '#fff' : 'var(--text-muted)') + ';border:none;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;">⚡ Stacker News</button>' +
+        '<button onclick="forumSwitchTab(\'discussions\')" style="flex:1;padding:10px;background:' + (forumTab === 'discussions' ? 'var(--accent)' : 'none') + ';color:' + (forumTab === 'discussions' ? '#fff' : 'var(--text-muted)') + ';border:none;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:6px;"><i class="fa-solid fa-comments"></i> Discussions</button>' +
+        '<button onclick="forumSwitchTab(\'articles\')" style="flex:1;padding:10px;background:' + (forumTab === 'articles' ? 'var(--accent)' : 'none') + ';color:' + (forumTab === 'articles' ? '#fff' : 'var(--text-muted)') + ';border:none;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:6px;"><i class="fa-solid fa-newspaper"></i> Articles</button>' +
+        '<button onclick="forumSwitchTab(\'stacker\')" style="flex:1;padding:10px;background:' + (forumTab === 'stacker' ? 'var(--accent)' : 'none') + ';color:' + (forumTab === 'stacker' ? '#fff' : 'var(--text-muted)') + ';border:none;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:6px;"><i class="fa-solid fa-bolt"></i> Stacker News</button>' +
     '</div>';
 
     if (forumTab === 'stacker') {
@@ -20819,7 +20824,7 @@ window.renderForum = function() {
     html += '<div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;align-items:center;">';
     // Sort buttons
     ['recent','top','discussed'].forEach(function(s) {
-        var labels = { recent: '🕐 Recent', top: '🔥 Top', discussed: '💬 Discussed' };
+        var labels = { recent: '<i class="fa-solid fa-clock"></i> Recent', top: '<i class="fa-solid fa-fire"></i> Top', discussed: '<i class="fa-solid fa-comments"></i> Discussed' };
         var active = forumSort === s;
         html += '<button onclick="forumSetSort(\'' + s + '\')" style="padding:8px 12px;border-radius:16px;font-size:0.75rem;cursor:pointer;font-family:inherit;border:1px solid ' + (active ? 'var(--accent)' : 'var(--border)') + ';background:' + (active ? 'var(--accent-bg)' : 'none') + ';color:' + (active ? 'var(--accent)' : 'var(--text-muted)') + ';font-weight:' + (active ? '700' : '400') + ';touch-action:manipulation;">' + labels[s] + '</button>';
     });
@@ -20914,7 +20919,7 @@ function forumRenderPosts(posts, container) {
         html += '<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px;cursor:pointer;transition:0.2s;-webkit-tap-highlight-color:rgba(247,147,26,0.1);" onclick="forumViewPost(\'' + p.id + '\')" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">' +
             '<div style="display:flex;gap:10px;">' +
                 '<div style="display:flex;flex-direction:column;align-items:center;min-width:36px;flex-shrink:0;">' +
-                    '<button onclick="event.stopPropagation();forumVotePost(\'' + p.id + '\')" style="background:none;border:none;cursor:pointer;font-size:1.2rem;padding:4px;color:' + (hasVoted ? 'var(--accent)' : 'var(--text-faint)') + ';touch-action:manipulation;" title="Upvote">👍</button>' +
+                    '<button onclick="event.stopPropagation();forumVotePost(\'' + p.id + '\')" style="background:none;border:none;cursor:pointer;font-size:1rem;padding:4px;color:' + (hasVoted ? 'var(--accent)' : 'var(--text-faint)') + ';touch-action:manipulation;" title="Upvote"><i class="fa-solid fa-thumbs-up"></i></button>' +
                     '<span style="color:' + (hasVoted ? 'var(--accent)' : 'var(--text-muted)') + ';font-size:0.8rem;font-weight:700;">' + (p.upvotes || 0) + '</span>' +
                 '</div>' +
                 '<div style="flex:1;min-width:0;overflow:hidden;">' +
@@ -20923,9 +20928,9 @@ function forumRenderPosts(posts, container) {
                     '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">' +
                         '<span onclick="event.stopPropagation();if(typeof showUserProfile===\'function\')showUserProfile(\'' + p.authorId + '\')" style="font-size:0.7rem;' + (p.authorFaction ? window._factionNameStyle(p.authorFaction) : 'color:var(--text-faint)') + ';cursor:pointer;transition:0.2s;">' + lv.emoji + ' ' + fEsc(p.authorName || 'Anon') + '</span>' +
                         '<span style="font-size:0.65rem;color:var(--text-faint);">' + timeAgo(p.createdAt) + '</span>' +
-                        '<span style="font-size:0.7rem;color:var(--text-faint);">💬 ' + (p.replyCount || 0) + '</span>' +
+                        '<span style="font-size:0.7rem;color:var(--text-faint);display:inline-flex;align-items:center;gap:3px;"><i class="fa-solid fa-comment"></i> ' + (p.replyCount || 0) + '</span>' +
                         (catLabel ? '<span style="font-size:0.6rem;padding:2px 6px;background:var(--bg-side);border:1px solid var(--border);border-radius:8px;color:var(--text-faint);white-space:nowrap;">' + catLabel + '</span>' : '') +
-                        (canDelete ? '<button onclick="event.stopPropagation();forumDeletePost(\'' + p.id + '\')" style="background:none;border:none;color:var(--text-faint);font-size:0.7rem;cursor:pointer;padding:4px;touch-action:manipulation;opacity:0.5;" title="Delete post">🗑️</button>' : '') +
+                        (canDelete ? '<button onclick="event.stopPropagation();forumDeletePost(\'' + p.id + '\')" style="background:none;border:none;color:var(--text-faint);font-size:0.7rem;cursor:pointer;padding:4px;touch-action:manipulation;opacity:0.5;" title="Delete post"><i class="fa-solid fa-trash"></i></button>' : '') +
                     '</div>' +
                 '</div>' +
             '</div>' +
@@ -20959,9 +20964,14 @@ window.forumViewPost = async function(postId, fromPopState) {
         var hasVoted = p.voters && auth && auth.currentUser && p.voters.indexOf(auth.currentUser.uid) !== -1;
 
         var html = '<div style="max-width:700px;margin:0 auto;padding:16px 12px;">';
-    html += '<div class="channel-logos" style="display:flex;justify-content:center;gap:20px;margin-bottom:20px;">' + 
-        '<img src="images/btc-grad-logo-sm.jpg" alt="Home" class="channel-logo-img" onclick="goHome()" style="width:50px;height:50px;border-radius:50%;cursor:pointer;box-shadow:0 0 15px rgba(247,147,26,0.3);object-fit:cover;" title="Home">' + 
-        '<span class="donate-circle" onclick="showDonateModal()" style="width:50px;height:50px;background:#f7931a;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 15px rgba(247,147,26,0.3);"><svg viewBox="0 0 64 64" width="32" height="32"><polygon points="36,10 22,38 30,38 28,54 42,26 34,26" fill="#fff"/></svg></span>' + 
+    html += '<div style="display:flex;justify-content:center;gap:16px;margin-bottom:20px;align-items:center;">' +
+        '<div onclick="goHome()" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:6px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;transition:border-color 0.2s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">' +
+            '<svg viewBox="0 0 64 64" width="22" height="22"><circle cx="32" cy="32" r="30" fill="#f7931a"/><g transform="rotate(14,32,32)"><text x="32" y="44" text-anchor="middle" font-size="36" font-weight="bold" fill="#fff" font-family="Arial,sans-serif">B</text><line x1="28" y1="12" x2="28" y2="52" stroke="#fff" stroke-width="3"/><line x1="36" y1="12" x2="36" y2="52" stroke="#fff" stroke-width="3"/></g></svg>' +
+            '<span style="font-size:0.72rem;font-weight:700;color:var(--text-muted);">Home</span>' +
+        '</div>' +
+        '<button onclick="showDonateModal()" style="display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--accent-bg);border:1px solid var(--accent-glow);border-radius:10px;color:var(--accent);font-size:0.72rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.18s;" onmouseover="this.style.background=\'var(--accent)\';this.style.color=\'#fff\'" onmouseout="this.style.background=\'var(--accent-bg)\';this.style.color=\'var(--accent)\'">' +
+            '<i class="fa-solid fa-bolt"></i> Donate' +
+        '</button>' +
         '</div>';
 
         // Back button
@@ -21137,9 +21147,14 @@ window.forumNewPost = function() {
     
 
     var html = '<div style="max-width:700px;margin:0 auto;padding:16px 12px;">';
-    html += '<div class="channel-logos" style="display:flex;justify-content:center;gap:20px;margin-bottom:20px;">' + 
-        '<img src="images/btc-grad-logo-sm.jpg" alt="Home" class="channel-logo-img" onclick="goHome()" style="width:50px;height:50px;border-radius:50%;cursor:pointer;box-shadow:0 0 15px rgba(247,147,26,0.3);object-fit:cover;" title="Home">' + 
-        '<span class="donate-circle" onclick="showDonateModal()" style="width:50px;height:50px;background:#f7931a;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 15px rgba(247,147,26,0.3);"><svg viewBox="0 0 64 64" width="32" height="32"><polygon points="36,10 22,38 30,38 28,54 42,26 34,26" fill="#fff"/></svg></span>' + 
+    html += '<div style="display:flex;justify-content:center;gap:16px;margin-bottom:20px;align-items:center;">' +
+        '<div onclick="goHome()" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:6px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;transition:border-color 0.2s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">' +
+            '<svg viewBox="0 0 64 64" width="22" height="22"><circle cx="32" cy="32" r="30" fill="#f7931a"/><g transform="rotate(14,32,32)"><text x="32" y="44" text-anchor="middle" font-size="36" font-weight="bold" fill="#fff" font-family="Arial,sans-serif">B</text><line x1="28" y1="12" x2="28" y2="52" stroke="#fff" stroke-width="3"/><line x1="36" y1="12" x2="36" y2="52" stroke="#fff" stroke-width="3"/></g></svg>' +
+            '<span style="font-size:0.72rem;font-weight:700;color:var(--text-muted);">Home</span>' +
+        '</div>' +
+        '<button onclick="showDonateModal()" style="display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--accent-bg);border:1px solid var(--accent-glow);border-radius:10px;color:var(--accent);font-size:0.72rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.18s;" onmouseover="this.style.background=\'var(--accent)\';this.style.color=\'#fff\'" onmouseout="this.style.background=\'var(--accent-bg)\';this.style.color=\'var(--accent)\'">' +
+            '<i class="fa-solid fa-bolt"></i> Donate' +
+        '</button>' +
         '</div>';
     html += '<button onclick="forumBack()" style="background:none;border:none;color:var(--text-muted);font-size:0.85rem;cursor:pointer;padding:8px 0;margin-bottom:8px;font-family:inherit;touch-action:manipulation;">← Back to PlebTalk</button>';
 
@@ -21557,8 +21572,8 @@ function renderArticlesList(htmlPrefix, fc) {
     
     // Action buttons
     html += '<div style="display:flex;gap:8px;margin-bottom:16px;justify-content:flex-end;">' +
-        '<button onclick="showForumRulesBtn()" style="padding:10px 14px;background:none;border:1px solid var(--border);color:var(--text-muted);border-radius:10px;font-size:0.85rem;cursor:pointer;font-family:inherit;">📜 Rules</button>' +
-        '<button onclick="articleNew()" style="padding:10px 18px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;">✍️ Write Article</button>' +
+        '<button onclick="showForumRulesBtn()" style="padding:10px 14px;background:none;border:1px solid var(--border);color:var(--text-muted);border-radius:10px;font-size:0.85rem;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px;"><i class="fa-solid fa-scroll"></i> Rules</button>' +
+        '<button onclick="articleNew()" style="padding:10px 18px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px;"><i class="fa-solid fa-pen-nib"></i> Write Article</button>' +
     '</div>';
     
     // Sort
@@ -22955,7 +22970,7 @@ function showMarketRules(force) {
     for (var i = 0; i < MARKETPLACE_RULES.length; i++) {
         var r = MARKETPLACE_RULES[i];
         html += '<div style="display:flex;gap:10px;margin-bottom:12px;align-items:flex-start;">' +
-            '<span style="font-size:1.2rem;flex-shrink:0;margin-top:2px;">' + r.emoji + '</span>' +
+            '<span style="width:28px;flex-shrink:0;margin-top:2px;color:var(--accent);font-size:0.95rem;display:flex;align-items:center;justify-content:center;">' + r.emoji + '</span>' +
             '<div>' +
                 '<div style="color:var(--heading);font-size:0.85rem;font-weight:700;margin-bottom:2px;">' + r.title + '</div>' +
                 '<div style="color:var(--text-muted);font-size:0.8rem;line-height:1.4;">' + r.desc + '</div>' +
@@ -23180,9 +23195,14 @@ function _actualRenderMarketplace(options) {
 
     // Header
     var html = '<div style="max-width:900px;margin:0 auto;padding:16px;">';
-    html += '<div class="channel-logos" style="display:flex;justify-content:center;gap:20px;margin-bottom:20px;">' + 
-        '<img src="images/btc-grad-logo-sm.jpg" alt="Home" class="channel-logo-img" onclick="goHome()" style="width:50px;height:50px;border-radius:50%;cursor:pointer;box-shadow:0 0 15px rgba(247,147,26,0.3);object-fit:cover;" title="Home">' + 
-        '<span class="donate-circle" onclick="showDonateModal()" style="width:50px;height:50px;background:#f7931a;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 15px rgba(247,147,26,0.3);"><svg viewBox="0 0 64 64" width="32" height="32"><polygon points="36,10 22,38 30,38 28,54 42,26 34,26" fill="#fff"/></svg></span>' + 
+    html += '<div style="display:flex;justify-content:center;gap:16px;margin-bottom:20px;align-items:center;">' +
+        '<div onclick="goHome()" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:6px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;transition:border-color 0.2s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">' +
+            '<svg viewBox="0 0 64 64" width="22" height="22"><circle cx="32" cy="32" r="30" fill="#f7931a"/><g transform="rotate(14,32,32)"><text x="32" y="44" text-anchor="middle" font-size="36" font-weight="bold" fill="#fff" font-family="Arial,sans-serif">B</text><line x1="28" y1="12" x2="28" y2="52" stroke="#fff" stroke-width="3"/><line x1="36" y1="12" x2="36" y2="52" stroke="#fff" stroke-width="3"/></g></svg>' +
+            '<span style="font-size:0.72rem;font-weight:700;color:var(--text-muted);">Home</span>' +
+        '</div>' +
+        '<button onclick="showDonateModal()" style="display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--accent-bg);border:1px solid var(--accent-glow);border-radius:10px;color:var(--accent);font-size:0.72rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.18s;" onmouseover="this.style.background=\'var(--accent)\';this.style.color=\'#fff\'" onmouseout="this.style.background=\'var(--accent-bg)\';this.style.color=\'var(--accent)\'">' +
+            '<i class="fa-solid fa-bolt"></i> Donate' +
+        '</button>' +
         '</div>';
 
     // Top bar

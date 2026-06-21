@@ -12,6 +12,7 @@ var MODULES = [
         id: 'meadow',
         name: 'The Meadow',
         emoji: '🌿',
+        icon: 'fa-seedling',
         subtitle: 'Where every Bitcoiner begins',
         desc: 'Learn the fundamentals: what Bitcoin is, why it matters, and what makes it different from everything before it.',
         color: '#22c55e',
@@ -35,6 +36,7 @@ var MODULES = [
         id: 'mountain',
         name: 'The Mountain',
         emoji: '⛰️',
+        icon: 'fa-mountain',
         subtitle: 'The climb gets real',
         desc: 'Go deeper: mining, Lightning, self-custody, privacy, and the broken system Bitcoin is replacing.',
         color: '#f97316',
@@ -60,6 +62,7 @@ var MODULES = [
         id: 'summit',
         name: 'The Summit',
         emoji: '🏔️',
+        icon: 'fa-mountain-sun',
         subtitle: 'Only for the committed',
         desc: 'Master-level topics: cryptography, nodes, proof of work, protocol upgrades, and the maximalist case.',
         color: '#a855f7',
@@ -155,43 +158,64 @@ window.renderModules = function(container) {
 
     // Header
     html += '<div style="text-align:center;margin-bottom:24px;animation:fadeSlideIn 0.4s ease-out;">' +
-        '<div onclick="goHome()" style="cursor:pointer;display:inline-flex;align-items:center;gap:8px;margin-bottom:12px;color:var(--text-muted);font-size:0.8rem;">← Back to Archive</div>' +
-        '<div style="font-size:2.5rem;margin-bottom:6px;">🦌🗺️</div>' +
-        '<h2 style="color:var(--heading);font-size:1.4rem;font-weight:900;margin:0 0 4px;">Nacho\'s Trails</h2>' +
-        '<p style="color:var(--text-muted);font-size:0.82rem;margin:0;">Guided learning paths through Bitcoin · Complete channels · Pass the Trail Quest</p>' +
+        '<div onclick="goHome()" style="display:inline-flex;align-items:center;gap:6px;margin-bottom:16px;padding:6px 14px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.78rem;font-weight:600;cursor:pointer;">' +
+            '<i class="fa-solid fa-chevron-left" style="font-size:0.7rem;"></i> Back to Archive' +
+        '</div>' +
+        '<div style="width:56px;height:56px;margin:0 auto 14px;background:var(--accent-bg);border:1px solid var(--accent-glow);border-radius:16px;display:flex;align-items:center;justify-content:center;">' +
+            '<i class="fa-solid fa-route" style="font-size:1.4rem;color:var(--accent);"></i>' +
+        '</div>' +
+        '<h2 style="color:var(--heading);font-size:1.4rem;font-weight:900;margin:0 0 6px;">Nacho\'s Trails</h2>' +
+        '<p style="color:var(--text-muted);font-size:0.82rem;margin:0 0 14px;max-width:380px;margin-left:auto;margin-right:auto;line-height:1.5;">Guided learning paths through Bitcoin.</p>' +
+        '<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;">' +
+            '<span style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:var(--card-bg);border:1px solid var(--border);border-radius:999px;color:var(--text-muted);font-size:0.7rem;font-weight:600;"><i class="fa-solid fa-route" style="font-size:0.65rem;color:var(--accent);"></i>Guided paths</span>' +
+            '<span style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:var(--card-bg);border:1px solid var(--border);border-radius:999px;color:var(--text-muted);font-size:0.7rem;font-weight:600;"><i class="fa-solid fa-list-check" style="font-size:0.65rem;color:var(--accent);"></i>Complete channels</span>' +
+            '<span style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:var(--card-bg);border:1px solid var(--border);border-radius:999px;color:var(--text-muted);font-size:0.7rem;font-weight:600;"><i class="fa-solid fa-flag-checkered" style="font-size:0.65rem;color:var(--accent);"></i>Pass the quest</span>' +
+        '</div>' +
     '</div>';
 
     // Overall progress
     var totalPassed = getPassed().length;
-    html += '<div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--card-bg);border:1px solid var(--border);border-radius:14px;margin-bottom:20px;">' +
-        '<div style="font-size:1.5rem;">' + (totalPassed === 3 ? '👑' : totalPassed >= 2 ? '🏔️' : totalPassed >= 1 ? '⛰️' : '🌱') + '</div>' +
-        '<div style="flex:1;">' +
-            '<div style="color:var(--heading);font-weight:700;font-size:0.9rem;">' + totalPassed + ' of 3 Trails Complete</div>' +
-            '<div style="background:rgba(255,255,255,0.1);border-radius:4px;height:6px;margin-top:4px;overflow:hidden;">' +
-                '<div style="background:var(--accent);height:100%;width:' + Math.round(totalPassed / 3 * 100) + '%;border-radius:4px;transition:0.3s;"></div>' +
+    var _ovIcon = totalPassed === 3 ? 'fa-crown' : totalPassed >= 2 ? 'fa-mountain-sun' : totalPassed >= 1 ? 'fa-mountain' : 'fa-seedling';
+    var _segHtml = '';
+    MODULES.forEach(function(m) {
+        var mStat = getModuleStatus(m);
+        var mFillPct = mStat.isPassed ? 100 : (mStat.isLocked ? 0 : Math.round(mStat.visitedCount / mStat.totalChannels * 100));
+        _segHtml += '<div style="flex:1;height:6px;border-radius:999px;background:rgba(255,255,255,0.08);overflow:hidden;">' +
+            '<div style="height:100%;width:' + mFillPct + '%;background:' + m.color + ';border-radius:999px;transition:0.3s;"></div>' +
+        '</div>';
+    });
+    html += '<div style="padding:16px 18px;background:var(--card-bg);border:1px solid var(--border);border-radius:14px;margin-bottom:20px;">' +
+        '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">' +
+            '<div style="width:40px;height:40px;border-radius:12px;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid ' + _ovIcon + '" style="font-size:1.05rem;color:var(--accent);"></i></div>' +
+            '<div style="flex:1;">' +
+                '<div style="color:var(--heading);font-weight:700;font-size:0.92rem;">' + totalPassed + ' of 3 trails complete</div>' +
             '</div>' +
+            '<div style="color:var(--heading);font-weight:800;font-size:1.2rem;">' + Math.round(totalPassed / 3 * 100) + '%</div>' +
         '</div>' +
+        '<div style="display:flex;gap:5px;">' + _segHtml + '</div>' +
     '</div>';
 
     // Module cards
     MODULES.forEach(function(mod, idx) {
         var status = getModuleStatus(mod);
         var pct = Math.round(status.visitedCount / status.totalChannels * 100);
+        var accentBorder = status.isLocked ? 'var(--border)' : mod.color;
 
-        html += '<div style="background:var(--card-bg);border:1px solid ' + (status.isPassed ? mod.color : 'var(--border)') + ';border-radius:18px;padding:20px;margin-bottom:16px;' +
-            (status.isLocked ? 'opacity:0.5;' : '') +
+        html += '<div style="background:var(--card-bg);border:1px solid var(--border);border-left:3px solid ' + accentBorder + ';border-radius:16px;padding:18px 20px;margin-bottom:16px;' +
+            (status.isLocked ? 'opacity:0.55;' : '') +
             'animation:fadeSlideIn ' + (0.3 + idx * 0.15) + 's ease-out;">';
 
         // Module header
-        html += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">' +
-            '<div style="width:48px;height:48px;background:' + (status.isPassed ? mod.color : 'rgba(255,255,255,0.05)') + ';border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">' +
-                (status.isPassed ? '✅' : (status.isLocked ? '🔒' : mod.emoji)) +
+        html += '<div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;">' +
+            '<div style="width:40px;height:40px;background:' + (status.isPassed ? mod.color : (status.isLocked ? 'var(--secondary)' : 'var(--accent-bg)')) + ';border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' +
+                '<i class="fa-solid ' + (status.isPassed ? 'fa-check' : (status.isLocked ? 'fa-lock' : mod.icon)) + '" style="font-size:1rem;color:' + (status.isPassed ? '#fff' : (status.isLocked ? 'var(--text-faint)' : mod.color)) + ';"></i>' +
             '</div>' +
-            '<div style="flex:1;">' +
-                '<div style="color:var(--heading);font-weight:800;font-size:1.05rem;">' + mod.name + '</div>' +
+            '<div style="flex:1;min-width:0;">' +
+                '<div style="color:var(--heading);font-weight:800;font-size:1.02rem;">' + mod.name + '</div>' +
                 '<div style="color:var(--text-muted);font-size:0.75rem;">' + mod.subtitle + '</div>' +
             '</div>' +
-            (status.isPassed ? '<span style="color:' + mod.color + ';font-size:0.7rem;font-weight:700;padding:4px 10px;border:1px solid ' + mod.color + ';border-radius:8px;">PASSED ✅</span>' : '') +
+            (status.isPassed ? '<span style="color:' + mod.color + ';background:' + mod.color + '1a;font-size:0.68rem;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap;">Passed</span>' :
+                (status.isLocked ? '' : '<span style="color:var(--text-muted);background:var(--secondary);font-size:0.68rem;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap;">' + status.visitedCount + ' of ' + status.totalChannels + '</span>')) +
         '</div>';
 
         // Description
@@ -199,41 +223,47 @@ window.renderModules = function(container) {
 
         if (status.isLocked) {
             var reqMod = MODULES.find(function(m) { return m.id === mod.requires; });
-            html += '<div style="text-align:center;padding:12px;background:rgba(255,255,255,0.03);border-radius:10px;color:var(--text-faint);font-size:0.82rem;">' +
-                '🔒 Complete <strong>' + (reqMod ? reqMod.name : 'previous trail') + '</strong> to unlock this trail</div>';
+            html += '<div style="display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--secondary);border-radius:10px;color:var(--text-faint);font-size:0.82rem;">' +
+                '<i class="fa-solid fa-lock" style="font-size:0.85rem;"></i>' +
+                '<span>Complete <strong style="color:var(--text-muted);">' + (reqMod ? reqMod.name : 'previous trail') + '</strong> to unlock this trail</span></div>';
         } else {
             // Progress bar
-            html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">' +
-                '<div style="flex:1;background:rgba(255,255,255,0.1);border-radius:4px;height:8px;overflow:hidden;">' +
-                    '<div style="background:' + mod.color + ';height:100%;width:' + pct + '%;border-radius:4px;transition:0.3s;"></div>' +
-                '</div>' +
-                '<span style="color:var(--text-muted);font-size:0.75rem;font-weight:700;flex-shrink:0;">' + status.visitedCount + '/' + status.totalChannels + '</span>' +
+            html += '<div style="display:flex;justify-content:space-between;font-size:0.7rem;color:var(--text-faint);margin-bottom:4px;">' +
+                '<span>Progress</span><span style="font-weight:700;color:var(--text-muted);">' + status.visitedCount + ' / ' + status.totalChannels + '</span>' +
+            '</div>';
+            html += '<div style="background:rgba(255,255,255,0.08);border-radius:999px;height:6px;overflow:hidden;margin-bottom:12px;">' +
+                '<div style="background:' + mod.color + ';height:100%;width:' + pct + '%;border-radius:999px;transition:0.3s;"></div>' +
             '</div>';
 
             // Channel list
             html += '<div style="margin-bottom:12px;">';
+            var nextChannelId = (mod.channels.find(function(ch) { return status.visited.indexOf(ch.id) === -1; }) || {}).id;
             mod.channels.forEach(function(ch) {
                 var done = status.visited.indexOf(ch.id) !== -1;
-                html += '<div onclick="window._fromTrails=true;go(\'' + ch.id + '\')" style="display:flex;align-items:center;gap:10px;padding:8px 10px;margin-bottom:4px;border-radius:10px;cursor:pointer;transition:0.2s;border:1px solid transparent;" ' +
-                    'onmouseover="this.style.background=\'rgba(255,255,255,0.03)\';this.style.borderColor=\'var(--border)\'" ' +
-                    'onmouseout="this.style.background=\'none\';this.style.borderColor=\'transparent\'">' +
-                    '<span style="font-size:1rem;flex-shrink:0;">' + (done ? '✅' : '⬜') + '</span>' +
+                var isNext = !done && ch.id === nextChannelId;
+                html += '<div onclick="window._fromTrails=true;go(\'' + ch.id + '\')" style="display:flex;align-items:center;gap:10px;padding:8px 10px;margin-bottom:4px;border-radius:10px;cursor:pointer;transition:0.2s;border:1px solid transparent;' + (isNext ? 'background:var(--secondary);' : '') + '" ' +
+                    'onmouseover="this.style.borderColor=\'var(--border)\'" ' +
+                    'onmouseout="this.style.borderColor=\'transparent\'">' +
+                    '<span style="width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;' + (done ? 'background:' + mod.color + ';' : (isNext ? 'border:2px solid ' + mod.color + ';' : 'border:2px solid var(--border);')) + '">' +
+                        (done ? '<i class="fa-solid fa-check" style="font-size:0.6rem;color:#fff;"></i>' : '') +
+                    '</span>' +
                     '<div style="flex:1;min-width:0;">' +
                         '<div style="color:' + (done ? 'var(--text-faint)' : 'var(--text)') + ';font-size:0.85rem;font-weight:600;' + (done ? 'text-decoration:line-through;' : '') + '">' + ch.name + '</div>' +
                         '<div style="color:var(--text-faint);font-size:0.7rem;">' + ch.why + '</div>' +
                     '</div>' +
+                    (isNext ? '<i class="fa-solid fa-chevron-right" style="font-size:0.75rem;color:var(--text-faint);flex-shrink:0;"></i>' : '') +
                 '</div>';
             });
             html += '</div>';
 
             // Action button
             if (status.isPassed) {
-                html += '<button onclick="startTrailExam(\'' + mod.id + '\')" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:12px;color:var(--text-muted);font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;">🔄 Retake Trail Quest</button>';
+                html += '<button onclick="startTrailExam(\'' + mod.id + '\')" style="width:100%;padding:12px;background:var(--secondary);border:1px solid var(--border);border-radius:12px;color:var(--text-muted);font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;"><i class="fa-solid fa-rotate-right"></i>Retake trail quest</button>';
             } else if (status.isComplete) {
-                html += '<button onclick="startTrailExam(\'' + mod.id + '\')" style="width:100%;padding:14px;background:' + mod.color + ';border:none;border-radius:12px;color:#fff;font-size:0.95rem;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 4px 15px ' + mod.color + '40;">⚡ Take the ' + mod.name + ' Trail Quest (25 Questions)</button>';
+                html += '<button onclick="startTrailExam(\'' + mod.id + '\')" style="width:100%;padding:14px;background:' + mod.color + ';border:none;border-radius:12px;color:#fff;font-size:0.92rem;font-weight:800;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;">Take the ' + mod.name + ' trail quest (' + mod.questionsNeeded + ' questions) <i class="fa-solid fa-arrow-right"></i></button>';
             } else {
                 var nextChannel = mod.channels.find(function(ch) { return status.visited.indexOf(ch.id) === -1; });
-                html += '<button onclick="window._fromTrails=true;go(\'' + (nextChannel ? nextChannel.id : mod.channels[0].id) + '\')" style="width:100%;padding:14px;background:var(--accent);border:none;border-radius:12px;color:#fff;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:inherit;">📖 Continue: ' + (nextChannel ? nextChannel.name : mod.channels[0].name) + ' →</button>';
+                html += '<button onclick="window._fromTrails=true;go(\'' + (nextChannel ? nextChannel.id : mod.channels[0].id) + '\')" style="width:100%;padding:14px;background:var(--accent);border:none;border-radius:12px;color:#fff;font-size:0.92rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;">Continue: ' + (nextChannel ? nextChannel.name : mod.channels[0].name) + ' <i class="fa-solid fa-arrow-right"></i></button>';
             }
         }
 

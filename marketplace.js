@@ -35,7 +35,7 @@ function showMarketRules(force) {
     for (var i = 0; i < MARKETPLACE_RULES.length; i++) {
         var r = MARKETPLACE_RULES[i];
         html += '<div style="display:flex;gap:10px;margin-bottom:12px;align-items:flex-start;">' +
-            '<span style="font-size:1.2rem;flex-shrink:0;margin-top:2px;">' + r.emoji + '</span>' +
+            '<span style="width:28px;flex-shrink:0;margin-top:2px;color:var(--accent);font-size:0.95rem;display:flex;align-items:center;justify-content:center;">' + r.emoji + '</span>' +
             '<div>' +
                 '<div style="color:var(--heading);font-size:0.85rem;font-weight:700;margin-bottom:2px;">' + r.title + '</div>' +
                 '<div style="color:var(--text-muted);font-size:0.8rem;line-height:1.4;">' + r.desc + '</div>' +
@@ -260,9 +260,14 @@ function _actualRenderMarketplace(options) {
 
     // Header
     var html = '<div style="max-width:900px;margin:0 auto;padding:16px;">';
-    html += '<div class="channel-logos" style="display:flex;justify-content:center;gap:20px;margin-bottom:20px;">' + 
-        '<img src="images/btc-grad-logo-sm.jpg" alt="Home" class="channel-logo-img" onclick="goHome()" style="width:50px;height:50px;border-radius:50%;cursor:pointer;box-shadow:0 0 15px rgba(247,147,26,0.3);object-fit:cover;" title="Home">' + 
-        '<span class="donate-circle" onclick="showDonateModal()" style="width:50px;height:50px;background:#f7931a;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 15px rgba(247,147,26,0.3);"><svg viewBox="0 0 64 64" width="32" height="32"><polygon points="36,10 22,38 30,38 28,54 42,26 34,26" fill="#fff"/></svg></span>' + 
+    html += '<div style="display:flex;justify-content:center;gap:16px;margin-bottom:20px;align-items:center;">' +
+        '<div onclick="goHome()" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:6px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;transition:border-color 0.2s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">' +
+            '<svg viewBox="0 0 64 64" width="22" height="22"><circle cx="32" cy="32" r="30" fill="#f7931a"/><g transform="rotate(14,32,32)"><text x="32" y="44" text-anchor="middle" font-size="36" font-weight="bold" fill="#fff" font-family="Arial,sans-serif">B</text><line x1="28" y1="12" x2="28" y2="52" stroke="#fff" stroke-width="3"/><line x1="36" y1="12" x2="36" y2="52" stroke="#fff" stroke-width="3"/></g></svg>' +
+            '<span style="font-size:0.72rem;font-weight:700;color:var(--text-muted);">Home</span>' +
+        '</div>' +
+        '<button onclick="showDonateModal()" style="display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--accent-bg);border:1px solid var(--accent-glow);border-radius:10px;color:var(--accent);font-size:0.72rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.18s;" onmouseover="this.style.background=\'var(--accent)\';this.style.color=\'#fff\'" onmouseout="this.style.background=\'var(--accent-bg)\';this.style.color=\'var(--accent)\'">' +
+            '<i class="fa-solid fa-bolt"></i> Donate' +
+        '</button>' +
         '</div>';
 
     // Top bar
