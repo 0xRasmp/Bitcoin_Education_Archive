@@ -2713,18 +2713,18 @@ window.beatsRenderLibrary = function() {
 
     var section = window._beatsLibrarySection || 'liked';
     var hasUploads = auth && auth.currentUser;
-    var btnStyle = 'padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card-bg);font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;color:var(--text-muted);';
+    var btnStyle = 'display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:12px;border:1px solid var(--border);background:var(--card-bg);font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit;transition:0.18s;color:var(--text-muted);';
 
-    var html = '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;">';
+    var html = '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);">';
     [
-        { id: 'liked', label: '❤️ Liked', show: true },
-        { id: 'playlists', label: '📋 Playlists', show: true },
-        { id: 'uploads', label: '🎸 My Uploads', show: !!hasUploads },
-        { id: 'recent', label: '🕐 Recent', show: true }
+        { id: 'liked', icon: 'fa-solid fa-heart', label: 'Liked', show: true },
+        { id: 'playlists', icon: 'fa-solid fa-list-ul', label: 'Playlists', show: true },
+        { id: 'uploads', icon: 'fa-solid fa-cloud-arrow-up', label: 'My Uploads', show: !!hasUploads },
+        { id: 'recent', icon: 'fa-regular fa-clock', label: 'Recent', show: true }
     ].forEach(function(s) {
         if (!s.show) return;
         var active = section === s.id;
-        html += '<button onclick="window._beatsLibrarySection=\'' + s.id + '\';beatsRenderLibrary()" style="' + btnStyle + (active ? 'border-color:var(--accent);background:var(--accent);color:#fff;' : '') + '">' + s.label + '</button>';
+        html += '<button onclick="window._beatsLibrarySection=\'' + s.id + '\';beatsRenderLibrary()" style="' + btnStyle + (active ? 'border-color:var(--accent);background:var(--accent);color:#fff;box-shadow:0 2px 10px rgba(247,147,26,0.3);' : '') + '"><i class="' + s.icon + '"></i>' + s.label + '</button>';
     });
     html += '</div>';
 
@@ -2799,7 +2799,7 @@ window.beatsLoadLikedTracks = function() {
         console.warn('[beats] liked-tracks server query failed:', err && err.message);
         // Fall back to localStorage-only path
         if (localLiked.length === 0) {
-            el.innerHTML = '<div style="text-align:center;padding:30px;"><div style="font-size:2rem;margin-bottom:8px;">❤️</div><div style="color:var(--text-muted);font-weight:600;">No liked tracks yet</div><div style="color:var(--text-faint);font-size:0.8rem;margin-top:4px;">Hit the ❤️ on tracks you love!</div></div>';
+            el.innerHTML = '<div style="text-align:center;padding:48px 20px;"><div style="width:64px;height:64px;border-radius:50%;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;"><i class="fa-solid fa-heart" style="font-size:1.5rem;color:var(--accent);"></i></div><div style="color:var(--heading);font-weight:700;font-size:0.95rem;margin-bottom:4px;">No liked tracks yet</div><div style="color:var(--text-faint);font-size:0.8rem;margin-bottom:16px;">Tap the heart on any track to save it here</div><button onclick="beatsTab(\'discover\')" style="padding:9px 18px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit;">Browse Discover</button></div>';
             return;
         }
         db.collection('beats_tracks').where(firebase.firestore.FieldPath.documentId(), 'in', localLiked.slice(0, 30)).get().then(function(snap) {
@@ -2807,7 +2807,7 @@ window.beatsLoadLikedTracks = function() {
             snap.forEach(function(doc) { tracks.push(Object.assign({ id: doc.id }, doc.data())); });
             window._beatsQueue = tracks;
             if (tracks.length === 0) {
-                el.innerHTML = '<div style="text-align:center;padding:30px;"><div style="font-size:2rem;margin-bottom:8px;">❤️</div><div style="color:var(--text-muted);font-weight:600;">No liked tracks yet</div><div style="color:var(--text-faint);font-size:0.8rem;margin-top:4px;">Hit the ❤️ on tracks you love!</div></div>';
+                el.innerHTML = '<div style="text-align:center;padding:48px 20px;"><div style="width:64px;height:64px;border-radius:50%;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;"><i class="fa-solid fa-heart" style="font-size:1.5rem;color:var(--accent);"></i></div><div style="color:var(--heading);font-weight:700;font-size:0.95rem;margin-bottom:4px;">No liked tracks yet</div><div style="color:var(--text-faint);font-size:0.8rem;margin-bottom:16px;">Tap the heart on any track to save it here</div><button onclick="beatsTab(\'discover\')" style="padding:9px 18px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit;">Browse Discover</button></div>';
             } else {
                 beatsRenderTrackList(el, tracks, true);
             }
@@ -2823,7 +2823,7 @@ function _renderLikedTracks(el, trackMap, serverIds, localLiked) {
     localLiked.forEach(function(id) { if (trackMap[id] && !seen[id]) { ordered.push(trackMap[id]); seen[id] = true; } });
 
     if (ordered.length === 0) {
-        el.innerHTML = '<div style="text-align:center;padding:30px;"><div style="font-size:2rem;margin-bottom:8px;">❤️</div><div style="color:var(--text-muted);font-weight:600;">No liked tracks yet</div><div style="color:var(--text-faint);font-size:0.8rem;margin-top:4px;">Hit the ❤️ on tracks you love!</div></div>';
+        el.innerHTML = '<div style="text-align:center;padding:48px 20px;"><div style="width:64px;height:64px;border-radius:50%;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;"><i class="fa-solid fa-heart" style="font-size:1.5rem;color:var(--accent);"></i></div><div style="color:var(--heading);font-weight:700;font-size:0.95rem;margin-bottom:4px;">No liked tracks yet</div><div style="color:var(--text-faint);font-size:0.8rem;margin-bottom:16px;">Tap the heart on any track to save it here</div><button onclick="beatsTab(\'discover\')" style="padding:9px 18px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit;">Browse Discover</button></div>';
         return;
     }
     window._beatsQueue = ordered;
