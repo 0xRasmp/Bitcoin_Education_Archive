@@ -2248,6 +2248,12 @@ if (document.readyState === 'loading') {
         try {
             var saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
             if (saved && typeof saved.left === 'number' && typeof saved.bottom === 'number') {
+                if (typeof saved.vw !== 'number' || Math.abs(window.innerWidth - saved.vw) > 80) {
+                    localStorage.removeItem(STORAGE_KEY);
+                    var c0 = getContainer();
+                    if (c0) { c0.style.left = ''; c0.style.bottom = ''; c0.style.top = ''; c0.style.right = ''; }
+                    return;
+                }
                 var c = getContainer();
                 if (c) {
                     // Clamp to viewport
@@ -2267,7 +2273,7 @@ if (document.readyState === 'loading') {
 
     function savePosition(left, bottom) {
         try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify({ left: left, bottom: bottom }));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ left: left, bottom: bottom, vw: window.innerWidth }));
         } catch(e) {}
     }
 

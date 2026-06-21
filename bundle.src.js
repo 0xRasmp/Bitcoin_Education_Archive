@@ -14961,6 +14961,12 @@ if (document.readyState === 'loading') {
         try {
             var saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
             if (saved && typeof saved.left === 'number' && typeof saved.bottom === 'number') {
+                if (typeof saved.vw !== 'number' || Math.abs(window.innerWidth - saved.vw) > 80) {
+                    localStorage.removeItem(STORAGE_KEY);
+                    var c0 = getContainer();
+                    if (c0) { c0.style.left = ''; c0.style.bottom = ''; c0.style.top = ''; c0.style.right = ''; }
+                    return;
+                }
                 var c = getContainer();
                 if (c) {
                     // Clamp to viewport
@@ -14980,7 +14986,7 @@ if (document.readyState === 'loading') {
 
     function savePosition(left, bottom) {
         try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify({ left: left, bottom: bottom }));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ left: left, bottom: bottom, vw: window.innerWidth }));
         } catch(e) {}
     }
 
@@ -29620,6 +29626,15 @@ window._startHalvingTicker = function() {
         }
     }
 
+    // Keep the mobile top bar in sync with the actual viewport on resize.
+    // Without this, an inline style.display set while at mobile width (e.g. from goHome())
+    // never gets cleared when resizing back up to desktop, leaving a leftover bar.
+    window.addEventListener('resize', function() {
+        var mbar = document.querySelector('.mobile-bar');
+        if (!mbar || window._nachoMode) return; // Nacho Mode always hides it regardless of width
+        mbar.style.display = isMobile() ? 'flex' : 'none';
+    });
+
     function toggleSidebarCollapse() {
         var sidebar = document.getElementById('sidebar');
         if (!sidebar) return;
@@ -32326,6 +32341,9 @@ window.nachoQuizAnswer = function(btn, correct) {
             if (mbar) mbar.style.display = 'flex';
             // Re-populate user info in mobile bar
             if (typeof updateRankUI === 'function') updateRankUI();
+        } else {
+            var mbarDesktop = document.querySelector('.mobile-bar');
+            if (mbarDesktop) mbarDesktop.style.display = 'none';
         }
         // Show continue reading
         showContinueReading();
@@ -33050,6 +33068,7 @@ window.nachoQuizAnswer = function(btn, correct) {
             if (fc) { fc.style.display = 'block'; }
             if (!fromPopState) history.pushState({ channel: id }, '', _cleanUrl(id));
             if (isMobile()) { document.getElementById('sidebar').classList.remove('open'); }
+            else { var _mbarReset = document.querySelector('.mobile-bar'); if (_mbarReset) _mbarReset.style.display = 'none'; }
             
             // Route to correct renderer (with retry for lazy-loaded scripts)
             function _routeApp(id, attempt) {
