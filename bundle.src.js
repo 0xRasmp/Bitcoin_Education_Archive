@@ -26702,7 +26702,7 @@ window.setFloatingElementsVisible = function(visible) {
         if (el) el.style.display = visible ? '' : 'none';
     });
     var mbar = document.querySelector('.mobile-bar');
-    if (mbar) mbar.style.display = visible ? 'flex' : 'none';
+    if (mbar) mbar.style.display = (visible && window.innerWidth <= 900) ? 'flex' : 'none';
 };
 
 // ========== CELEBRATION SYSTEM ==========
