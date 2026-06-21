@@ -669,11 +669,12 @@ window.beatsBulkFileChange = function(input) {
         var html = '';
         for (var i = 0; i < files.length; i++) {
             var name = files[i].name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/^\d+\s*/, '');
-            html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:8px 10px;" draggable="true" data-idx="' + i + '" ondragstart="event.dataTransfer.setData(\'text/plain\',\'' + i + '\')" ondragover="event.preventDefault();this.style.borderColor=\'var(--accent)\'" ondragleave="this.style.borderColor=\'var(--border)\'" ondrop="beatsBulkReorder(event,\'' + i + '\')">' +
-                '<span style="color:var(--text-faint);font-size:0.75rem;font-weight:700;width:24px;text-align:center;flex-shrink:0;">' + (i + 1) + '</span>' +
+            html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:8px 10px;cursor:grab;" draggable="true" data-idx="' + i + '" ondragstart="event.dataTransfer.setData(\'text/plain\',\'' + i + '\')" ondragover="event.preventDefault();this.style.borderColor=\'var(--accent)\'" ondragleave="this.style.borderColor=\'var(--border)\'" ondrop="beatsBulkReorder(event,\'' + i + '\')">' +
+                '<i class="fa-solid fa-grip-vertical" style="color:var(--text-faint);font-size:0.7rem;flex-shrink:0;"></i>' +
+                '<span style="color:var(--text-faint);font-size:0.75rem;font-weight:700;width:20px;text-align:center;flex-shrink:0;">' + (i + 1) + '</span>' +
                 '<input type="text" value="' + (typeof escapeHtml === 'function' ? escapeHtml(name) : name).replace(/"/g, '&quot;') + '" maxlength="100" class="beats-bulk-title" data-idx="' + i + '" style="flex:1;padding:6px 10px;background:transparent;border:1px solid transparent;border-radius:8px;color:var(--text);font-size:0.82rem;font-family:inherit;" onfocus="this.style.borderColor=\'var(--accent)\'" onblur="this.style.borderColor=\'transparent\'">' +
                 '<span style="color:var(--text-faint);font-size:0.6rem;">' + (files[i].size / (1024 * 1024)).toFixed(1) + 'MB</span>' +
-                '<button onclick="beatsBulkRemove(' + i + ')" style="background:none;border:none;color:var(--text-faint);font-size:0.9rem;cursor:pointer;padding:2px 6px;">✕</button>' +
+                '<button onclick="beatsBulkRemove(' + i + ')" style="background:none;border:none;color:var(--text-faint);font-size:0.85rem;cursor:pointer;padding:4px 8px;border-radius:6px;transition:0.15s;" onmouseover="this.style.color=\'#ef4444\';this.style.background=\'rgba(239,68,68,0.1)\'" onmouseout="this.style.color=\'var(--text-faint)\';this.style.background=\'none\'"><i class="fa-solid fa-xmark"></i></button>' +
             '</div>';
         }
         tracksEl.innerHTML = html;
@@ -1517,10 +1518,22 @@ window.beatsRenderUpload = function() {
     var listEl = document.getElementById('beatsTrackList');
     if (!listEl) return;
 
+    if (!document.getElementById('beatsUploadCSS')) {
+        var upCss = document.createElement('style');
+        upCss.id = 'beatsUploadCSS';
+        upCss.textContent = '#beatsUpFile::-webkit-file-upload-button,#beatsUpFile::file-selector-button{background:var(--accent);color:#fff;border:none;padding:9px 16px;border-radius:8px;font-weight:700;font-size:0.8rem;font-family:inherit;cursor:pointer;margin-right:12px;transition:filter 0.15s;}' +
+            '#beatsUpFile::-webkit-file-upload-button:hover,#beatsUpFile::file-selector-button:hover{filter:brightness(1.1);}' +
+            '.beats-upload-dropzone{transition:border-color 0.2s;}' +
+            '.beats-upload-dropzone:hover{border-color:var(--accent);}';
+        document.head.appendChild(upCss);
+    }
+
     listEl.innerHTML =
         '<div style="text-align:center;animation:fadeSlideIn 0.4s ease-out;padding:40px 20px;">' +
             '<div style="margin-bottom:20px;">' +
-                '<div style="font-size:3.5rem;margin-bottom:16px;animation:beatsPulse 2s infinite;filter:drop-shadow(0 0 12px var(--accent));">🎸</div>' +
+                '<div style="width:72px;height:72px;border-radius:50%;background:var(--accent-bg);border:1px solid var(--accent-glow);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;animation:beatsPulse 2s infinite;">' +
+                    '<i class="fa-solid fa-cloud-arrow-up" style="font-size:1.8rem;color:var(--accent);"></i>' +
+                '</div>' +
                 '<div style="color:var(--heading);font-weight:800;font-size:1.5rem;margin-bottom:8px;">Upload Music</div>' +
                 '<div style="color:var(--text-faint);font-size:0.9rem;margin-bottom:24px;">Upload a single track or an entire album/EP (up to 20 songs at once).</div>' +
             '</div>' +
@@ -1529,17 +1542,21 @@ window.beatsRenderUpload = function() {
             '<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:28px;max-width:520px;margin:0 auto;">' +
 
                 // Audio files — multiple
-                '<label style="display:block;font-size:0.75rem;color:var(--text-faint);margin-bottom:4px;">Audio Files * (up to 20 — MP3, WAV, FLAC, OGG, AAC — max 50MB each)</label>' +
-                '<input type="file" id="beatsUpFile" multiple accept="audio/mpeg,audio/mp3,audio/wav,audio/x-wav,audio/flac,audio/ogg,audio/aac,audio/mp4,audio/x-m4a" style="width:100%;padding:10px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.85rem;margin-bottom:8px;box-sizing:border-box;" onchange="beatsBulkFileChange(this)">' +
-                '<div id="beatsBulkCount" style="font-size:0.7rem;color:var(--text-faint);margin-bottom:12px;"></div>' +
+                '<label style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--text-faint);margin-bottom:8px;">Audio Files *</label>' +
+                '<div class="beats-upload-dropzone" style="border:2px dashed var(--border);border-radius:14px;padding:22px 16px;text-align:center;margin-bottom:6px;background:var(--input-bg);">' +
+                    '<i class="fa-solid fa-cloud-arrow-up" style="font-size:1.5rem;color:var(--accent);display:block;margin-bottom:10px;"></i>' +
+                    '<input type="file" id="beatsUpFile" multiple accept="audio/mpeg,audio/mp3,audio/wav,audio/x-wav,audio/flac,audio/ogg,audio/aac,audio/mp4,audio/x-m4a" style="width:100%;background:none;border:none;color:var(--text-muted);font-size:0.78rem;font-family:inherit;" onchange="beatsBulkFileChange(this)">' +
+                    '<div style="color:var(--text-faint);font-size:0.68rem;margin-top:8px;">Up to 20 files — MP3, WAV, FLAC, OGG, AAC — max 50MB each</div>' +
+                '</div>' +
+                '<div id="beatsBulkCount" style="font-size:0.7rem;color:var(--accent);font-weight:700;margin-bottom:12px;"></div>' +
 
                 // Album/EP grouping (appears when 2+ files selected)
                 '<div id="beatsBulkGroup" style="display:none;background:linear-gradient(135deg,rgba(99,102,241,0.06),rgba(247,147,26,0.04));border:1px solid rgba(99,102,241,0.2);border-radius:14px;padding:16px;margin-bottom:16px;">' +
-                    '<div style="color:var(--heading);font-weight:700;font-size:0.85rem;margin-bottom:10px;">📀 Group these tracks</div>' +
+                    '<div style="display:flex;align-items:center;gap:8px;color:var(--heading);font-weight:700;font-size:0.85rem;margin-bottom:10px;"><i class="fa-solid fa-layer-group" style="color:var(--accent);"></i>Group these tracks</div>' +
                     '<div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;">' +
-                        '<button onclick="beatsBulkSetType(\'single\')" id="beatsBulkTypeSingle" class="beats-bulk-type-btn" style="padding:8px 16px;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit;border:1px solid var(--border);background:var(--card-bg);color:var(--text-muted);">🎵 Singles</button>' +
-                        '<button onclick="beatsBulkSetType(\'ep\')" id="beatsBulkTypeEp" class="beats-bulk-type-btn" style="padding:8px 16px;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit;border:1px solid var(--border);background:var(--card-bg);color:var(--text-muted);">💿 EP</button>' +
-                        '<button onclick="beatsBulkSetType(\'album\')" id="beatsBulkTypeAlbum" class="beats-bulk-type-btn" style="padding:8px 16px;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit;border:1px solid var(--border);background:var(--card-bg);color:var(--text-muted);">📀 Album</button>' +
+                        '<button onclick="beatsBulkSetType(\'single\')" id="beatsBulkTypeSingle" class="beats-bulk-type-btn" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit;border:1px solid var(--border);background:var(--card-bg);color:var(--text-muted);"><i class="fa-solid fa-music"></i>Singles</button>' +
+                        '<button onclick="beatsBulkSetType(\'ep\')" id="beatsBulkTypeEp" class="beats-bulk-type-btn" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit;border:1px solid var(--border);background:var(--card-bg);color:var(--text-muted);"><i class="fa-solid fa-compact-disc"></i>EP</button>' +
+                        '<button onclick="beatsBulkSetType(\'album\')" id="beatsBulkTypeAlbum" class="beats-bulk-type-btn" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit;border:1px solid var(--border);background:var(--card-bg);color:var(--text-muted);"><i class="fa-solid fa-record-vinyl"></i>Album</button>' +
                     '</div>' +
                     '<div id="beatsBulkAlbumFields" style="display:none;">' +
                         '<label style="display:block;font-size:0.72rem;color:var(--text-faint);margin-bottom:4px;">Album / EP Title *</label>' +
@@ -1576,8 +1593,8 @@ window.beatsRenderUpload = function() {
                 // Cover art
                 '<label style="display:block;font-size:0.75rem;color:var(--text-faint);margin-bottom:4px;">Cover Art (JPG, PNG, WebP — max 2MB)</label>' +
                 '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">' +
-                    '<div id="beatsCoverPreview" style="width:64px;height:64px;border-radius:10px;border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;background:var(--card-bg);cursor:pointer;" onclick="document.getElementById(\'beatsUpCover\').click()">' +
-                        '<span style="font-size:1.5rem;color:var(--text-faint);">🎨</span>' +
+                    '<div id="beatsCoverPreview" style="width:64px;height:64px;border-radius:10px;border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;background:var(--card-bg);cursor:pointer;transition:border-color 0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'" onclick="document.getElementById(\'beatsUpCover\').click()">' +
+                        '<i class="fa-solid fa-image" style="font-size:1.2rem;color:var(--text-faint);"></i>' +
                     '</div>' +
                     '<div style="flex:1;">' +
                         '<input type="file" id="beatsUpCover" accept="image/jpeg,image/jpg,image/png,image/webp,image/gif" style="width:100%;padding:8px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.8rem;box-sizing:border-box;" onchange="var f=this.files[0];if(f){var r=new FileReader();r.onload=function(e){var p=document.getElementById(\'beatsCoverPreview\');if(p)p.innerHTML=\'<img src=\\\'\'+e.target.result+\'\\\' style=\\\'width:100%;height:100%;object-fit:cover;\\\'>\';};r.readAsDataURL(f);}">' +
@@ -1603,8 +1620,8 @@ window.beatsRenderUpload = function() {
 
             // Copyright notice + Info
             '<div style="margin-top:20px;max-width:520px;margin-left:auto;margin-right:auto;">' +
-                '<button onclick="var d=document.getElementById(\'beatsCopyrightDetails\');d.style.display=d.style.display===\'none\'?\'block\':\'none\';this.querySelector(\'span\').textContent=d.style.display===\'none\'?\'▸\':\'▾\'" style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.2);border-radius:10px;color:#eab308;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;width:100%;text-align:left;">' +
-                    '⚠️ Copyright Notice <span style="margin-left:auto;">▸</span>' +
+                '<button onclick="var d=document.getElementById(\'beatsCopyrightDetails\');d.style.display=d.style.display===\'none\'?\'block\':\'none\';this.querySelector(\'span\').textContent=d.style.display===\'none\'?\'▸\':\'▾\'" style="display:flex;align-items:center;gap:8px;padding:8px 14px;background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.2);border-radius:10px;color:#eab308;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;width:100%;text-align:left;">' +
+                    '<i class="fa-solid fa-triangle-exclamation"></i> Copyright Notice <span style="margin-left:auto;">▸</span>' +
                 '</button>' +
                 '<div id="beatsCopyrightDetails" style="display:none;padding:10px 14px;margin-top:4px;background:rgba(234,179,8,0.05);border:1px solid rgba(234,179,8,0.15);border-radius:0 0 10px 10px;font-size:0.73rem;color:#eab308;line-height:1.5;">' +
                     'By uploading music, you confirm you own the rights or have permission to share it. Copyrighted material uploaded without authorization will be removed. Bitcoin Education Archive is not responsible for user-uploaded content.' +
@@ -1614,14 +1631,14 @@ window.beatsRenderUpload = function() {
                     '</div>' +
                 '</div>' +
             '</div>' +
-            '<div style="margin-top:16px;padding:20px;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;text-align:center;">' +
-                '<h3 style="color:var(--heading);font-weight:800;font-size:0.95rem;margin-bottom:12px;">Tips for Uploading</h3>' +
-                '<div style="color:var(--text-faint);font-size:0.75rem;line-height:1.5;">' +
-                    '<p><strong>✅ Supported formats:</strong> MP3, WAV, FLAC, OGG, AAC (max 50MB each)</p>' +
-                    '<p><strong>✅ Batch upload:</strong> Select up to 20 files and group as Album or EP</p>' +
-                    '<p><strong>✅ Rewards:</strong> +25 XP + 🎟️ 10 Orange Tickets per track</p>' +
-                    '<p><strong>✅ Visibility:</strong> Your tracks will be publicly available to all users</p>' +
-                    '<p><strong>⚠️ Copyright:</strong> Only upload music you own or have permission to share</p>' +
+            '<div style="margin-top:16px;padding:20px;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;text-align:left;">' +
+                '<h3 style="color:var(--heading);font-weight:800;font-size:0.95rem;margin-bottom:14px;text-align:center;">Tips for Uploading</h3>' +
+                '<div style="display:flex;flex-direction:column;gap:10px;">' +
+                    '<div style="display:flex;align-items:flex-start;gap:10px;"><i class="fa-solid fa-circle-check" style="color:#22c55e;margin-top:2px;flex-shrink:0;"></i><div style="color:var(--text-muted);font-size:0.8rem;line-height:1.5;"><strong style="color:var(--text);">Supported formats:</strong> MP3, WAV, FLAC, OGG, AAC (max 50MB each)</div></div>' +
+                    '<div style="display:flex;align-items:flex-start;gap:10px;"><i class="fa-solid fa-circle-check" style="color:#22c55e;margin-top:2px;flex-shrink:0;"></i><div style="color:var(--text-muted);font-size:0.8rem;line-height:1.5;"><strong style="color:var(--text);">Batch upload:</strong> Select up to 20 files and group as Album or EP</div></div>' +
+                    '<div style="display:flex;align-items:flex-start;gap:10px;"><i class="fa-solid fa-circle-check" style="color:#22c55e;margin-top:2px;flex-shrink:0;"></i><div style="color:var(--text-muted);font-size:0.8rem;line-height:1.5;"><strong style="color:var(--text);">Rewards:</strong> +25 XP + 10 Orange Tickets per track</div></div>' +
+                    '<div style="display:flex;align-items:flex-start;gap:10px;"><i class="fa-solid fa-circle-check" style="color:#22c55e;margin-top:2px;flex-shrink:0;"></i><div style="color:var(--text-muted);font-size:0.8rem;line-height:1.5;"><strong style="color:var(--text);">Visibility:</strong> Your tracks will be publicly available to all users</div></div>' +
+                    '<div style="display:flex;align-items:flex-start;gap:10px;"><i class="fa-solid fa-triangle-exclamation" style="color:#eab308;margin-top:2px;flex-shrink:0;"></i><div style="color:var(--text-muted);font-size:0.8rem;line-height:1.5;"><strong style="color:var(--text);">Copyright:</strong> Only upload music you own or have permission to share</div></div>' +
                 '</div>' +
             '</div>' +
         '</div>' +
