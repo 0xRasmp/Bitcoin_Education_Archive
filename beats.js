@@ -206,7 +206,7 @@ window.beatsShowGlobalPlayer = function() {
         var playerH = 80; // approx player height
         var navH = 56;
         var baseBottom = navH + playerH;
-        ['chatOverlayBtn', 'aiToolsBtn', 'lbFloatBtn', 'dashboardFloatBtn'].forEach(function(id) {
+        ['chatOverlayBtn', 'aiToolsBtn', 'lbFloatBtn', 'dashboardFloatBtn', 'backToTop', 'scrollToBottom'].forEach(function(id) {
             var el = document.getElementById(id);
             if (el) el.style.bottom = (baseBottom + 10) + 'px';
         });
@@ -257,7 +257,7 @@ window.beatsClosePlayer = function() {
     window._beatsQueueIdx = -1;
     // Reset floating button positions on mobile
     if (window.innerWidth <= 900) {
-        ['chatOverlayBtn', 'aiToolsBtn', 'lbFloatBtn', 'dashboardFloatBtn'].forEach(function(id) {
+        ['chatOverlayBtn', 'aiToolsBtn', 'lbFloatBtn', 'dashboardFloatBtn', 'backToTop', 'scrollToBottom'].forEach(function(id) {
             var el = document.getElementById(id);
             if (el) el.style.bottom = '';
         });
@@ -1255,6 +1255,9 @@ window.beatsTrackMenu = function(trackId, idx) {
         '<div style="width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;"></div>' +
         '<div style="color:var(--heading);font-weight:700;font-size:0.9rem;margin-bottom:4px;">' + escapeHtml(track.title || 'Untitled') + '</div>' +
         '<div style="color:var(--text-faint);font-size:0.75rem;margin-bottom:16px;">' + escapeHtml(track.artist || 'Unknown') + '</div>';
+
+    html += '<button onclick="document.getElementById(\'beatsMenuOverlay\').remove();beatsShowComments(\'' + trackId + '\')" style="width:100%;padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:0.9rem;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:8px;">💬 Comments</button>';
+    html += '<button onclick="document.getElementById(\'beatsMenuOverlay\').remove();beatsShareTrack(\'' + trackId + '\',\'' + escapeHtml(track.title || 'Track').replace(/[\\'"]/g, "") + '\')" style="width:100%;padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:0.9rem;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:8px;">🔗 Share</button>';
 
     // Add to playlist (for signed-in users)
     if (auth && auth.currentUser && !auth.currentUser.isAnonymous) {

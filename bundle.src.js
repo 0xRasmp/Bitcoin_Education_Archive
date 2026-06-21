@@ -30577,6 +30577,8 @@ window._startHalvingTicker = function() {
     window._nachoModeEarnings = { points: 0, badges: [], interactions: 0 };
 
     window.enterNachoMode = function(fromPopState) {
+        // Guard against double-call on hard refresh (handleHash + onload both fire)
+        if (window._nachoMode && document.getElementById('nachoModeScreen')) return;
         window._nachoMode = true;
         window._nachoBusy = true; // suppress ALL popups
         window._nachoModeEarnings = { points: 0, badges: [], interactions: 0 };
@@ -30634,14 +30636,14 @@ window._startHalvingTicker = function() {
         var micHtml = hasSpeech ?
             '<button id="nachoModeMic" onclick="nachoModeVoice()" style="position:absolute;right:60px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:1.2rem;cursor:pointer;padding:4px;opacity:0.6;transition:0.2s;touch-action:manipulation;" title="Voice input">🎙️</button>' : '';
 
-        // Init chat history from localStorage
-        window._nachoChatHistory = safeJSON('btc_nacho_chat', []);
-        window._nachoSentHistory = safeJSON('btc_nacho_sent', []);
+        // Init chat history from localStorage (guard against double-init on refresh)
+        window._nachoChatHistory = window._nachoChatHistory || safeJSON('btc_nacho_chat', []);
+        window._nachoSentHistory = window._nachoSentHistory || safeJSON('btc_nacho_sent', []);
         window._nachoSentIdx = -1;
 
         var screen = document.createElement('div');
         screen.id = 'nachoModeScreen';
-        screen.style.cssText = 'display:flex;flex-direction:column;height:calc(100vh - 32px);margin-top:32px;animation:fadeSlideIn 0.4s ease-out;position:relative;z-index:9999;';
+        screen.style.cssText = 'display:flex;flex-direction:column;animation:fadeSlideIn 0.4s ease-out;position:fixed;inset:0;z-index:9999;background:var(--bg);';
         screen.innerHTML =
             '<style>' +
                 '@keyframes nachoModeBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }' +
@@ -30666,7 +30668,7 @@ window._startHalvingTicker = function() {
                 '@media(max-width:768px){.nm-hero-avatar{width:36px!important;height:36px!important;}.nm-hero-avatar img{width:36px!important;height:36px!important;}.nm-hero-title{font-size:0.9rem!important;letter-spacing:2px!important;}.nm-hero-bar{gap:4px!important;}}' +
             '</style>' +
             /* ===== COMPACT HEADER ===== */
-            '<div style="flex-shrink:0;background:linear-gradient(180deg,rgba(247,147,26,0.06) 0%,transparent 100%);border-bottom:1px solid var(--border);padding:8px 12px;position:relative;">' +
+            '<div style="flex-shrink:0;background:var(--bg-side);border-bottom:1px solid var(--border);padding:8px 12px;position:relative;padding-top:calc(8px + env(safe-area-inset-top, 0px));">' +
                 '<div style="display:flex;align-items:center;justify-content:space-between;">' +
                     /* Left: back + avatar + title */
                     '<div style="display:flex;align-items:center;gap:8px;">' +
@@ -30690,7 +30692,7 @@ window._startHalvingTicker = function() {
                 '</div>' +
             '</div>' +
             /* ===== CHAT AREA ===== */
-            '<div id="nachoModeChat" style="flex:1;"></div>' +
+            '<div id="nachoModeChat" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;"></div>' +
             /* Input bar */
             '<div style="flex-shrink:0;padding:12px 16px;border-top:1px solid var(--border);background:var(--bg-side,#0a0a0a);">' +
                 '<div style="max-width:500px;margin:0 auto;position:relative;">' +
@@ -30708,7 +30710,9 @@ window._startHalvingTicker = function() {
         setTimeout(function() {
             var chat = document.getElementById('nachoModeChat');
             if (chat) chat.scrollTop = chat.scrollHeight;
-        }, 100);
+            // Re-render welcome if chat is still empty after scroll (guards against race on refresh)
+            if (chat && chat.innerHTML.trim() === '') nachoChatRender();
+        }, 150);
         updateNachoModeFriendship();
 
         // Set ELI5 button state
@@ -30822,18 +30826,18 @@ window._startHalvingTicker = function() {
     function nachoTopicChips() {
         // Ordered to guide beginners: understand → believe → act
         var chips = [
-            { emoji: '📘', label: 'What is Bitcoin?', q: 'What is Bitcoin and what problem does it solve?' },
-            { emoji: '💰', label: 'Why Bitcoin?', q: 'Why is Bitcoin better than regular money and why should I care?' },
-            { emoji: '🔒', label: '21 Million', q: 'Why is the 21 million cap important and why can\'t it be changed?' },
-            { emoji: '🛒', label: 'How to Buy', q: 'How do I buy my first Bitcoin and start stacking sats?' },
-            { emoji: '🔑', label: 'Self-Custody', q: 'What is self-custody and why is it the most important thing in Bitcoin?' },
-            { emoji: '⚡', label: 'Lightning', q: 'What is the Lightning Network and how does it make Bitcoin faster?' },
-            { emoji: '🪙', label: 'Why Not Altcoins?', q: 'Why do Bitcoiners only focus on Bitcoin and not other cryptocurrencies?' },
-            { emoji: '🌍', label: 'Fix the World', q: 'How is Bitcoin actually changing the world for the better?' },
+            { icon: 'fa-solid fa-circle-question', label: 'What is Bitcoin?', q: 'What is Bitcoin and what problem does it solve?' },
+            { icon: 'fa-solid fa-bolt', label: 'Why Bitcoin?', q: 'Why is Bitcoin better than regular money and why should I care?' },
+            { icon: 'fa-solid fa-lock', label: '21 Million', q: 'Why is the 21 million cap important and why can\'t it be changed?' },
+            { icon: 'fa-solid fa-cart-shopping', label: 'How to Buy', q: 'How do I buy my first Bitcoin and start stacking sats?' },
+            { icon: 'fa-solid fa-key', label: 'Self-Custody', q: 'What is self-custody and why is it the most important thing in Bitcoin?' },
+            { icon: 'fa-solid fa-zap', label: 'Lightning', q: 'What is the Lightning Network and how does it make Bitcoin faster?' },
+            { icon: 'fa-solid fa-ban', label: 'Why Not Altcoins?', q: 'Why do Bitcoiners only focus on Bitcoin and not other cryptocurrencies?' },
+            { icon: 'fa-solid fa-earth-americas', label: 'Fix the World', q: 'How is Bitcoin actually changing the world for the better?' },
         ];
-        var html = '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:400px;margin:0 auto;">';
+        var html = '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-start;max-width:520px;">';
         for (var i = 0; i < chips.length; i++) {
-            html += '<button onclick="nachoModeChip(\''+ chips[i].q.replace(/[\\'"]/g, "") + '\')" style="padding:8px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:20px;color:var(--text);font-size:0.8rem;cursor:pointer;font-family:inherit;transition:0.2s;display:flex;align-items:center;gap:4px;touch-action:manipulation;" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.background=\'var(--accent-bg)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.background=\'var(--card-bg)\'">' + chips[i].emoji + ' ' + chips[i].label + '</button>';
+            html += '<button onclick="nachoModeChip(\''+ chips[i].q.replace(/[\\'"]/g, "") + '\')" style="padding:7px 13px;background:var(--secondary);border:1px solid var(--border);border-radius:8px;color:var(--text-dim);font-size:0.78rem;font-weight:500;cursor:pointer;font-family:inherit;transition:0.15s;display:flex;align-items:center;gap:6px;touch-action:manipulation;" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.background=\'var(--accent-bg)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.background=\'var(--secondary)\';this.style.color=\'var(--text-dim)\'"><i class="' + chips[i].icon + '" style="font-size:0.7rem;color:var(--accent);"></i>' + chips[i].label + '</button>';
         }
         html += '</div>';
         return html;
@@ -31649,29 +31653,46 @@ window.nachoQuizAnswer = function(btn, correct) {
     function nachoChatRender() {
         var chat = document.getElementById('nachoModeChat');
         if (!chat) return;
-        var hist = window._nachoChatHistory || [];
+        // Ensure history is always initialized before rendering
+        if (!window._nachoChatHistory) {
+            window._nachoChatHistory = safeJSON('btc_nacho_chat', []);
+        }
+        if (!window._nachoSentHistory) {
+            window._nachoSentHistory = safeJSON('btc_nacho_sent', []);
+        }
+        var hist = window._nachoChatHistory;
         if (hist.length === 0) {
             // Show welcome with daily fact + topic chips
             var userName = (typeof currentUser !== 'undefined' && currentUser && currentUser.username) ? currentUser.username : '';
             chat.innerHTML =
-                '<div style="text-align:center;padding:30px 20px;">' +
-                    '<div id="nachoModeAvatar" style="width:180px;height:180px;margin:0 auto 16px;cursor:pointer;" onclick="nachoModeAvatarTap()"><img src="nacho-fly.svg" alt="Nacho" style="width:180px;height:180px;pointer-events:none;" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<div style=\\\'font-size:100px;line-height:180px;text-align:center;\\\'>🦌</div>\';"></div>' +
-                    '<div style="color:var(--accent);font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;font-weight:800;margin-bottom:6px;">🦌 NACHO MODE</div>' +
-                    '<div style="color:var(--heading);font-size:1.2rem;font-weight:800;margin-bottom:12px;">' +
-                        (userName ? 'Hey ' + escapeHtml(userName) + '! Let\'s talk Bitcoin.' : 'Hey! Let\'s talk Bitcoin.') +
+                '<div style="max-width:560px;margin:0 auto;padding:24px 24px 20px;">' +
+                    /* Avatar + greeting row */
+                    '<div style="display:flex;align-items:center;gap:20px;margin-bottom:24px;">' +
+                        '<div id="nachoModeAvatar" style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,rgba(247,147,26,0.18),rgba(247,147,26,0.06));border:2px solid rgba(247,147,26,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;box-shadow:0 0 24px rgba(247,147,26,0.2);" onclick="nachoModeAvatarTap()">' +
+                            '<img src="nacho-fly.svg" alt="Nacho" style="width:56px;height:56px;pointer-events:none;" onerror="this.style.display=\'none\';var _fi=document.createElement(\'i\');_fi.className=\'fa-solid fa-deer\';_fi.style.cssText=\'font-size:2rem;color:var(--accent);\';this.parentElement.appendChild(_fi);">' +
+                        '</div>' +
+                        '<div style="text-align:left;">' +
+                            '<div style="font-size:0.6rem;color:var(--accent);text-transform:uppercase;letter-spacing:2.5px;font-weight:800;margin-bottom:4px;opacity:0.85;">Nacho Mode</div>' +
+                            '<div style="color:var(--heading);font-size:1.35rem;font-weight:900;letter-spacing:-0.5px;line-height:1.2;">' +
+                                (userName ? 'Hey ' + escapeHtml(userName) + '!<br><span style="color:var(--text-dim);font-size:1.05rem;font-weight:700;">Let\'s talk Bitcoin.</span>' : 'Hey! Let\'s talk Bitcoin.') +
+                            '</div>' +
+                        '</div>' +
                     '</div>' +
                     /* Daily fact */
-                    '<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin:0 auto 20px;max-width:380px;text-align:left;">' +
-                        '<div style="font-size:0.7rem;color:var(--accent);font-weight:700;margin-bottom:4px;">💡 DID YOU KNOW?</div>' +
-                        '<div style="color:var(--text);font-size:0.85rem;line-height:1.5;">' + getDailyFact() + '</div>' +
+                    '<div style="background:linear-gradient(135deg,rgba(247,147,26,0.08),rgba(247,147,26,0.03));border:1px solid rgba(247,147,26,0.2);border-left:3px solid var(--accent);border-radius:12px;padding:14px 16px;margin-bottom:24px;">' +
+                        '<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">' +
+                            '<i class="fa-solid fa-lightbulb" style="color:var(--accent);font-size:0.7rem;"></i>' +
+                            '<span style="font-size:0.6rem;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:1.6px;">Did You Know?</span>' +
+                        '</div>' +
+                        '<div style="color:var(--text);font-size:0.87rem;line-height:1.6;">' + getDailyFact() + '</div>' +
                     '</div>' +
-                    /* Topic chips */
-                    '<div style="color:var(--text-muted);font-size:0.8rem;margin-bottom:12px;">Tap a topic or ask me anything:</div>' +
+                    /* Topic label */
+                    '<div style="font-size:0.72rem;color:var(--text-muted);font-weight:600;letter-spacing:0.3px;margin-bottom:10px;text-align:left;">Tap a topic or ask me anything:</div>' +
                     nachoTopicChips() +
                     /* Action buttons */
-                    '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px;max-width:400px;margin-left:auto;margin-right:auto;">' +
-                        '<button onclick="nachoLearningPath()" style="padding:8px 16px;background:var(--accent-bg);border:1px solid var(--accent);border-radius:20px;color:var(--accent);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;touch-action:manipulation;">🗺️ Start Bitcoin Journey</button>' +
-                        '<button onclick="nachoQuizMe()" style="padding:8px 16px;background:var(--card-bg);border:1px solid var(--border);border-radius:20px;color:var(--text);font-size:0.8rem;cursor:pointer;font-family:inherit;touch-action:manipulation;">🎮 Quiz Me</button>' +
+                    '<div style="display:flex;gap:10px;margin-top:20px;">' +
+                        '<button onclick="nachoLearningPath()" style="flex:1;padding:11px 16px;background:var(--accent);border:none;border-radius:12px;color:#fff;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:inherit;touch-action:manipulation;display:flex;align-items:center;justify-content:center;gap:7px;letter-spacing:0.2px;box-shadow:0 4px 16px rgba(247,147,26,0.25);transition:opacity 0.15s;" onmouseover="this.style.opacity=\'0.88\'" onmouseout="this.style.opacity=\'1\'"><i class="fa-solid fa-map" style="font-size:0.8rem;"></i> Start Bitcoin Journey</button>' +
+                        '<button onclick="nachoQuizMe()" style="padding:11px 18px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;touch-action:manipulation;display:flex;align-items:center;justify-content:center;gap:7px;transition:border-color 0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text)\'"><i class="fa-solid fa-gamepad" style="font-size:0.8rem;"></i> Quiz Me</button>' +
                     '</div>' +
                 '</div>';
             return;
