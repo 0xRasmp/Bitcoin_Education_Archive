@@ -17,25 +17,25 @@ window.renderBitcoinBeats = function() {
 
             </div>
             <div style="flex:1;">
-                <h2 style="color:var(--heading);font-weight:900;font-size:1.6rem;margin:0;letter-spacing:-0.5px;">🎸 Bitcoin Beats</h2>
+                <h2 style="color:var(--heading);font-weight:900;font-size:1.6rem;margin:0;letter-spacing:-0.5px;"><i class="fa-solid fa-music" style="color:var(--accent);font-size:1.2rem;margin-right:8px;"></i>Bitcoin Beats</h2>
                 <div style="color:var(--text-muted);font-size:0.75rem;">Community Music · Powered by Lightning</div>
             </div>
         </div>
 
         <!-- Tab Bar -->
         <div style="display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:20px;">
-            <button onclick="beatsTab('discover')" id="beatsTabDiscover" class="beats-tab active" style="padding:10px 16px;background:none;border:none;border-bottom:2px solid var(--accent);margin-bottom:-2px;color:var(--accent);font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;">🔥 Discover</button>
-            <button onclick="beatsTab('library')" id="beatsTabLibrary" class="beats-tab" style="padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--text-muted);font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;">📚 Library</button>
-            <button onclick="beatsTab('artists')" id="beatsTabArtists" class="beats-tab" style="padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--text-muted);font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;">🎤 Artists</button>
-            <button onclick="beatsTab('upload')" id="beatsTabUpload" class="beats-tab" style="padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--text-muted);font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;">🎸 Upload</button>
-            <button onclick="beatsTab('livestream')" id="beatsTabLivestream" class="beats-tab" style="padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--text-muted);font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;">📡 Live</button>
-            <button onclick="beatsTab('pumpit')" id="beatsTabPumpit" class="beats-tab" style="padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--text-muted);font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;">🚀 Pump It!</button>
+            <button onclick="beatsTab('discover')" id="beatsTabDiscover" class="beats-tab active" style="padding:10px 16px;background:none;border:none;border-bottom:2px solid var(--accent);margin-bottom:-2px;color:var(--accent);font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;"><i class="fa-solid fa-fire"></i> Discover</button>
+            <button onclick="beatsTab('library')" id="beatsTabLibrary" class="beats-tab" style="padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--text-muted);font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;"><i class="fa-solid fa-book"></i> Library</button>
+            <button onclick="beatsTab('artists')" id="beatsTabArtists" class="beats-tab" style="padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--text-muted);font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;"><i class="fa-solid fa-microphone"></i> Artists</button>
+            <button onclick="beatsTab('upload')" id="beatsTabUpload" class="beats-tab" style="padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--text-muted);font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;"><i class="fa-solid fa-cloud-arrow-up"></i> Upload</button>
+            <button onclick="beatsTab('livestream')" id="beatsTabLivestream" class="beats-tab" style="padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--text-muted);font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;"><i class="fa-solid fa-tower-broadcast"></i> Live</button>
+            <button onclick="beatsTab('pumpit')" id="beatsTabPumpit" class="beats-tab" style="padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--text-muted);font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;"><i class="fa-solid fa-rocket"></i> Pump It!</button>
         </div>
 
         <!-- Search Bar -->
         <div style="margin-bottom:16px;">
             <div style="display:flex;gap:8px;align-items:center;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:8px 12px;">
-                <span style="font-size:1rem;color:var(--text-faint);">🔍</span>
+                <i class="fa-solid fa-magnifying-glass" style="font-size:0.9rem;color:var(--text-faint);"></i>
                 <input type="text" id="beatsSearchInput" placeholder="Search songs, artists, or albums..." style="flex:1;background:none;border:none;color:var(--text);font-size:0.85rem;font-family:inherit;outline:none;" onkeydown="if(event.key==='Enter')beatsPerformSearch()">
                 <button onclick="beatsPerformSearch()" style="padding:6px 14px;background:var(--accent);border:none;border-radius:8px;color:#fff;font-size:0.75rem;font-weight:700;cursor:pointer;font-family:inherit;">Search</button>
             </div>
@@ -2286,11 +2286,11 @@ window.beatsSetGenre = function(genre) {
             var sortBtnStyle = 'padding:6px 12px;border-radius:16px;border:1px solid var(--border);background:none;font-size:0.72rem;font-weight:600;cursor:pointer;font-family:inherit;transition:0.2s;';
             sortBar.innerHTML =
                 '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">' +
-                    '<button class="beats-sort-btn" data-sort="newest" onclick="beatsSetSort(\'newest\')" style="' + sortBtnStyle + 'border-color:var(--accent);color:var(--accent);">🆕 Newest</button>' +
-                    '<button class="beats-sort-btn" data-sort="trending" onclick="beatsSetSort(\'trending\')" style="' + sortBtnStyle + 'color:var(--text-muted);">🔥 Trending</button>' +
-                    '<button class="beats-sort-btn" data-sort="most-played" onclick="beatsSetSort(\'most-played\')" style="' + sortBtnStyle + 'color:var(--text-muted);">› Most Played</button>' +
-                    '<button class="beats-sort-btn" data-sort="most-liked" onclick="beatsSetSort(\'most-liked\')" style="' + sortBtnStyle + 'color:var(--text-muted);">❤️ Most Liked</button>' +
-                    '<button class="beats-sort-btn" data-sort="shuffle" onclick="beatsSetSort(\'shuffle\')" style="' + sortBtnStyle + 'color:var(--text-muted);">🎲 Shuffle</button>' +
+                    '<button class="beats-sort-btn" data-sort="newest" onclick="beatsSetSort(\'newest\')" style="' + sortBtnStyle + 'border-color:var(--accent);color:var(--accent);"><i class="fa-solid fa-clock"></i> Newest</button>' +
+                    '<button class="beats-sort-btn" data-sort="trending" onclick="beatsSetSort(\'trending\')" style="' + sortBtnStyle + 'color:var(--text-muted);"><i class="fa-solid fa-fire"></i> Trending</button>' +
+                    '<button class="beats-sort-btn" data-sort="most-played" onclick="beatsSetSort(\'most-played\')" style="' + sortBtnStyle + 'color:var(--text-muted);"><i class="fa-solid fa-play"></i> Most Played</button>' +
+                    '<button class="beats-sort-btn" data-sort="most-liked" onclick="beatsSetSort(\'most-liked\')" style="' + sortBtnStyle + 'color:var(--text-muted);"><i class="fa-solid fa-heart"></i> Most Liked</button>' +
+                    '<button class="beats-sort-btn" data-sort="shuffle" onclick="beatsSetSort(\'shuffle\')" style="' + sortBtnStyle + 'color:var(--text-muted);"><i class="fa-solid fa-shuffle"></i> Shuffle</button>' +
                 '</div>' +
                 '<div id="beatsGenreChips" style="display:flex;gap:6px;flex-wrap:wrap;"></div>';
             listEl.parentNode.insertBefore(sortBar, listEl);
@@ -2380,12 +2380,12 @@ window.beatsSetGenre = function(genre) {
                         '</div>' +
                     '</div>' +
                     '<div style="display:flex;align-items:center;gap:4px;margin-top:6px;padding-left:38px;">' +
-                        '<button class="beats-action-btn" onclick="event.stopPropagation();beatsShowComments(\'' + t.id + '\')" style="background:none;border:none;font-size:0.75rem;cursor:pointer;padding:3px 6px;color:var(--text-faint);display:flex;align-items:center;gap:2px;border-radius:6px;transition:0.15s;" title="Comments">💬' + (t.commentCount ? '<span style="font-size:0.6rem;">' + t.commentCount + '</span>' : '') + '</button>' +
-                        '<button class="beats-action-btn" onclick="event.stopPropagation();beatsToggleLike(\'' + t.id + '\',this)" style="background:none;border:none;font-size:0.85rem;cursor:pointer;padding:3px 6px;color:' + (isLiked ? '#ef4444' : 'var(--text-faint)') + ';border-radius:6px;transition:0.15s;" title="Like">' + (isLiked ? '❤️' : '🤍') + '</button>' +
-                        '<button class="beats-action-btn" onclick="event.stopPropagation();beatsAddToPlaylistPicker(\'' + t.id + '\')" style="background:none;border:none;font-size:0.85rem;cursor:pointer;padding:3px 6px;color:var(--accent);border-radius:6px;transition:0.15s;" title="Add to playlist">➕</button>' +
-                        (t.authorId ? '<button class="beats-action-btn" onclick="event.stopPropagation();beatsTipCurrentArtistById(\'' + t.authorId + '\',\'' + escapeHtml(t.artist || t.authorName || 'Artist').replace(/[\\'"]/g, "") + '\',\'' + escapeHtml(t.title || '').replace(/[\\'"]/g, "") + '\')" style="background:none;border:none;font-size:0.75rem;cursor:pointer;padding:3px 6px;color:#eab308;border-radius:6px;" title="Tip Artist">⚡ Tip</button>' : '') +
-                        '<button class="beats-action-btn" onclick="event.stopPropagation();beatsShareTrack(\'' + t.id + '\',\'' + escapeHtml(t.title || 'Track').replace(/[\\'"]/g, "") + '\')" style="background:none;border:none;font-size:0.75rem;cursor:pointer;padding:3px 6px;color:var(--text-faint);border-radius:6px;margin-left:auto;" title="Share">🔗</button>' +
-                        '<button class="beats-action-btn" onclick="event.stopPropagation();beatsTrackMenu(\'' + t.id + '\',' + idx + ')" style="background:none;border:none;font-size:0.8rem;cursor:pointer;padding:3px 6px;color:var(--text-faint);border-radius:6px;" title="More">⋮</button>' +
+                        '<button class="beats-action-btn" onclick="event.stopPropagation();beatsShowComments(\'' + t.id + '\')" style="background:none;border:none;font-size:0.75rem;cursor:pointer;padding:3px 6px;color:var(--text-faint);display:flex;align-items:center;gap:2px;border-radius:6px;transition:0.15s;" title="Comments"><i class="fa-regular fa-comment"></i>' + (t.commentCount ? '<span style="font-size:0.6rem;">' + t.commentCount + '</span>' : '') + '</button>' +
+                        '<button class="beats-action-btn" onclick="event.stopPropagation();beatsToggleLike(\'' + t.id + '\',this)" style="background:none;border:none;font-size:0.85rem;cursor:pointer;padding:3px 6px;color:' + (isLiked ? '#ef4444' : 'var(--text-faint)') + ';border-radius:6px;transition:0.15s;" title="Like"><i class="fa-' + (isLiked ? 'solid' : 'regular') + ' fa-heart"></i></button>' +
+                        '<button class="beats-action-btn" onclick="event.stopPropagation();beatsAddToPlaylistPicker(\'' + t.id + '\')" style="background:none;border:none;font-size:0.85rem;cursor:pointer;padding:3px 6px;color:var(--accent);border-radius:6px;transition:0.15s;" title="Add to playlist"><i class="fa-solid fa-plus"></i></button>' +
+                        (t.authorId ? '<button class="beats-action-btn" onclick="event.stopPropagation();beatsTipCurrentArtistById(\'' + t.authorId + '\',\'' + escapeHtml(t.artist || t.authorName || 'Artist').replace(/[\\'"]/g, "") + '\',\'' + escapeHtml(t.title || '').replace(/[\\'"]/g, "") + '\')" style="background:none;border:none;font-size:0.75rem;cursor:pointer;padding:3px 6px;color:#eab308;border-radius:6px;" title="Tip Artist"><i class="fa-solid fa-bolt"></i> Tip</button>' : '') +
+                        '<button class="beats-action-btn" onclick="event.stopPropagation();beatsShareTrack(\'' + t.id + '\',\'' + escapeHtml(t.title || 'Track').replace(/[\\'"]/g, "") + '\')" style="background:none;border:none;font-size:0.75rem;cursor:pointer;padding:3px 6px;color:var(--text-faint);border-radius:6px;margin-left:auto;" title="Share"><i class="fa-solid fa-link"></i></button>' +
+                        '<button class="beats-action-btn" onclick="event.stopPropagation();beatsTrackMenu(\'' + t.id + '\',' + idx + ')" style="background:none;border:none;font-size:0.8rem;cursor:pointer;padding:3px 6px;color:var(--text-faint);border-radius:6px;" title="More"><i class="fa-solid fa-ellipsis-vertical"></i></button>' +
                     '</div>' +
                 '</div>';
             });
