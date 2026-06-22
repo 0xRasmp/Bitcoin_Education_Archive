@@ -11,24 +11,31 @@ function initProofOfWalk() {
         const style = document.createElement('style');
         style.id = 'pow-styles';
         style.textContent = `
-            .pow-card { background:#1a1a1a; border:1px solid #333; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 4px 20px rgba(0,0,0,0.4); text-align:center; position:relative; overflow:hidden; }
+            .pow-card { background:var(--card-bg); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 4px 20px rgba(0,0,0,0.4); text-align:center; position:relative; overflow:hidden; }
             .pow-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:4px; background:linear-gradient(90deg, #f7931a, #fc6000); }
-            .pow-header { font-size:1.8rem; font-weight:900; color:#fff; display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:8px; }
-            .pow-desc { font-size:0.9rem; color:#aaa; margin-bottom:24px; max-width:400px; margin-left:auto; margin-right:auto; }
-            .pow-stats { display:flex; justify-content:space-around; background:#111; padding:16px; border-radius:12px; margin-bottom:24px; border:1px solid #222; }
+            .pow-header { font-size:1.8rem; font-weight:900; color:var(--heading); display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:8px; }
+            .pow-desc { font-size:0.9rem; color:var(--text-muted); margin-bottom:24px; max-width:400px; margin-left:auto; margin-right:auto; }
+            .pow-stats { display:flex; justify-content:space-around; background:var(--secondary); padding:16px; border-radius:12px; margin-bottom:24px; border:1px solid var(--border); }
             .pow-stat-box { text-align:center; }
             .pow-stat-val { font-size:1.6rem; font-weight:800; color:#f7931a; }
-            .pow-stat-label { font-size:0.7rem; color:#888; text-transform:uppercase; letter-spacing:1px; margin-top:4px; }
+            .pow-stat-label { font-size:0.7rem; color:var(--text-faint); text-transform:uppercase; letter-spacing:1px; margin-top:4px; }
             .pow-btn { display:inline-block; background:#fc4c02; color:#fff; font-weight:800; padding:12px 24px; border-radius:30px; font-size:1rem; text-decoration:none; cursor:pointer; border:none; transition:all 0.2s; box-shadow:0 4px 15px rgba(252,76,2,0.3); }
             .pow-btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(252,76,2,0.4); }
             .pow-btn.syncing { opacity:0.7; cursor:not-allowed; transform:none; }
+            .pow-connect-btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; background:#fc4c02; color:#fff; font-weight:800; padding:13px 28px; border-radius:10px; font-size:0.95rem; text-decoration:none; cursor:pointer; border:none; transition:all 0.2s ease; box-shadow:0 4px 15px rgba(252,76,2,0.3); }
+            .pow-connect-btn:hover { background:#e34402; transform:translateY(-1px); box-shadow:0 6px 20px rgba(252,76,2,0.4); }
+            .pow-connect-btn i { font-size:1rem; }
+            .pow-secondary-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; background:transparent; border:1.5px solid #fc4c02; color:#fc4c02; font-weight:700; padding:11px 24px; border-radius:10px; font-size:0.85rem; text-decoration:none; cursor:pointer; transition:all 0.2s ease; }
+            .pow-secondary-btn:hover { background:rgba(252,76,2,0.08); }
+            .pow-powered-by { display:inline-flex; align-items:center; gap:6px; color:var(--text-faint); font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; text-decoration:none; }
+            .pow-powered-by:hover { color:#fc4c02; }
             .pow-list { text-align:left; margin-top:20px; max-height:200px; overflow-y:auto; padding-right:8px; }
-            .pow-item { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #222; font-size:0.85rem; }
+            .pow-item { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); font-size:0.85rem; }
             .pow-item:last-child { border-bottom:none; }
-            .pow-item-date { color:#888; }
-            .pow-item-dist { color:#eee; font-weight:700; }
+            .pow-item-date { color:var(--text-faint); }
+            .pow-item-dist { color:var(--text); font-weight:700; }
             .pow-item-pts { color:#f7931a; font-weight:700; }
-            .pow-progress-wrap { background:#222; border-radius:10px; height:20px; overflow:hidden; margin-top:8px; position:relative; }
+            .pow-progress-wrap { background:var(--border); border-radius:10px; height:20px; overflow:hidden; margin-top:8px; position:relative; }
             .pow-progress-bar { background:linear-gradient(90deg, #f7931a, #ffd000); height:100%; width:0%; transition:width 0.5s ease; }
             .pow-progress-text { position:absolute; top:0; left:0; width:100%; text-align:center; line-height:20px; font-size:0.7rem; font-weight:800; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.8); }
         `;
@@ -53,7 +60,7 @@ window.renderProofOfWalk = function() {
     
     powEl.innerHTML = `
         <div class="pow-card">
-            <div class="pow-header"><span style="color:#fc4c02;">⛰️ Proof of Walk</span></div>
+            <div class="pow-header"><i class="fa-solid fa-person-hiking" style="color:#fc4c02;"></i> Proof of Walk</div>
             <div class="pow-desc">Connect Strava to earn 50 points for every kilometer you Walk, Run, or Hike. (Max 42km / 2,100 pts per day)</div>
             <div id="pow-ui-state">
                 <div class="spinner" style="border-width:2px;width:24px;height:24px;border-top-color:#f7931a;margin:20px auto;"></div>
@@ -86,11 +93,12 @@ function renderPOWConnect() {
     const authUrl = `https://www.strava.com/oauth/authorize?client_id=${STRAVA_CLIENT_ID}&response_type=code&redirect_uri=${STRAVA_REDIRECT_URI}&approval_prompt=force&scope=read,activity:read_all&state=${stateUrl}`;
     
     document.getElementById('pow-ui-state').innerHTML = `
-        <a href="${authUrl}" style="display:inline-block;margin-bottom:12px;"><img src="images/strava/btn_connect_orange.svg" alt="Connect with Strava" style="height:48px;"></a>
-        <br>
-        <a href="https://www.strava.com" target="_blank" rel="noopener noreferrer" class="pow-btn" style="background:transparent;border:2px solid #fc4c02;color:#fc4c02;margin-top:4px;display:inline-block;box-shadow:none;">Download Strava</a>
-        <div style="font-size:0.7rem;color:#666;margin-top:16px;">We only read your activity distances to award points. No GPS, routes, or personal data is stored. <a href="#pow-support" style="color:#fc4c02;">Learn more</a></div>
-        <div style="margin-top:12px;"><a href="https://www.strava.com" target="_blank" rel="noopener noreferrer"><img src="images/strava/pwrdBy_strava_white.svg" alt="Powered by Strava" style="height:24px;opacity:0.7;"></a></div>
+        <a href="${authUrl}" class="pow-connect-btn"><i class="fa-brands fa-strava"></i> Connect with Strava</a>
+        <div style="margin-top:10px;">
+            <a href="https://www.strava.com" target="_blank" rel="noopener noreferrer" class="pow-secondary-btn"><i class="fa-solid fa-arrow-down-to-line"></i> Download Strava</a>
+        </div>
+        <div style="font-size:0.72rem;color:var(--text-faint);margin-top:18px;max-width:340px;margin-left:auto;margin-right:auto;line-height:1.5;">We only read your activity distances to award points. No GPS, routes, or personal data is stored. <a href="#pow-support" style="color:#fc4c02;font-weight:600;">Learn more</a></div>
+        <div style="margin-top:14px;"><a href="https://www.strava.com" target="_blank" rel="noopener noreferrer" class="pow-powered-by"><i class="fa-brands fa-strava"></i> Powered by Strava</a></div>
     `;
 }
 
