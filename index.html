@@ -7108,487 +7108,192 @@
       onclick="if (event.target === this) hideUsernamePrompt();"
     >
       <div class="username-box glass-dark">
-        <h2>⚡ Join the Leaderboard</h2>
-        <p>Pick a username to start earning XP as you explore the archive!</p>
-        <input
-          type="text"
-          id="usernameInput"
-          placeholder="Enter a username..."
-          maxlength="20"
-          onkeydown="if (event.key === 'Enter') submitUsername();"
-        />
-        <input
-          type="email"
-          id="emailInput"
-          placeholder="📧 Email (optional)"
-          style="margin-top: 0; width: 100%; box-sizing: border-box"
-        />
-        <p style="color: #475569; font-size: 0.75rem; margin: -8px 0 16px">
-          We'll never spam you. Only used if we launch future Bitcoin education
-          updates.
-        </p>
-        <div
-          style="position: relative; margin-bottom: 16px"
-          id="signupCountryAutocomplete"
-        >
-          <input
-            type="text"
-            id="signupCountryInput"
-            placeholder="🌍 Country (optional)"
-            autocomplete="off"
-            style="
-              width: 100%;
-              padding: 14px 18px;
-              background: #020617;
-              border: 1px solid var(--border);
-              border-radius: 10px;
-              color: #fff;
-              font-size: 1rem;
-              font-family: inherit;
-              outline: none;
-              text-align: center;
-              box-sizing: border-box;
-            "
-            oninput="
-              window._filterSignupCountry && window._filterSignupCountry()
-            "
-            onfocus="
-              window._filterSignupCountry && window._filterSignupCountry()
-            "
-          />
-          <div
-            id="signupCountryDropdown"
-            style="
-              display: none;
-              position: absolute;
-              top: 100%;
-              left: 0;
-              right: 0;
-              max-height: 200px;
-              overflow-y: auto;
-              background: var(--bg-side, #0a0a0a);
-              border: 1px solid var(--accent);
-              border-radius: 0 0 10px 10px;
-              z-index: 50;
-              box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-            "
-          ></div>
-        </div>
-        <div id="signupLnSection" style="margin-bottom: 16px">
-          <input
-            type="text"
-            id="signupLnAddress"
-            placeholder="⚡ Lightning address (optional)"
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
-            spellcheck="false"
-            maxlength="200"
-            style="
-              width: 100%;
-              padding: 14px 16px;
-              background: var(--input-bg);
-              border: 1px solid var(--border);
-              border-radius: 10px;
-              color: var(--text);
-              font-size: 16px;
-              font-family: inherit;
-              outline: none;
-              box-sizing: border-box;
-              -webkit-appearance: none;
-            "
-            oninput="this.style.borderColor = 'var(--border)'"
-          />
-          <p
-            style="color: var(--text-faint); font-size: 0.7rem; margin: 6px 0 0"
-          >
-            Used so others can tip you ⚡ (e.g. you@walletofsatoshi.com)
-          </p>
-          <button
-            type="button"
-            onclick="window._signupGoGetLnAddress()"
-            style="
-              margin-top: 8px;
-              width: 100%;
-              padding: 10px;
-              background: none;
-              border: 1px dashed rgba(247, 147, 26, 0.5);
-              border-radius: 10px;
-              color: var(--accent);
-              font-size: 0.8rem;
-              font-weight: 700;
-              cursor: pointer;
-              font-family: inherit;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              gap: 6px;
-              transition: 0.2s;
-              touch-action: manipulation;
-            "
-            onmouseover="this.style.background = 'rgba(247,147,26,0.08)'"
-            onmouseout="this.style.background = 'none'"
-          >
-            ⚡ I need a Lightning Address →
+        <!-- ── Tab bar ── -->
+        <div style="display:flex;gap:0;margin:-26px -26px 20px;border-bottom:1px solid var(--border);border-radius:20px 20px 0 0;overflow:hidden;">
+          <button id="authTabNew" onclick="switchAuthTab('new')" style="flex:1;padding:14px 10px;background:var(--accent);border:none;color:#fff;font-size:0.82rem;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.3px;border-radius:20px 0 0 0;transition:0.2s;">
+            <i class="fa-solid fa-user-plus" style="margin-right:6px;font-size:0.75rem;"></i>New Account
+          </button>
+          <button id="authTabSign" onclick="switchAuthTab('signin')" style="flex:1;padding:14px 10px;background:var(--secondary);border:none;color:var(--text-muted);font-size:0.82rem;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:0.3px;border-radius:0 20px 0 0;transition:0.2s;">
+            <i class="fa-solid fa-arrow-right-to-bracket" style="margin-right:6px;font-size:0.75rem;"></i>Sign In
           </button>
         </div>
-        <div
-          id="factionPickerSignup"
-          style="margin-bottom: 16px; text-align: left"
-        >
-          <div
-            style="
-              color: #94a3b8;
-              font-size: 0.8rem;
-              font-weight: 700;
-              margin-bottom: 4px;
-              text-align: center;
-            "
-          >
-            ⚔️ Choose Your Faction
+
+        <!-- ── Header ── -->
+        <div style="text-align:center;margin-bottom:20px;">
+          <div style="width:48px;height:48px;border-radius:14px;background:var(--accent-bg);border:1px solid var(--accent-glow);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+            <i class="fa-solid fa-bolt" style="color:var(--accent);font-size:1.3rem;"></i>
           </div>
-          <div
-            style="
-              color: #475569;
-              font-size: 0.68rem;
-              margin-bottom: 10px;
-              text-align: center;
-            "
-          >
-            New faction features coming soon — no competitive advantage to
-            either choice.
+          <h2 style="font-size:1.25rem;margin-bottom:4px;">Join the Leaderboard</h2>
+          <p style="color:var(--text-muted);font-size:0.8rem;line-height:1.5;margin:0;">Pick a username to start earning XP as you explore the archive!</p>
+        </div>
+
+        <!-- ══ NEW ACCOUNT PANEL ══ -->
+        <div id="authPanelNew">
+
+          <!-- Username -->
+          <div style="position:relative;margin-bottom:10px;">
+            <i class="fa-solid fa-at" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-faint);font-size:0.8rem;pointer-events:none;"></i>
+            <input type="text" id="usernameInput" placeholder="Username" maxlength="20"
+              onkeydown="if(event.key==='Enter')submitUsername();"
+              style="width:100%;padding:13px 14px 13px 38px;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.95rem;font-family:inherit;outline:none;box-sizing:border-box;transition:border-color 0.2s;"
+              onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"/>
           </div>
-          <div style="display: flex; gap: 8px">
-            <div
-              id="factionBtnHornets"
-              onclick="
-                window._signupFaction = 'cyber_hornets';
-                document.getElementById('factionBtnHornets').style.borderColor =
-                  '#f7931a';
-                document.getElementById('factionBtnHornets').style.background =
-                  'rgba(247,147,26,0.1)';
-                document.getElementById('factionBtnBadgers').style.borderColor =
-                  'var(--border,#1e293b)';
-                document.getElementById('factionBtnBadgers').style.background =
-                  'none';
-              "
-              style="
-                flex: 1;
-                padding: 12px 6px;
-                border-radius: 12px;
-                border: 2px solid var(--border, #1e293b);
-                background: none;
-                cursor: pointer;
-                text-align: center;
-                transition: all 0.2s;
-              "
-            >
-              <div style="font-size: 1.6rem">🐝</div>
-              <div
-                style="
-                  color: #e2e8f0;
-                  font-weight: 700;
-                  font-size: 0.8rem;
-                  margin-top: 4px;
-                "
-              >
-                Cyber Hornets
-              </div>
-              <div style="color: #64748b; font-size: 0.6rem; margin-top: 2px">
-                The swarm protects the network
-              </div>
+
+          <!-- Email -->
+          <div style="position:relative;margin-bottom:4px;">
+            <i class="fa-solid fa-envelope" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-faint);font-size:0.8rem;pointer-events:none;"></i>
+            <input type="email" id="emailInput" placeholder="Email (optional)"
+              style="width:100%;padding:13px 14px 13px 38px;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.95rem;font-family:inherit;outline:none;box-sizing:border-box;transition:border-color 0.2s;"
+              onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"/>
+          </div>
+          <p style="color:var(--text-faint);font-size:0.68rem;margin:0 0 10px 2px;">Never spammed. Only used for major product updates.</p>
+
+          <!-- Country -->
+          <div style="position:relative;margin-bottom:10px;" id="signupCountryAutocomplete">
+            <i class="fa-solid fa-earth-americas" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-faint);font-size:0.8rem;pointer-events:none;z-index:1;"></i>
+            <input type="text" id="signupCountryInput" placeholder="Country (optional)" autocomplete="off"
+              style="width:100%;padding:13px 14px 13px 38px;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.95rem;font-family:inherit;outline:none;box-sizing:border-box;transition:border-color 0.2s;"
+              onfocus="this.style.borderColor='var(--accent)';window._filterSignupCountry&&window._filterSignupCountry()"
+              onblur="this.style.borderColor='var(--border)'"
+              oninput="window._filterSignupCountry&&window._filterSignupCountry()"/>
+            <div id="signupCountryDropdown" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:200px;overflow-y:auto;background:var(--bg-side);border:1px solid var(--accent);border-radius:0 0 10px 10px;z-index:50;box-shadow:0 8px 24px rgba(0,0,0,0.4);"></div>
+          </div>
+
+          <!-- Lightning address -->
+          <div id="signupLnSection" style="margin-bottom:10px;">
+            <div style="position:relative;">
+              <i class="fa-solid fa-bolt" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-faint);font-size:0.8rem;pointer-events:none;"></i>
+              <input type="text" id="signupLnAddress" placeholder="Lightning address (optional)"
+                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" maxlength="200"
+                style="width:100%;padding:13px 14px 13px 38px;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.95rem;font-family:inherit;outline:none;box-sizing:border-box;-webkit-appearance:none;transition:border-color 0.2s;"
+                onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"
+                oninput="this.style.borderColor='var(--border)'"/>
             </div>
-            <div
-              id="factionBtnBadgers"
-              onclick="
-                window._signupFaction = 'honey_badgers';
-                document.getElementById('factionBtnBadgers').style.borderColor =
-                  '#a855f7';
-                document.getElementById('factionBtnBadgers').style.background =
-                  'rgba(168,85,247,0.1)';
-                document.getElementById('factionBtnHornets').style.borderColor =
-                  'var(--border,#1e293b)';
-                document.getElementById('factionBtnHornets').style.background =
-                  'none';
-              "
-              style="
-                flex: 1;
-                padding: 12px 6px;
-                border-radius: 12px;
-                border: 2px solid var(--border, #1e293b);
-                background: none;
-                cursor: pointer;
-                text-align: center;
-                transition: all 0.2s;
-              "
-            >
-              <div style="font-size: 1.6rem">🦡</div>
-              <div
-                style="
-                  color: #e2e8f0;
-                  font-weight: 700;
-                  font-size: 0.8rem;
-                  margin-top: 4px;
-                "
-              >
-                Honey Badgers
-              </div>
-              <div style="color: #64748b; font-size: 0.6rem; margin-top: 2px">
-                Honey badger don't care
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px 0 0;">
+              <p style="color:var(--text-faint);font-size:0.68rem;margin:4px 0 8px 2px;">So others can tip you (e.g. you@walletofsatoshi.com)</p>
+            </div>
+            <button type="button" onclick="window._signupGoGetLnAddress()"
+              style="width:100%;padding:9px;background:none;border:1px dashed rgba(247,147,26,0.4);border-radius:10px;color:var(--accent);font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;transition:0.2s;touch-action:manipulation;margin-bottom:10px;"
+              onmouseover="this.style.background='rgba(247,147,26,0.07)'" onmouseout="this.style.background='none'">
+              <i class="fa-solid fa-bolt" style="font-size:0.7rem;"></i> I need a Lightning Address →
+            </button>
+          </div>
+
+          <!-- Faction picker — collapsed toggle -->
+          <div style="margin-bottom:16px;">
+            <button onclick="var fp=document.getElementById('factionPickerSignup');var arr=document.getElementById('factionArrow');var open=fp.style.display!=='none';fp.style.display=open?'none':'block';arr.style.transform=open?'':'rotate(90deg)';"
+              style="width:100%;padding:10px 14px;background:var(--secondary);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:space-between;transition:0.2s;"
+              onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">
+              <span><i class="fa-solid fa-shield-halved" style="margin-right:7px;font-size:0.75rem;color:var(--accent);"></i>Choose Your Faction <span style="color:var(--text-faint);font-weight:400;">(optional)</span></span>
+              <i id="factionArrow" class="fa-solid fa-chevron-right" style="font-size:0.65rem;transition:transform 0.2s;"></i>
+            </button>
+            <div id="factionPickerSignup" style="display:none;margin-top:8px;">
+              <p style="color:var(--text-faint);font-size:0.68rem;text-align:center;margin:0 0 10px;">No competitive advantage — faction features coming soon.</p>
+              <div style="display:flex;gap:8px;">
+                <div id="factionBtnHornets"
+                  onclick="window._signupFaction='cyber_hornets';document.getElementById('factionBtnHornets').style.borderColor='#f7931a';document.getElementById('factionBtnHornets').style.background='rgba(247,147,26,0.1)';document.getElementById('factionBtnBadgers').style.borderColor='var(--border,#1e293b)';document.getElementById('factionBtnBadgers').style.background='none';"
+                  style="flex:1;padding:14px 8px;border-radius:12px;border:2px solid var(--border);background:none;cursor:pointer;text-align:center;transition:all 0.2s;">
+                  <div style="font-size:1.5rem;margin-bottom:6px;">🐝</div>
+                  <div style="color:var(--heading);font-weight:700;font-size:0.8rem;">Cyber Hornets</div>
+                  <div style="color:var(--text-faint);font-size:0.62rem;margin-top:3px;line-height:1.3;">The swarm protects the network</div>
+                </div>
+                <div id="factionBtnBadgers"
+                  onclick="window._signupFaction='honey_badgers';document.getElementById('factionBtnBadgers').style.borderColor='#a855f7';document.getElementById('factionBtnBadgers').style.background='rgba(168,85,247,0.1)';document.getElementById('factionBtnHornets').style.borderColor='var(--border,#1e293b)';document.getElementById('factionBtnHornets').style.background='none';"
+                  style="flex:1;padding:14px 8px;border-radius:12px;border:2px solid var(--border);background:none;cursor:pointer;text-align:center;transition:all 0.2s;">
+                  <div style="font-size:1.5rem;margin-bottom:6px;">🦡</div>
+                  <div style="color:var(--heading);font-weight:700;font-size:0.8rem;">Honey Badgers</div>
+                  <div style="color:var(--text-faint);font-size:0.62rem;margin-top:3px;line-height:1.3;">Honey badger don't care</div>
+                </div>
               </div>
             </div>
           </div>
+
+          <!-- CTA -->
+          <button onclick="submitUsername()"
+            style="width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:0.9rem;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.3px;transition:0.2s;display:flex;align-items:center;justify-content:center;gap:8px;"
+            onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
+            <i class="fa-solid fa-bolt" style="font-size:0.8rem;"></i> Start Learning →
+          </button>
+          <span class="skip" onclick="hideUsernamePrompt()" style="display:block;text-align:center;margin-top:12px;color:var(--text-faint);font-size:0.78rem;cursor:pointer;">Skip for now</span>
         </div>
-        <button onclick="submitUsername()">Start Learning →</button>
-        <div
-          id="emailSignInSection"
-          style="
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border);
-          "
-        >
-          <p
-            style="
-              color: var(--text-faint);
-              font-size: 0.75rem;
-              margin-bottom: 8px;
-            "
-          >
-            Already have an account? Sign in with your email:
-          </p>
-          <input
-            type="email"
-            id="returningEmailInput"
-            placeholder="📧 Your email address"
-            maxlength="100"
-            onkeydown="if (event.key === 'Enter') sendReturningMagicLink();"
-            style="
-              font-size: 16px;
-              padding: 14px 18px;
-              width: 100%;
-              background: var(--input-bg, #020617);
-              border: 1px solid var(--border);
-              border-radius: 10px;
-              color: var(--text, #fff);
-              font-family: inherit;
-              outline: none;
-              box-sizing: border-box;
-            "
-          />
-          <button
-            onclick="sendReturningMagicLink()"
-            style="
-              width: 100%;
-              padding: 12px;
-              background: var(--card-bg);
-              border: 1px solid var(--border);
-              border-radius: 10px;
-              color: var(--text);
-              font-size: 0.9rem;
-              cursor: pointer;
-              font-family: inherit;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              gap: 8px;
-              transition: 0.2s;
-              margin-bottom: 6px;
-            "
-          >
-            📧 Send Magic Link
-          </button>
-          <p
-            style="
-              color: var(--text-faint);
-              font-size: 0.7rem;
-              margin: -6px 0 12px;
-            "
-          >
-            We'll email you a magic link — no password needed! ✨
-          </p>
-        </div>
-        <div style="padding-top: 8px; border-top: 1px solid var(--border)">
-          <p
-            style="
-              color: var(--text-faint);
-              font-size: 0.75rem;
-              margin-bottom: 8px;
-            "
-          >
-            Or sign in with a provider:
-          </p>
-          <button
-            onclick="
-              this.innerHTML = '⏳ Opening Google...';
-              this.style.opacity = '0.6';
-              signInWithGoogle();
-            "
-            style="
-              width: 100%;
-              padding: 12px;
-              background: var(--card-bg);
-              border: 1px solid var(--border);
-              border-radius: 10px;
-              color: var(--text);
-              font-size: 0.9rem;
-              cursor: pointer;
-              font-family: inherit;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              gap: 8px;
-              transition: 0.2s;
-              margin-bottom: 6px;
-            "
-          >
-            <img
-              src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-              width="18"
-              height="18"
-            />
-            Sign in with Google
-          </button>
-          <button
-            onclick="signInWithFacebook()"
-            style="
-              width: 100%;
-              padding: 12px;
-              background: var(--card-bg);
-              border: 1px solid var(--border);
-              border-radius: 10px;
-              color: var(--text);
-              font-size: 0.9rem;
-              cursor: pointer;
-              font-family: inherit;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              gap: 8px;
-              transition: 0.2s;
-              margin-bottom: 6px;
-            "
-          >
-            <img
-              src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/facebook.svg"
-              width="18"
-              height="18"
-            />
-            Sign in with Facebook
-          </button>
-          <button
-            onclick="signInWithTwitter()"
-            style="
-              width: 100%;
-              padding: 12px;
-              background: var(--card-bg);
-              border: 1px solid var(--border);
-              border-radius: 10px;
-              color: var(--text);
-              font-size: 0.9rem;
-              cursor: pointer;
-              font-family: inherit;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              gap: 8px;
-              transition: 0.2s;
-              margin-bottom: 6px;
-            "
-          >
-            𝕏 Sign in with Twitter/X
-          </button>
-          <button
-            onclick="signInWithGithub()"
-            style="
-              width: 100%;
-              padding: 12px;
-              background: var(--card-bg);
-              border: 1px solid var(--border);
-              border-radius: 10px;
-              color: var(--text);
-              font-size: 0.9rem;
-              cursor: pointer;
-              font-family: inherit;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              gap: 8px;
-              transition: 0.2s;
-              margin-bottom: 6px;
-            "
-          >
-            <img
-              src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/github.svg"
-              width="18"
-              height="18"
-            />
-            Sign in with GitHub
-          </button>
-          <!-- Apple sign-in removed -->
-          <div
-            style="
-              border-top: 1px solid var(--border);
-              margin: 10px 0 6px;
-              padding-top: 10px;
-            "
-          >
-            <p
-              style="
-                color: var(--text-faint);
-                font-size: 0.7rem;
-                margin-bottom: 8px;
-              "
-            >
-              Bitcoin-native sign in:
-            </p>
-            <button
-              onclick="signInWithNostr()"
-              style="
-                width: 100%;
-                padding: 12px;
-                background: var(--card-bg);
-                border: 1px solid var(--border);
-                border-radius: 10px;
-                color: var(--text);
-                font-size: 0.9rem;
-                cursor: pointer;
-                font-family: inherit;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-                transition: 0.2s;
-                margin-bottom: 6px;
-              "
-            >
-              🟣 Sign in with Nostr
+
+        <!-- ══ SIGN IN PANEL ══ -->
+        <div id="authPanelSign" style="display:none;">
+
+          <!-- Magic link -->
+          <div style="margin-bottom:16px;padding:16px;background:var(--secondary);border-radius:12px;border:1px solid var(--border);">
+            <div style="font-size:0.72rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;"><i class="fa-solid fa-envelope" style="margin-right:5px;color:var(--accent);"></i>Magic Link</div>
+            <div style="position:relative;margin-bottom:8px;">
+              <i class="fa-solid fa-envelope" style="position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text-faint);font-size:0.8rem;pointer-events:none;"></i>
+              <input type="email" id="returningEmailInput" placeholder="Your email address" maxlength="100"
+                onkeydown="if(event.key==='Enter')sendReturningMagicLink();"
+                style="width:100%;padding:12px 14px 12px 38px;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.9rem;font-family:inherit;outline:none;box-sizing:border-box;transition:border-color 0.2s;"
+                onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"/>
+            </div>
+            <button onclick="sendReturningMagicLink()"
+              style="width:100%;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:0.85rem;font-weight:800;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px;transition:0.2s;"
+              onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
+              <i class="fa-solid fa-paper-plane" style="font-size:0.75rem;"></i> Send Magic Link
             </button>
-            <button
-              onclick="signInWithLightning()"
-              style="
-                width: 100%;
-                padding: 12px;
-                background: var(--card-bg);
-                border: 1px solid var(--border);
-                border-radius: 10px;
-                color: var(--text);
-                font-size: 0.9rem;
-                cursor: pointer;
-                font-family: inherit;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-                transition: 0.2s;
-                margin-bottom: 6px;
-              "
-            >
-              ⚡ Sign in with Lightning
+            <p style="color:var(--text-faint);font-size:0.68rem;text-align:center;margin:6px 0 0;">No password needed — we'll email you a login link ✨</p>
+          </div>
+
+          <!-- Divider -->
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+            <div style="flex:1;height:1px;background:var(--border);"></div>
+            <span style="color:var(--text-faint);font-size:0.72rem;font-weight:600;white-space:nowrap;">or continue with</span>
+            <div style="flex:1;height:1px;background:var(--border);"></div>
+          </div>
+
+          <!-- Provider grid -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+            <button onclick="this.innerHTML='<i class=\'fa-solid fa-spinner fa-spin\'></i>';this.style.opacity='0.6';signInWithGoogle();"
+              style="padding:10px 8px;background:var(--secondary);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px;transition:0.2s;"
+              onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="15" height="15"/> Google
+            </button>
+            <button onclick="signInWithTwitter()"
+              style="padding:10px 8px;background:var(--secondary);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px;transition:0.2s;"
+              onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+              <i class="fa-brands fa-x-twitter" style="font-size:0.85rem;"></i> Twitter / X
+            </button>
+            <button onclick="signInWithFacebook()"
+              style="padding:10px 8px;background:var(--secondary);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px;transition:0.2s;"
+              onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/facebook.svg" width="15" height="15"/> Facebook
+            </button>
+            <button onclick="signInWithGithub()"
+              style="padding:10px 8px;background:var(--secondary);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px;transition:0.2s;"
+              onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/github.svg" width="15" height="15"/> GitHub
+            </button>
+            <button onclick="signInWithNostr()"
+              style="padding:10px 8px;background:var(--secondary);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px;transition:0.2s;"
+              onmouseover="this.style.borderColor='#a855f7'" onmouseout="this.style.borderColor='var(--border)'">
+              <i class="fa-solid fa-circle-nodes" style="font-size:0.85rem;color:#a855f7;"></i> Nostr
+            </button>
+            <button onclick="signInWithLightning()"
+              style="padding:10px 8px;background:var(--secondary);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px;transition:0.2s;"
+              onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+              <i class="fa-solid fa-bolt" style="font-size:0.85rem;color:var(--accent);"></i> Lightning
             </button>
           </div>
+
+          <span class="skip" onclick="hideUsernamePrompt()" style="display:block;text-align:center;color:var(--text-faint);font-size:0.78rem;cursor:pointer;">Cancel</span>
         </div>
-        <span class="skip" onclick="hideUsernamePrompt()">Skip for now</span>
+
+        <!-- Tab switcher script -->
+        <script>
+          window.switchAuthTab = function(tab) {
+            var isNew = tab === 'new';
+            document.getElementById('authPanelNew').style.display = isNew ? '' : 'none';
+            document.getElementById('authPanelSign').style.display = isNew ? 'none' : '';
+            document.getElementById('authTabNew').style.background = isNew ? 'var(--accent)' : 'var(--secondary)';
+            document.getElementById('authTabNew').style.color = isNew ? '#fff' : 'var(--text-muted)';
+            document.getElementById('authTabSign').style.background = isNew ? 'var(--secondary)' : 'var(--accent)';
+            document.getElementById('authTabSign').style.color = isNew ? 'var(--text-muted)' : '#fff';
+          };
+        </script>
       </div>
     </div>
 
