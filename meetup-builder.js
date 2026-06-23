@@ -2,390 +2,756 @@
 // meetup-builder.js — Meetup Builder for IRL Sync (standalone module)
 // Injects itself into #irl-sync-view after render
 
-(function() {
-'use strict';
+(function () {
+  "use strict";
 
-function _mbResource(emoji, title, url, desc) {
-    var linkStart = url ? '<a href="' + url + '" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">' : '<div>';
-    var linkEnd = url ? '</a>' : '</div>';
-    return linkStart +
-        '<div style="display:flex;gap:10px;padding:10px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;transition:0.2s;' + (url ? 'cursor:pointer;' : '') + '" ' +
-            (url ? 'onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'"' : '') + '>' +
-            '<span style="font-size:1.2rem;flex-shrink:0;margin-top:2px;">' + emoji + '</span>' +
-            '<div style="flex:1;min-width:0;">' +
-                '<div style="color:var(--heading);font-weight:700;font-size:0.85rem;">' + title + (url ? ' <span style="color:var(--accent);font-size:0.7rem;">↗</span>' : '') + '</div>' +
-                '<div style="color:var(--text-muted);font-size:0.78rem;line-height:1.5;margin-top:2px;">' + desc + '</div>' +
-            '</div>' +
-        '</div>' + linkEnd;
-}
+  function _mbResource(icon, title, url, desc) {
+    var linkStart = url
+      ? '<a href="' +
+        url +
+        '" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">'
+      : "<div>";
+    var linkEnd = url ? "</a>" : "</div>";
+    return (
+      linkStart +
+      '<div style="display:flex;gap:10px;padding:10px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;transition:0.2s;' +
+      (url ? "cursor:pointer;" : "") +
+      '" ' +
+      (url
+        ? "onmouseover=\"this.style.borderColor='var(--accent)'\" onmouseout=\"this.style.borderColor='var(--border)'\""
+        : "") +
+      ">" +
+      '<div style="width:28px;height:28px;border-radius:7px;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><i class="fa-solid ' +
+      icon +
+      '" style="color:var(--accent);font-size:0.72rem;"></i></div>' +
+      '<div style="flex:1;min-width:0;">' +
+      '<div style="color:var(--heading);font-weight:700;font-size:0.85rem;">' +
+      title +
+      (url
+        ? ' <span style="color:var(--accent);font-size:0.7rem;">↗</span>'
+        : "") +
+      "</div>" +
+      '<div style="color:var(--text-muted);font-size:0.78rem;line-height:1.5;margin-top:2px;">' +
+      desc +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      linkEnd
+    );
+  }
 
-// Wait for IRL Sync to render, then inject Meetup Builder section
-var _origRenderIRL = window.renderIRLSync;
-if (_origRenderIRL) {
-    window.renderIRLSync = function(opts) {
-        _origRenderIRL(opts);
-        setTimeout(injectMeetupBuilder, 300);
+  // Wait for IRL Sync to render, then inject Meetup Builder section
+  var _origRenderIRL = window.renderIRLSync;
+  if (_origRenderIRL) {
+    window.renderIRLSync = function (opts) {
+      _origRenderIRL(opts);
+      setTimeout(injectMeetupBuilder, 300);
     };
-}
+  }
 
-function injectMeetupBuilder() {
-    var view = document.getElementById('irl-sync-view');
-    if (!view || document.getElementById('meetupBuilderSection')) return;
+  function injectMeetupBuilder() {
+    var view = document.getElementById("irl-sync-view");
+    if (!view || document.getElementById("meetupBuilderSection")) return;
 
-    var section = document.createElement('div');
-    section.id = 'meetupBuilderSection';
-    section.style.cssText = 'margin-top:50px;border-top:1px solid var(--border);padding-top:40px;';
+    var section = document.createElement("div");
+    section.id = "meetupBuilderSection";
+    section.style.cssText =
+      "margin-top:50px;border-top:1px solid var(--border);padding-top:40px;";
     section.innerHTML =
-        '<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">' +
-            '<div style="width:48px;height:48px;background:linear-gradient(135deg,#f7931a,#ea580c);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">🏗️</div>' +
-            '<div>' +
-                '<h2 style="font-size:1.3rem;color:var(--heading);margin:0;">Meetup Builder</h2>' +
-                '<p style="color:var(--text-muted);font-size:0.82rem;margin:2px 0 0;">Learn from experienced hosts · Start your own Bitcoin meetup</p>' +
-            '</div>' +
-        '</div>' +
-        '<p style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;margin-bottom:24px;">Want to start a Bitcoin meetup in your area? Learn from hosts who have done it. Browse slides, presentations, write-ups, and advice from experienced organizers.</p>' +
-        '<div id="meetupBuilderGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));gap:16px;margin-bottom:20px;">' +
-            '<div style="text-align:center;padding:40px;opacity:0.5;grid-column:1/-1;"><span style="font-size:2rem;">📡</span><br>Loading community resources...</div>' +
-        '</div>' +
-        '<button onclick="showMeetupBuilderSubmit()" style="width:100%;padding:14px;background:none;border:2px dashed var(--accent);color:var(--accent);border-radius:14px;font-weight:700;font-size:0.9rem;cursor:pointer;font-family:inherit;transition:0.2s;" onmouseover="this.style.background=\'rgba(247,147,26,0.08)\'" onmouseout="this.style.background=\'none\'">📤 Upload & Share Your Meetup Experience</button>';
+      '<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">' +
+      '<div style="width:48px;height:48px;background:linear-gradient(135deg,#f7931a,#ea580c);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-hammer" style="color:#fff;font-size:1.2rem;"></i></div>' +
+      "<div>" +
+      '<h2 style="font-size:1.3rem;color:var(--heading);margin:0;">Meetup Builder</h2>' +
+      '<p style="color:var(--text-muted);font-size:0.82rem;margin:2px 0 0;">Learn from experienced hosts · Start your own Bitcoin meetup</p>' +
+      "</div>" +
+      "</div>" +
+      '<p style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;margin-bottom:24px;">Want to start a Bitcoin meetup in your area? Learn from hosts who have done it. Browse slides, presentations, write-ups, and advice from experienced organizers.</p>' +
+      '<div id="meetupBuilderGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));gap:16px;margin-bottom:20px;">' +
+      '<div style="text-align:center;padding:40px;opacity:0.5;grid-column:1/-1;"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:2rem;color:var(--accent);"></i><br><span style="color:var(--text-faint);font-size:0.85rem;margin-top:12px;display:block;">Loading community resources...</span></div>' +
+      "</div>" +
+      '<button onclick="showMeetupBuilderSubmit()" style="width:100%;padding:14px;background:none;border:2px dashed var(--accent);color:var(--accent);border-radius:14px;font-weight:700;font-size:0.9rem;cursor:pointer;font-family:inherit;transition:0.2s;display:flex;align-items:center;justify-content:center;gap:8px;" onmouseover="this.style.background=\'rgba(247,147,26,0.08)\'" onmouseout="this.style.background=\'none\'"><i class="fa-solid fa-arrow-up-from-bracket" style="font-size:0.8rem;"></i> Upload & Share Your Meetup Experience</button>';
 
     // Curated Resources
-    var resources = document.createElement('div');
-    resources.style.cssText = 'margin-bottom:30px;';
-        function _mbToggle(id) {
-        return 'onclick="var c=document.getElementById(\'' + id + '\');var a=this.querySelector(\'.mb-arrow\');if(c.style.display===\'none\'){c.style.display=\'block\';a.textContent=\'‹\'}else{c.style.display=\'none\';a.textContent=\'›\'}"';
+    var resources = document.createElement("div");
+    resources.style.cssText = "margin-bottom:30px;";
+    function _mbToggle(id) {
+      return (
+        "onclick=\"var c=document.getElementById('" +
+        id +
+        "');var a=this.querySelector('.mb-arrow');if(c.style.display==='none'){c.style.display='block';a.textContent='‹'}else{c.style.display='none';a.textContent='›'}\""
+      );
     }
-    var _btnStyle = 'display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:12px 16px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;transition:0.2s;';
+    var _btnStyle =
+      "display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:12px 16px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;transition:0.2s;";
 
     resources.innerHTML =
-        '<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;"><span style="font-size:1.1rem;">🧰</span><span style="color:var(--heading);font-weight:700;font-size:0.95rem;">Resources for Meetup Organizers</span></div>' +
+      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;"><i class="fa-solid fa-toolbox" style="color:var(--accent);font-size:0.95rem;"></i><span style="color:var(--heading);font-weight:700;font-size:0.95rem;">Resources for Meetup Organizers</span></div>' +
+      "<div " +
+      _mbToggle("mbPlatforms") +
+      ' style="' +
+      _btnStyle +
+      '">' +
+      '<div style="display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-satellite-dish" style="color:var(--accent);font-size:0.8rem;"></i><span style="color:var(--text);font-weight:700;font-size:0.85rem;">Platforms & Promotion</span></div>' +
+      '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">›</span>' +
+      "</div>" +
+      '<div id="mbPlatforms" style="display:none;margin-bottom:16px;">' +
+      '<div style="display:flex;flex-direction:column;gap:8px;padding:0 4px;">' +
+      _mbResource(
+        "fa-circle",
+        "Club Orange",
+        "https://www.cluborange.org",
+        "The #1 app for finding and hosting Bitcoin meetups. Create events, RSVP, group chats, discover local Bitcoiners. Active in 71+ countries with 19K+ members. $3.99/mo.",
+      ) +
+      _mbResource(
+        "fa-umbrella-beach",
+        "Satlantis",
+        "https://satlantis.io",
+        "Bitcoin social network and community platform. Discover local Bitcoiners, join communities, find meetups, and connect with the global Bitcoin network. Free to use.",
+      ) +
+      _mbResource(
+        "fa-calendar",
+        "Meetup.com",
+        "https://www.meetup.com",
+        "The largest event platform. Great for reaching normies who aren't on Bitcoin apps yet. Free to join, organizers pay ~$25/mo for groups.",
+      ) +
+      _mbResource(
+        "fa-bolt",
+        "Geyser Fund",
+        "https://geyser.fund",
+        "Bitcoin-native crowdfunding. Raise sats for your meetup via Lightning. Apply for Bitcoin education grants (up to 1 BTC). Non-custodial.",
+      ) +
+      _mbResource(
+        "fa-bullhorn",
+        "Nostr",
+        "https://primal.net",
+        "Post meetup announcements on Nostr — the censorship-resistant social network Bitcoiners use. No algorithm, no gatekeeping.",
+      ) +
+      _mbResource(
+        "fa-ticket",
+        "Evento",
+        "https://evento.so",
+        "Free event listing platform with ticketing and payments — including Bitcoin payments. Clean UI, no fees for free events.",
+      ) +
+      _mbResource(
+        "fa-calendar-days",
+        "Bitcoin Events",
+        "https://www.bitcoinevents.co.za",
+        "Bitcoin-focused event listing site. Submit your meetup to get visibility in the broader Bitcoin community.",
+      ) +
+      _mbResource(
+        "fa-x-twitter",
+        "X (Twitter)",
+        "https://x.com",
+        "Post meetup announcements where Bitcoiners already hang out. Use hashtags like #Bitcoin and your city name. Great organic reach.",
+      ) +
+      _mbResource(
+        "fa-instagram",
+        "Instagram",
+        "https://instagram.com",
+        "Share event photos, reels, and stories. Visual content drives attendance. Tag your venue and local Bitcoin community.",
+      ) +
+      _mbResource(
+        "fa-facebook",
+        "Facebook",
+        "https://facebook.com",
+        "Create a Facebook Event or Page for your meetup. Reaches people outside the Bitcoin bubble. <strong>Pro tip:</strong> Meta Ads (Facebook + Instagram) are highly effective for ticketed events — even $5-10/day can fill seats and drive ticket sales.",
+      ) +
+      _mbResource(
+        "fa-comments",
+        "Telegram / Signal",
+        null,
+        "Create a group chat for your local community. Most successful meetups have an always-on chat where members connect between events.",
+      ) +
+      "</div>" +
+      "</div>" +
+      "<div " +
+      _mbToggle("mbVenues") +
+      ' style="' +
+      _btnStyle +
+      '">' +
+      '<div style="display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-building" style="color:var(--accent);font-size:0.8rem;"></i><span style="color:var(--text);font-weight:700;font-size:0.85rem;">Free Venue Ideas</span></div>' +
+      '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">›</span>' +
+      "</div>" +
+      '<div id="mbVenues" style="display:none;margin-bottom:16px;">' +
+      '<div style="display:flex;flex-direction:column;gap:8px;padding:0 4px;">' +
+      _mbResource(
+        "fa-book",
+        "Public Libraries",
+        null,
+        "Most libraries offer free meeting rooms for community groups. Reserve online or ask at the front desk. Great for educational meetups.",
+      ) +
+      _mbResource(
+        "fa-landmark",
+        "Community Centers",
+        null,
+        "Recreation centers, senior centers, and town halls often have free rooms. Contact your local parks & recreation department.",
+      ) +
+      _mbResource(
+        "fa-laptop",
+        "Coworking Spaces",
+        null,
+        "Many coworking spaces offer free event rooms during off-hours or for community tech groups. WeWork, Industrious, local spaces.",
+      ) +
+      _mbResource(
+        "fa-beer-mug-empty",
+        "Breweries & Pubs",
+        null,
+        'Approach the owner about hosting on a slow night (Tuesday/Wednesday). "Bitcoin nerds discussing over beers" — no rental cost, they get the bar tab.',
+      ) +
+      _mbResource(
+        "fa-mug-hot",
+        "Coffee Shops",
+        null,
+        "Many cafes welcome regular meetup groups, especially if your group buys drinks. Ask about their back room or quiet hours.",
+      ) +
+      _mbResource(
+        "fa-building",
+        "Bitcoin Companies",
+        null,
+        "Local Bitcoin/tech companies may donate conference room space. It's good PR for them and free for you. Just ask!",
+      ) +
+      "</div>" +
+      "</div>" +
+      "<div " +
+      _mbToggle("mbGuides") +
+      ' style="' +
+      _btnStyle +
+      '">' +
+      '<div style="display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-book-open" style="color:var(--accent);font-size:0.8rem;"></i><span style="color:var(--text);font-weight:700;font-size:0.85rem;">Guides & Education</span></div>' +
+      '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">›</span>' +
+      "</div>" +
+      '<div id="mbGuides" style="display:none;margin-bottom:16px;">' +
+      '<div style="display:flex;flex-direction:column;gap:8px;padding:0 4px;">' +
+      _mbResource(
+        "fa-microphone",
+        "Local Bitcoiners Podcast",
+        "https://fountain.fm/show/Q48WBr6nT3mrbwMZ8ydY",
+        "Podcast dedicated to Bitcoin meetup organizers. Real stories from hosts around the world about starting, growing, and sustaining local communities.",
+      ) +
+      _mbResource(
+        "fa-folder-open",
+        "Bitcoin Meetups Repository",
+        "https://github.com/ReedBTC/Bitcoin-Meetups",
+        "Open-source GitHub repo packed with guides on finding venues, structuring meetings, growing attendance, handling finances, and more. Community-maintained.",
+      ) +
+      _mbResource(
+        "fa-book",
+        "How to Start a Bitcoin Meetup",
+        "https://www.whatisbitcoin.com/guides/start-your-own-bitcoin-meetup",
+        "Comprehensive guide covering venues, promotion, format, content ideas, and growing your community from zero.",
+      ) +
+      _mbResource(
+        "fa-graduation-cap",
+        "My First Bitcoin",
+        "https://myfirstbitcoin.org/",
+        "Free open-source Bitcoin education curriculum. Perfect for structured meetup presentations — tested in El Salvador schools.",
+      ) +
+      _mbResource(
+        "fa-code-branch",
+        "Bodarc",
+        "https://github.com/KC-Bitcoiners/bodarc",
+        "Open-source community website built by KC Bitcoiners. Forkable Next.js static site using Nostr as its data layer — get a storefront for circular economy, education resources, calendar, galleries, and committee management. Fully Nostr-ified and zappable.",
+      ) +
+      _mbResource(
+        "fa-archive",
+        "This Archive!",
+        null,
+        "Use the 146 channels in the Bitcoin Education Archive as meetup discussion topics. One channel per meetup = 2+ years of weekly content!",
+      ) +
+      "</div>" +
+      "</div>" +
+      "<div " +
+      _mbToggle("mbTips") +
+      ' style="' +
+      _btnStyle +
+      'border-color:rgba(247,147,26,0.3);background:rgba(247,147,26,0.04);">' +
+      '<div style="display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-lightbulb" style="color:var(--accent);font-size:0.8rem;"></i><span style="color:var(--accent);font-weight:700;font-size:0.85rem;">Pro Tips</span></div>' +
+      '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">‹</span>' +
+      "</div>" +
+      '<div id="mbTips" style="display:block;margin-bottom:16px;">' +
+      '<div style="padding:14px;background:rgba(247,147,26,0.06);border:1px solid rgba(247,147,26,0.2);border-radius:12px;color:var(--text);font-size:0.82rem;line-height:1.7;">' +
+      "• <strong>Start small</strong> — 3 people is a meetup. Don't wait for 30.<br>" +
+      "• <strong>Be consistent</strong> — Same day, same time, every month. Predictability builds attendance.<br>" +
+      "• <strong>Bitcoin only</strong> — Keep it focused. No altcoin talk, no trading tips.<br>" +
+      "• <strong>Welcome beginners</strong> — Your #1 job is making normies feel safe asking questions.<br>" +
+      "• <strong>Bring a node</strong> — Show don't tell. Let people see a real Bitcoin node running.<br>" +
+      "• <strong>Practice Lightning</strong> — Have everyone install a wallet and send sats to each other.<br>" +
+      "• <strong>Document everything</strong> — Take photos (with consent), share on Nostr/Twitter, grow your reach.<br>" +
+      "• <strong>Ask for help</strong> — Find a co-organizer. Burnout is the #1 killer of meetups." +
+      "</div>" +
+      "</div>";
 
-        '<div ' + _mbToggle('mbPlatforms') + ' style="' + _btnStyle + '">' +
-            '<div style="display:flex;align-items:center;gap:8px;"><span>📱</span><span style="color:var(--text);font-weight:700;font-size:0.85rem;">Platforms & Promotion</span></div>' +
-            '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">›</span>' +
-        '</div>' +
-        '<div id="mbPlatforms" style="display:none;margin-bottom:16px;">' +
-            '<div style="display:flex;flex-direction:column;gap:8px;padding:0 4px;">' +
-                _mbResource('🟠', 'Club Orange', 'https://www.cluborange.org', 'The #1 app for finding and hosting Bitcoin meetups. Create events, RSVP, group chats, discover local Bitcoiners. Active in 71+ countries with 19K+ members. $3.99/mo.') +
-                _mbResource('🏝️', 'Satlantis', 'https://satlantis.io', 'Bitcoin social network and community platform. Discover local Bitcoiners, join communities, find meetups, and connect with the global Bitcoin network. Free to use.') +
-                _mbResource('📅', 'Meetup.com', 'https://www.meetup.com', 'The largest event platform. Great for reaching normies who aren\'t on Bitcoin apps yet. Free to join, organizers pay ~$25/mo for groups.') +
-                _mbResource('⚡', 'Geyser Fund', 'https://geyser.fund', 'Bitcoin-native crowdfunding. Raise sats for your meetup via Lightning. Apply for Bitcoin education grants (up to 1 BTC). Non-custodial.') +
-                _mbResource('📣', 'Nostr', 'https://primal.net', 'Post meetup announcements on Nostr — the censorship-resistant social network Bitcoiners use. No algorithm, no gatekeeping.') +
-                _mbResource('🎟️', 'Evento', 'https://evento.so', 'Free event listing platform with ticketing and payments — including Bitcoin payments. Clean UI, no fees for free events.') +
-                _mbResource('🗓️', 'Bitcoin Events', 'https://www.bitcoinevents.co.za', 'Bitcoin-focused event listing site. Submit your meetup to get visibility in the broader Bitcoin community.') +
-                _mbResource('𝕏', 'X (Twitter)', 'https://x.com', 'Post meetup announcements where Bitcoiners already hang out. Use hashtags like #Bitcoin and your city name. Great organic reach.') +
-                _mbResource('📸', 'Instagram', 'https://instagram.com', 'Share event photos, reels, and stories. Visual content drives attendance. Tag your venue and local Bitcoin community.') +
-                _mbResource('👥', 'Facebook', 'https://facebook.com', 'Create a Facebook Event or Page for your meetup. Reaches people outside the Bitcoin bubble. <strong>Pro tip:</strong> Meta Ads (Facebook + Instagram) are highly effective for ticketed events — even $5-10/day can fill seats and drive ticket sales.') +
-                _mbResource('💬', 'Telegram / Signal', null, 'Create a group chat for your local community. Most successful meetups have an always-on chat where members connect between events.') +
-            '</div>' +
-        '</div>' +
-
-        '<div ' + _mbToggle('mbVenues') + ' style="' + _btnStyle + '">' +
-            '<div style="display:flex;align-items:center;gap:8px;"><span>🏠</span><span style="color:var(--text);font-weight:700;font-size:0.85rem;">Free Venue Ideas</span></div>' +
-            '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">›</span>' +
-        '</div>' +
-        '<div id="mbVenues" style="display:none;margin-bottom:16px;">' +
-            '<div style="display:flex;flex-direction:column;gap:8px;padding:0 4px;">' +
-                _mbResource('📚', 'Public Libraries', null, 'Most libraries offer free meeting rooms for community groups. Reserve online or ask at the front desk. Great for educational meetups.') +
-                _mbResource('🏛️', 'Community Centers', null, 'Recreation centers, senior centers, and town halls often have free rooms. Contact your local parks & recreation department.') +
-                _mbResource('💻', 'Coworking Spaces', null, 'Many coworking spaces offer free event rooms during off-hours or for community tech groups. WeWork, Industrious, local spaces.') +
-                _mbResource('🍺', 'Breweries & Pubs', null, 'Approach the owner about hosting on a slow night (Tuesday/Wednesday). "Bitcoin nerds discussing over beers" — no rental cost, they get the bar tab.') +
-                _mbResource('☕', 'Coffee Shops', null, 'Many cafes welcome regular meetup groups, especially if your group buys drinks. Ask about their back room or quiet hours.') +
-                _mbResource('🏢', 'Bitcoin Companies', null, 'Local Bitcoin/tech companies may donate conference room space. It\'s good PR for them and free for you. Just ask!') +
-            '</div>' +
-        '</div>' +
-
-        '<div ' + _mbToggle('mbGuides') + ' style="' + _btnStyle + '">' +
-            '<div style="display:flex;align-items:center;gap:8px;"><span>📖</span><span style="color:var(--text);font-weight:700;font-size:0.85rem;">Guides & Education</span></div>' +
-            '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">›</span>' +
-        '</div>' +
-        '<div id="mbGuides" style="display:none;margin-bottom:16px;">' +
-            '<div style="display:flex;flex-direction:column;gap:8px;padding:0 4px;">' +
-                _mbResource('🎙️', 'Local Bitcoiners Podcast', 'https://fountain.fm/show/Q48WBr6nT3mrbwMZ8ydY', 'Podcast dedicated to Bitcoin meetup organizers. Real stories from hosts around the world about starting, growing, and sustaining local communities.') +
-                _mbResource('📂', 'Bitcoin Meetups Repository', 'https://github.com/ReedBTC/Bitcoin-Meetups', 'Open-source GitHub repo packed with guides on finding venues, structuring meetings, growing attendance, handling finances, and more. Community-maintained.') +
-                _mbResource('📕', 'How to Start a Bitcoin Meetup', 'https://www.whatisbitcoin.com/guides/start-your-own-bitcoin-meetup', 'Comprehensive guide covering venues, promotion, format, content ideas, and growing your community from zero.') +
-                _mbResource('🎓', 'My First Bitcoin', 'https://myfirstbitcoin.org/', 'Free open-source Bitcoin education curriculum. Perfect for structured meetup presentations — tested in El Salvador schools.') +
-                _mbResource('🌳', 'Bodarc', 'https://github.com/KC-Bitcoiners/bodarc', 'Open-source community website built by KC Bitcoiners. Forkable Next.js static site using Nostr as its data layer — get a storefront for circular economy, education resources, calendar, galleries, and committee management. Fully Nostr-ified and zappable.') +
-                _mbResource('🦌', 'This Archive!', null, 'Use the 146 channels in the Bitcoin Education Archive as meetup discussion topics. One channel per meetup = 2+ years of weekly content!') +
-            '</div>' +
-        '</div>' +
-
-        '<div ' + _mbToggle('mbTips') + ' style="' + _btnStyle + 'border-color:rgba(247,147,26,0.3);background:rgba(247,147,26,0.04);">' +
-            '<div style="display:flex;align-items:center;gap:8px;"><span>💡</span><span style="color:var(--accent);font-weight:700;font-size:0.85rem;">Pro Tips</span></div>' +
-            '<span class="mb-arrow" style="color:var(--text-faint);font-size:0.8rem;">‹</span>' +
-        '</div>' +
-        '<div id="mbTips" style="display:block;margin-bottom:16px;">' +
-            '<div style="padding:14px;background:rgba(247,147,26,0.06);border:1px solid rgba(247,147,26,0.2);border-radius:12px;color:var(--text);font-size:0.82rem;line-height:1.7;">' +
-                '• <strong>Start small</strong> — 3 people is a meetup. Don\'t wait for 30.<br>' +
-                '• <strong>Be consistent</strong> — Same day, same time, every month. Predictability builds attendance.<br>' +
-                '• <strong>Bitcoin only</strong> — Keep it focused. No altcoin talk, no trading tips.<br>' +
-                '• <strong>Welcome beginners</strong> — Your #1 job is making normies feel safe asking questions.<br>' +
-                '• <strong>Bring a node</strong> — Show don\'t tell. Let people see a real Bitcoin node running.<br>' +
-                '• <strong>Practice Lightning</strong> — Have everyone install a wallet and send sats to each other.<br>' +
-                '• <strong>Document everything</strong> — Take photos (with consent), share on Nostr/Twitter, grow your reach.<br>' +
-                '• <strong>Ask for help</strong> — Find a co-organizer. Burnout is the #1 killer of meetups.' +
-            '</div>' +
-        '</div>';
-
-    section.insertBefore(resources, document.getElementById('meetupBuilderGrid'));
+    section.insertBefore(
+      resources,
+      document.getElementById("meetupBuilderGrid"),
+    );
 
     view.appendChild(section);
     loadMeetupBuilderPosts();
-}
+  }
 
-function loadMeetupBuilderPosts() {
-    var grid = document.getElementById('meetupBuilderGrid');
+  function loadMeetupBuilderPosts() {
+    var grid = document.getElementById("meetupBuilderGrid");
     if (!grid) return;
-    if (typeof firebase === 'undefined' || !firebase.firestore) {
-        grid.innerHTML = '';
-        return;
+    if (typeof firebase === "undefined" || !firebase.firestore) {
+      grid.innerHTML = "";
+      return;
     }
     var db = firebase.firestore();
-    db.collection('meetup_builder').orderBy('createdAt', 'desc').limit(20).get().then(function(snap) {
+    db.collection("meetup_builder")
+      .orderBy("createdAt", "desc")
+      .limit(20)
+      .get()
+      .then(function (snap) {
         if (snap.empty) {
-            grid.innerHTML =
-                '<div style="grid-column:1/-1;text-align:center;background:var(--card-bg);padding:40px;border-radius:16px;border:1px dashed var(--border);">' +
-                    '<div style="font-size:2.5rem;margin-bottom:12px;">🏗️</div>' +
-                    '<h3 style="color:var(--heading);margin-bottom:8px;font-size:1rem;">No resources shared yet</h3>' +
-                    '<p style="color:var(--text-muted);font-size:0.85rem;">Be the first to share how you built your meetup!</p>' +
-                '</div>';
-            return;
+          grid.innerHTML =
+            '<div style="grid-column:1/-1;text-align:center;background:var(--card-bg);padding:40px;border-radius:16px;border:1px dashed var(--border);">' +
+            '<div style="margin-bottom:12px;"><i class="fa-solid fa-hammer" style="font-size:2rem;color:var(--accent);opacity:0.5;"></i></div>' +
+            '<h3 style="color:var(--heading);margin-bottom:8px;font-size:1rem;">No resources shared yet</h3>' +
+            '<p style="color:var(--text-muted);font-size:0.85rem;">Be the first to share how you built your meetup!</p>' +
+            "</div>";
+          return;
         }
-        var html = '';
-        snap.forEach(function(doc) {
-            var d = doc.data();
-            var esc = typeof escapeHtml === 'function' ? escapeHtml : function(s) { return s; };
-            html += '<div onclick="viewMeetupBuilderPost(\'' + doc.id + '\')" style="background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:20px;cursor:pointer;transition:0.3s;" ' +
-                'onmouseover="this.style.borderColor=\'var(--accent)\';this.style.transform=\'translateY(-3px)\'" ' +
-                'onmouseout="this.style.borderColor=\'var(--border)\';this.style.transform=\'none\'">' +
-                '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">' +
-                    '<span style="font-size:1.3rem;">' + (d.emoji || '📋') + '</span>' +
-                    '<div style="flex:1;min-width:0;">' +
-                        '<div style="color:var(--heading);font-weight:700;font-size:0.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + esc(d.title || 'Untitled') + '</div>' +
-                        '<div style="color:var(--text-faint);font-size:0.7rem;">by ' + esc(d.authorName || 'Anonymous') + (d.meetupName ? ' · ' + esc(d.meetupName) : '') + '</div>' +
-                    '</div>' +
-                '</div>' +
-                (d.description ? '<div style="color:var(--text-muted);font-size:0.82rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">' + esc(d.description) + '</div>' : '') +
-                '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">' +
-                    (d.images && d.images.length ? '<span style="padding:3px 8px;background:rgba(236,72,153,0.1);border:1px solid rgba(236,72,153,0.2);border-radius:6px;font-size:0.65rem;color:#ec4899;font-weight:700;">📸 ' + d.images.length + ' photo' + (d.images.length > 1 ? 's' : '') + '</span>' : '') +
-                    (d.videoUrl ? '<span style="padding:3px 8px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);border-radius:6px;font-size:0.65rem;color:#a855f7;font-weight:700;">🎥 Video</span>' : '') +
-                    (d.hasSlides ? '<span style="padding:3px 8px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:6px;font-size:0.65rem;color:#818cf8;font-weight:700;">📊 Slides</span>' : '') +
-                    (d.hasWriteup ? '<span style="padding:3px 8px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);border-radius:6px;font-size:0.65rem;color:#22c55e;font-weight:700;">📝 Write-up</span>' : '') +
-                    (d.topics && d.topics.length ? '<span style="padding:3px 8px;background:rgba(247,147,26,0.1);border:1px solid rgba(247,147,26,0.2);border-radius:6px;font-size:0.65rem;color:var(--accent);font-weight:700;">🎯 ' + d.topics.length + ' topics</span>' : '') +
-                    '<span style="padding:3px 8px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:6px;font-size:0.65rem;color:var(--text-faint);">👁️ ' + (d.views || 0) + '</span>' +
-                '</div>' +
-            '</div>';
+        var html = "";
+        snap.forEach(function (doc) {
+          var d = doc.data();
+          var esc =
+            typeof escapeHtml === "function"
+              ? escapeHtml
+              : function (s) {
+                  return s;
+                };
+          html +=
+            "<div onclick=\"viewMeetupBuilderPost('" +
+            doc.id +
+            '\')" style="background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:20px;cursor:pointer;transition:0.3s;" ' +
+            "onmouseover=\"this.style.borderColor='var(--accent)';this.style.transform='translateY(-3px)'\" " +
+            "onmouseout=\"this.style.borderColor='var(--border)';this.style.transform='none'\">" +
+            '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">' +
+            '<span style="font-size:1.3rem;">' +
+            (d.emoji || "📋") +
+            "</span>" +
+            '<div style="flex:1;min-width:0;">' +
+            '<div style="color:var(--heading);font-weight:700;font-size:0.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' +
+            esc(d.title || "Untitled") +
+            "</div>" +
+            '<div style="color:var(--text-faint);font-size:0.7rem;">by ' +
+            esc(d.authorName || "Anonymous") +
+            (d.meetupName ? " · " + esc(d.meetupName) : "") +
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            (d.description
+              ? '<div style="color:var(--text-muted);font-size:0.82rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">' +
+                esc(d.description) +
+                "</div>"
+              : "") +
+            '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">' +
+            (d.images && d.images.length
+              ? '<span style="padding:3px 8px;background:rgba(236,72,153,0.1);border:1px solid rgba(236,72,153,0.2);border-radius:6px;font-size:0.65rem;color:#ec4899;font-weight:700;">📸 ' +
+                d.images.length +
+                " photo" +
+                (d.images.length > 1 ? "s" : "") +
+                "</span>"
+              : "") +
+            (d.videoUrl
+              ? '<span style="padding:3px 8px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);border-radius:6px;font-size:0.65rem;color:#a855f7;font-weight:700;">🎥 Video</span>'
+              : "") +
+            (d.hasSlides
+              ? '<span style="padding:3px 8px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:6px;font-size:0.65rem;color:#818cf8;font-weight:700;">📊 Slides</span>'
+              : "") +
+            (d.hasWriteup
+              ? '<span style="padding:3px 8px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);border-radius:6px;font-size:0.65rem;color:#22c55e;font-weight:700;">📝 Write-up</span>'
+              : "") +
+            (d.topics && d.topics.length
+              ? '<span style="padding:3px 8px;background:rgba(247,147,26,0.1);border:1px solid rgba(247,147,26,0.2);border-radius:6px;font-size:0.65rem;color:var(--accent);font-weight:700;">🎯 ' +
+                d.topics.length +
+                " topics</span>"
+              : "") +
+            '<span style="padding:3px 8px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:6px;font-size:0.65rem;color:var(--text-faint);">👁️ ' +
+            (d.views || 0) +
+            "</span>" +
+            "</div>" +
+            "</div>";
         });
         grid.innerHTML = html;
-    }).catch(function() {
-        grid.innerHTML = '';
-    });
-}
+      })
+      .catch(function () {
+        grid.innerHTML = "";
+      });
+  }
 
-window.viewMeetupBuilderPost = async function(id) {
+  window.viewMeetupBuilderPost = async function (id) {
     var db = firebase.firestore();
     try {
-        var doc = await db.collection('meetup_builder').doc(id).get();
-        if (!doc.exists) return;
-        var d = doc.data();
-        var esc = typeof escapeHtml === 'function' ? escapeHtml : function(s) { return s; };
-        db.collection('meetup_builder').doc(id).update({ views: firebase.firestore.FieldValue.increment(1) }).catch(function() {});
+      var doc = await db.collection("meetup_builder").doc(id).get();
+      if (!doc.exists) return;
+      var d = doc.data();
+      var esc =
+        typeof escapeHtml === "function"
+          ? escapeHtml
+          : function (s) {
+              return s;
+            };
+      db.collection("meetup_builder")
+        .doc(id)
+        .update({ views: firebase.firestore.FieldValue.increment(1) })
+        .catch(function () {});
 
-        var overlay = document.createElement('div');
-        overlay.id = 'meetupBuilderOverlay';
-        overlay.style.cssText = 'position:fixed;inset:0;z-index:100010;background:rgba(0,0,0,0.92);display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;-webkit-overflow-scrolling:touch;';
-        overlay.onclick = function(e) { if (e.target === overlay) overlay.remove(); };
+      var overlay = document.createElement("div");
+      overlay.id = "meetupBuilderOverlay";
+      overlay.style.cssText =
+        "position:fixed;inset:0;z-index:100010;background:rgba(0,0,0,0.92);display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;-webkit-overflow-scrolling:touch;";
+      overlay.onclick = function (e) {
+        if (e.target === overlay) overlay.remove();
+      };
 
-        var html = '<div style="background:var(--bg-side,#1a1a2e);border:1px solid var(--accent);border-radius:20px;max-width:600px;width:100%;margin:40px auto;padding:28px;">';
-        html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">' +
-            '<div><div style="font-size:0.7rem;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">MEETUP BUILDER</div>' +
-            '<h2 style="color:var(--heading);font-size:1.3rem;margin:0;line-height:1.3;">' + esc(d.title) + '</h2></div>' +
-            '<button onclick="document.getElementById(\'meetupBuilderOverlay\').remove()" style="background:none;border:none;color:var(--text-faint);font-size:1.3rem;cursor:pointer;padding:4px;">✕</button></div>';
+      var html =
+        '<div style="background:var(--bg-side,#1a1a2e);border:1px solid var(--accent);border-radius:20px;max-width:600px;width:100%;margin:40px auto;padding:28px;">';
+      html +=
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">' +
+        '<div><div style="font-size:0.7rem;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">MEETUP BUILDER</div>' +
+        '<h2 style="color:var(--heading);font-size:1.3rem;margin:0;line-height:1.3;">' +
+        esc(d.title) +
+        "</h2></div>" +
+        '<button onclick="document.getElementById(\'meetupBuilderOverlay\').remove()" style="background:none;border:none;color:var(--text-faint);font-size:1.3rem;cursor:pointer;padding:4px;">✕</button></div>';
 
-        html += '<div style="color:var(--text-faint);font-size:0.8rem;margin-bottom:16px;">by <strong style="color:var(--text);">' + esc(d.authorName || 'Anonymous') + '</strong>' +
-            (d.meetupName ? ' · ' + esc(d.meetupName) : '') +
-            (d.location ? ' · 📍 ' + esc(d.location) : '') +
-            (d.attendeeRange ? ' · 👥 ' + esc(d.attendeeRange) + ' typical attendees' : '') + '</div>';
+      html +=
+        '<div style="color:var(--text-faint);font-size:0.8rem;margin-bottom:16px;">by <strong style="color:var(--text);">' +
+        esc(d.authorName || "Anonymous") +
+        "</strong>" +
+        (d.meetupName ? " · " + esc(d.meetupName) : "") +
+        (d.location ? " · 📍 " + esc(d.location) : "") +
+        (d.attendeeRange
+          ? " · 👥 " + esc(d.attendeeRange) + " typical attendees"
+          : "") +
+        "</div>";
 
-        if (d.description) html += '<div style="color:var(--text);font-size:0.9rem;line-height:1.7;margin-bottom:20px;white-space:pre-wrap;">' + esc(d.description) + '</div>';
+      if (d.description)
+        html +=
+          '<div style="color:var(--text);font-size:0.9rem;line-height:1.7;margin-bottom:20px;white-space:pre-wrap;">' +
+          esc(d.description) +
+          "</div>";
 
-        if (d.topics && d.topics.length) {
-            html += '<div style="margin-bottom:20px;"><div style="font-size:0.75rem;color:var(--accent);font-weight:700;margin-bottom:8px;">🎯 TOPICS COVERED</div><div style="display:flex;flex-wrap:wrap;gap:6px;">';
-            d.topics.forEach(function(t) { html += '<span style="padding:5px 12px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;font-size:0.8rem;color:var(--text);">' + esc(t) + '</span>'; });
-            html += '</div></div>';
-        }
+      if (d.topics && d.topics.length) {
+        html +=
+          '<div style="margin-bottom:20px;"><div style="font-size:0.75rem;color:var(--accent);font-weight:700;margin-bottom:8px;">🎯 TOPICS COVERED</div><div style="display:flex;flex-wrap:wrap;gap:6px;">';
+        d.topics.forEach(function (t) {
+          html +=
+            '<span style="padding:5px 12px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;font-size:0.8rem;color:var(--text);">' +
+            esc(t) +
+            "</span>";
+        });
+        html += "</div></div>";
+      }
 
-        if (d.tips) html += '<div style="margin-bottom:20px;padding:16px;background:rgba(247,147,26,0.06);border:1px solid rgba(247,147,26,0.2);border-radius:12px;">' +
-            '<div style="font-size:0.75rem;color:var(--accent);font-weight:700;margin-bottom:6px;">💡 TIPS FOR NEW HOSTS</div>' +
-            '<div style="color:var(--text);font-size:0.85rem;line-height:1.6;white-space:pre-wrap;">' + esc(d.tips) + '</div></div>';
+      if (d.tips)
+        html +=
+          '<div style="margin-bottom:20px;padding:16px;background:rgba(247,147,26,0.06);border:1px solid rgba(247,147,26,0.2);border-radius:12px;">' +
+          '<div style="font-size:0.75rem;color:var(--accent);font-weight:700;margin-bottom:6px;">💡 TIPS FOR NEW HOSTS</div>' +
+          '<div style="color:var(--text);font-size:0.85rem;line-height:1.6;white-space:pre-wrap;">' +
+          esc(d.tips) +
+          "</div></div>";
 
-        if (d.images && d.images.length > 0) {
-            html += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">';
-            d.images.forEach(function(imgUrl) {
-                html += '<img src="' + esc(imgUrl) + '" onclick="if(typeof openImg===\'function\')openImg(this.src)" style="width:120px;height:120px;object-fit:cover;border-radius:10px;border:1px solid var(--border);cursor:pointer;" loading="lazy">';
-            });
-            html += '</div>';
-        }
-        if (d.videoUrl) html += '<video controls preload="metadata" style="width:100%;max-height:300px;border-radius:12px;margin-bottom:16px;background:#000;" src="' + esc(d.videoUrl) + '"></video>';
+      if (d.images && d.images.length > 0) {
+        html +=
+          '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">';
+        d.images.forEach(function (imgUrl) {
+          html +=
+            '<img src="' +
+            esc(imgUrl) +
+            '" onclick="if(typeof openImg===\'function\')openImg(this.src)" style="width:120px;height:120px;object-fit:cover;border-radius:10px;border:1px solid var(--border);cursor:pointer;" loading="lazy">';
+        });
+        html += "</div>";
+      }
+      if (d.videoUrl)
+        html +=
+          '<video controls preload="metadata" style="width:100%;max-height:300px;border-radius:12px;margin-bottom:16px;background:#000;" src="' +
+          esc(d.videoUrl) +
+          '"></video>';
 
-        if (d.slideUrl) html += '<a href="' + esc(d.slideUrl) + '" target="_blank" rel="noopener" style="display:block;padding:14px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:12px;color:#818cf8;font-weight:700;font-size:0.9rem;text-decoration:none;text-align:center;margin-bottom:12px;">📊 View Slides / Presentation ↗</a>';
-        if (d.resourceUrl) html += '<a href="' + esc(d.resourceUrl) + '" target="_blank" rel="noopener" style="display:block;padding:14px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:12px;color:#22c55e;font-weight:700;font-size:0.9rem;text-decoration:none;text-align:center;margin-bottom:12px;">📎 Additional Resources ↗</a>';
+      if (d.slideUrl)
+        html +=
+          '<a href="' +
+          esc(d.slideUrl) +
+          '" target="_blank" rel="noopener" style="display:block;padding:14px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:12px;color:#818cf8;font-weight:700;font-size:0.9rem;text-decoration:none;text-align:center;margin-bottom:12px;">📊 View Slides / Presentation ↗</a>';
+      if (d.resourceUrl)
+        html +=
+          '<a href="' +
+          esc(d.resourceUrl) +
+          '" target="_blank" rel="noopener" style="display:block;padding:14px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:12px;color:#22c55e;font-weight:700;font-size:0.9rem;text-decoration:none;text-align:center;margin-bottom:12px;">📎 Additional Resources ↗</a>';
 
-        html += '<button onclick="document.getElementById(\'meetupBuilderOverlay\').remove()" style="width:100%;padding:10px;background:none;border:1px solid var(--border);border-radius:10px;color:var(--text-faint);cursor:pointer;font-family:inherit;margin-top:8px;">Close</button>';
-        html += '</div>';
-        overlay.innerHTML = html;
-        document.body.appendChild(overlay);
-    } catch(e) {
-        if (typeof showToast === 'function') showToast('Error loading resource');
+      html +=
+        '<button onclick="document.getElementById(\'meetupBuilderOverlay\').remove()" style="width:100%;padding:10px;background:none;border:1px solid var(--border);border-radius:10px;color:var(--text-faint);cursor:pointer;font-family:inherit;margin-top:8px;">Close</button>';
+      html += "</div>";
+      overlay.innerHTML = html;
+      document.body.appendChild(overlay);
+    } catch (e) {
+      if (typeof showToast === "function") showToast("Error loading resource");
     }
-};
+  };
 
-window.showMeetupBuilderSubmit = function() {
-    var auth = typeof firebase !== 'undefined' ? firebase.auth() : null;
+  window.showMeetupBuilderSubmit = function () {
+    var auth = typeof firebase !== "undefined" ? firebase.auth() : null;
     if (!auth || !auth.currentUser || auth.currentUser.isAnonymous) {
-        if (typeof showUsernamePrompt === 'function') showUsernamePrompt();
-        else if (typeof showToast === 'function') showToast('🔒 Sign in to share your meetup experience');
-        return;
+      if (typeof showUsernamePrompt === "function") showUsernamePrompt();
+      else if (typeof showToast === "function")
+        showToast("🔒 Sign in to share your meetup experience");
+      return;
     }
 
-    var overlay = document.createElement('div');
-    overlay.id = 'meetupBuilderSubmitOverlay';
-    overlay.style.cssText = 'position:fixed;inset:0;z-index:100010;background:rgba(0,0,0,0.92);display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;-webkit-overflow-scrolling:touch;';
-    overlay.onclick = function(e) { if (e.target === overlay) overlay.remove(); };
+    var overlay = document.createElement("div");
+    overlay.id = "meetupBuilderSubmitOverlay";
+    overlay.style.cssText =
+      "position:fixed;inset:0;z-index:100010;background:rgba(0,0,0,0.92);display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;-webkit-overflow-scrolling:touch;";
+    overlay.onclick = function (e) {
+      if (e.target === overlay) overlay.remove();
+    };
 
-    var s = 'width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;color:var(--text);outline:none;box-sizing:border-box;font-family:inherit;margin-bottom:12px;';
-    var html = '<div style="background:var(--bg-side,#1a1a2e);border:1px solid var(--accent);border-radius:20px;max-width:500px;width:100%;margin:40px auto;padding:28px;">';
-    html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;"><h2 style="color:var(--heading);margin:0;font-size:1.2rem;">📤 Share Your Meetup</h2>' +
-        '<button onclick="document.getElementById(\'meetupBuilderSubmitOverlay\').remove()" style="background:none;border:none;color:var(--text-faint);font-size:1.3rem;cursor:pointer;">✕</button></div>';
+    var s =
+      "width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;color:var(--text);outline:none;box-sizing:border-box;font-family:inherit;margin-bottom:12px;";
+    var html =
+      '<div style="background:var(--bg-side,#1a1a2e);border:1px solid var(--accent);border-radius:20px;max-width:500px;width:100%;margin:40px auto;padding:28px;">';
+    html +=
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;"><h2 style="color:var(--heading);margin:0;font-size:1.2rem;">📤 Share Your Meetup</h2>' +
+      '<button onclick="document.getElementById(\'meetupBuilderSubmitOverlay\').remove()" style="background:none;border:none;color:var(--text-faint);font-size:1.3rem;cursor:pointer;">✕</button></div>';
 
-    html += '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Title *</label>';
-    html += '<input type="text" id="mbTitle" placeholder="e.g. How I Built Austin Bitcoin Club" maxlength="120" style="' + s + '">';
+    html +=
+      '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Title *</label>';
+    html +=
+      '<input type="text" id="mbTitle" placeholder="e.g. How I Built Austin Bitcoin Club" maxlength="120" style="' +
+      s +
+      '">';
 
-    html += '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Your Meetup Name</label>';
-    html += '<input type="text" id="mbMeetupName" placeholder="e.g. Austin Bitcoin Club" maxlength="80" style="' + s + '">';
+    html +=
+      '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Your Meetup Name</label>';
+    html +=
+      '<input type="text" id="mbMeetupName" placeholder="e.g. Austin Bitcoin Club" maxlength="80" style="' +
+      s +
+      '">';
 
-    html += '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Location</label>';
-    html += '<input type="text" id="mbLocation" placeholder="e.g. Austin, TX" maxlength="80" style="' + s + '">';
+    html +=
+      '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Location</label>';
+    html +=
+      '<input type="text" id="mbLocation" placeholder="e.g. Austin, TX" maxlength="80" style="' +
+      s +
+      '">';
 
-    html += '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Typical Attendees</label>';
-    html += '<input type="text" id="mbAttendees" placeholder="e.g. 15-30 people" maxlength="40" style="' + s + '">';
+    html +=
+      '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Typical Attendees</label>';
+    html +=
+      '<input type="text" id="mbAttendees" placeholder="e.g. 15-30 people" maxlength="40" style="' +
+      s +
+      '">';
 
-    html += '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Description / Your Story *</label>';
-    html += '<textarea id="mbDesc" placeholder="How did you start your meetup? What worked? What didn\'t?" rows="5" maxlength="3000" style="' + s + 'resize:vertical;font-size:0.88rem;line-height:1.5;"></textarea>';
+    html +=
+      '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Description / Your Story *</label>';
+    html +=
+      '<textarea id="mbDesc" placeholder="How did you start your meetup? What worked? What didn\'t?" rows="5" maxlength="3000" style="' +
+      s +
+      'resize:vertical;font-size:0.88rem;line-height:1.5;"></textarea>';
 
-    html += '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Tips for New Hosts</label>';
-    html += '<textarea id="mbTips" placeholder="What advice would you give someone starting their first meetup?" rows="3" maxlength="2000" style="' + s + 'resize:vertical;font-size:0.88rem;line-height:1.5;"></textarea>';
+    html +=
+      '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Tips for New Hosts</label>';
+    html +=
+      '<textarea id="mbTips" placeholder="What advice would you give someone starting their first meetup?" rows="3" maxlength="2000" style="' +
+      s +
+      'resize:vertical;font-size:0.88rem;line-height:1.5;"></textarea>';
 
-    html += '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Topics Covered (comma-separated)</label>';
-    html += '<input type="text" id="mbTopics" placeholder="e.g. Self-custody, Lightning, Privacy, Mining" style="' + s + '">';
+    html +=
+      '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Topics Covered (comma-separated)</label>';
+    html +=
+      '<input type="text" id="mbTopics" placeholder="e.g. Self-custody, Lightning, Privacy, Mining" style="' +
+      s +
+      '">';
 
-    html += '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Slides / Presentation Link</label>';
-    html += '<input type="url" id="mbSlideUrl" placeholder="https://docs.google.com/presentation/..." style="' + s + '">';
+    html +=
+      '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Slides / Presentation Link</label>';
+    html +=
+      '<input type="url" id="mbSlideUrl" placeholder="https://docs.google.com/presentation/..." style="' +
+      s +
+      '">';
 
-    html += '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Additional Resource Link</label>';
-    html += '<input type="url" id="mbResourceUrl" placeholder="https://..." style="' + s + '">';
+    html +=
+      '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Additional Resource Link</label>';
+    html +=
+      '<input type="url" id="mbResourceUrl" placeholder="https://..." style="' +
+      s +
+      '">';
 
-    html += '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Photos (up to 3)</label>';
+    html +=
+      '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Photos (up to 3)</label>';
     html += '<div style="display:flex;gap:10px;margin-bottom:12px;">';
     for (var pi = 0; pi < 3; pi++) {
-        html += '<div id="mbImgPreview' + pi + '" onclick="document.getElementById(\'mbImgFile' + pi + '\').click()" style="width:80px;height:80px;border-radius:12px;border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden;background:rgba(255,255,255,0.03);cursor:pointer;flex-shrink:0;">' +
-            '<span style="font-size:1.5rem;color:var(--text-faint);">📷</span></div>' +
-            '<input type="file" id="mbImgFile' + pi + '" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none;" onchange="var f=this.files[0];if(f){var r=new FileReader();var idx=' + pi + ';r.onload=function(e){var p=document.getElementById(\'mbImgPreview\'+idx);if(p)p.innerHTML=\'<img src=\\\'\'+e.target.result+\'\\\' style=\\\'width:100%;height:100%;object-fit:cover;\\\'>\';};r.readAsDataURL(f);}">';
+      html +=
+        '<div id="mbImgPreview' +
+        pi +
+        '" onclick="document.getElementById(\'mbImgFile' +
+        pi +
+        '\').click()" style="width:80px;height:80px;border-radius:12px;border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden;background:rgba(255,255,255,0.03);cursor:pointer;flex-shrink:0;">' +
+        '<i class="fa-solid fa-camera" style="font-size:1.2rem;color:var(--text-faint);"></i></div>' +
+        '<input type="file" id="mbImgFile' +
+        pi +
+        '" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none;" onchange="var f=this.files[0];if(f){var r=new FileReader();var idx=' +
+        pi +
+        ";r.onload=function(e){var p=document.getElementById('mbImgPreview'+idx);if(p)p.innerHTML='<img src=\\''+e.target.result+'\\' style=\\'width:100%;height:100%;object-fit:cover;\\'>';};r.readAsDataURL(f);}\">";
     }
-    html += '</div>';
+    html += "</div>";
 
-    html += '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Video (1 file, max 50MB)</label>';
-    html += '<input type="file" id="mbVideoFile" accept="video/mp4,video/webm,video/quicktime" style="' + s + 'font-size:0.8rem;">';
-    html += '<div style="font-size:0.6rem;color:var(--text-faint);margin:-8px 0 12px;">MP4, WebM, or MOV</div>';
+    html +=
+      '<label style="display:block;font-size:0.7rem;color:var(--text-faint);font-weight:700;margin-bottom:4px;text-transform:uppercase;">Video (1 file, max 50MB)</label>';
+    html +=
+      '<input type="file" id="mbVideoFile" accept="video/mp4,video/webm,video/quicktime" style="' +
+      s +
+      'font-size:0.8rem;">';
+    html +=
+      '<div style="font-size:0.6rem;color:var(--text-faint);margin:-8px 0 12px;">MP4, WebM, or MOV</div>';
 
-    html += '<button onclick="submitMeetupBuilder()" id="mbSubmitBtn" style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;font-family:inherit;margin-top:4px;">📤 Share with Community</button>';
-    html += '</div>';
+    html +=
+      '<button onclick="submitMeetupBuilder()" id="mbSubmitBtn" style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;font-family:inherit;margin-top:4px;">📤 Share with Community</button>';
+    html += "</div>";
     overlay.innerHTML = html;
     document.body.appendChild(overlay);
-};
+  };
 
-window.submitMeetupBuilder = async function() {
-    var btn = document.getElementById('mbSubmitBtn');
-    var title = (document.getElementById('mbTitle').value || '').trim();
-    var desc = (document.getElementById('mbDesc').value || '').trim();
-    if (!title || !desc) { if (typeof showToast === 'function') showToast('Title and description are required'); return; }
-    btn.disabled = true; btn.textContent = 'Submitting...';
-    try {
-        var auth = firebase.auth();
-        var db = firebase.firestore();
-        var topics = (document.getElementById('mbTopics').value || '').split(',').map(function(t) { return t.trim(); }).filter(function(t) { return t.length > 0; });
-        var slideUrl = (document.getElementById('mbSlideUrl').value || '').trim();
-        var resourceUrl = (document.getElementById('mbResourceUrl').value || '').trim();
-        var tips = (document.getElementById('mbTips').value || '').trim();
-
-        // Upload images
-        btn.textContent = 'Uploading media...';
-        var imageUrls = [];
-        var storage = null;
-        try { storage = firebase.storage(); } catch(e) {}
-        if (storage) {
-            for (var ii = 0; ii < 3; ii++) {
-                var imgInput = document.getElementById('mbImgFile' + ii);
-                if (imgInput && imgInput.files && imgInput.files[0]) {
-                    var imgFile = imgInput.files[0];
-                    if (imgFile.size > 5242880) continue; // skip >5MB
-                    try {
-                        var imgRef = storage.ref('meetup-builder/' + auth.currentUser.uid + '/' + Date.now() + '_img' + ii + '_' + imgFile.name.replace(/[^a-zA-Z0-9._-]/g, '_'));
-                        var imgSnap = await imgRef.put(imgFile);
-                        var imgUrl = await imgSnap.ref.getDownloadURL();
-                        imageUrls.push(imgUrl);
-                    } catch(e) {}
-                }
-            }
-        }
-
-        // Upload video
-        var videoUrl = '';
-        var vidInput = document.getElementById('mbVideoFile');
-        if (storage && vidInput && vidInput.files && vidInput.files[0]) {
-            var vidFile = vidInput.files[0];
-            if (vidFile.size <= 52428800) { // 50MB max
-                try {
-                    btn.textContent = 'Uploading video...';
-                    var vidRef = storage.ref('meetup-builder/' + auth.currentUser.uid + '/' + Date.now() + '_vid_' + vidFile.name.replace(/[^a-zA-Z0-9._-]/g, '_'));
-                    var vidSnap = await vidRef.put(vidFile);
-                    videoUrl = await vidSnap.ref.getDownloadURL();
-                } catch(e) {}
-            }
-        }
-
-        btn.textContent = 'Saving...';
-        var data = {
-            title: title.substring(0, 120),
-            description: desc.substring(0, 3000),
-            meetupName: (document.getElementById('mbMeetupName').value || '').trim().substring(0, 80),
-            location: (document.getElementById('mbLocation').value || '').trim().substring(0, 80),
-            attendeeRange: (document.getElementById('mbAttendees').value || '').trim().substring(0, 40),
-            authorId: auth.currentUser.uid,
-            authorName: (typeof currentUser !== 'undefined' && currentUser && currentUser.username) ? currentUser.username : (auth.currentUser.displayName || 'Anonymous'),
-            topics: topics.slice(0, 10),
-            hasSlides: !!slideUrl,
-            hasWriteup: desc.length > 200,
-            views: 0,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        };
-        if (slideUrl) data.slideUrl = slideUrl.substring(0, 500);
-        if (resourceUrl) data.resourceUrl = resourceUrl.substring(0, 500);
-        if (tips) data.tips = tips.substring(0, 2000);
-        if (imageUrls.length > 0) data.images = imageUrls;
-        if (videoUrl) data.videoUrl = videoUrl;
-        data.emoji = videoUrl ? '🎥' : imageUrls.length > 0 ? '📸' : slideUrl ? '📊' : tips ? '💡' : '📋';
-
-        await db.collection('meetup_builder').add(data);
-        document.getElementById('meetupBuilderSubmitOverlay').remove();
-        if (typeof showToast === 'function') showToast('✅ Meetup experience shared! Thank you!');
-        if (typeof awardPoints === 'function') awardPoints(25, '🏗️ Meetup Builder contribution');
-        loadMeetupBuilderPosts();
-    } catch(e) {
-        if (typeof showToast === 'function') showToast('Error: ' + (e.message || 'Unknown'));
-        btn.disabled = false; btn.textContent = '📤 Share with Community';
+  window.submitMeetupBuilder = async function () {
+    var btn = document.getElementById("mbSubmitBtn");
+    var title = (document.getElementById("mbTitle").value || "").trim();
+    var desc = (document.getElementById("mbDesc").value || "").trim();
+    if (!title || !desc) {
+      if (typeof showToast === "function")
+        showToast("Title and description are required");
+      return;
     }
-};
+    btn.disabled = true;
+    btn.textContent = "Submitting...";
+    try {
+      var auth = firebase.auth();
+      var db = firebase.firestore();
+      var topics = (document.getElementById("mbTopics").value || "")
+        .split(",")
+        .map(function (t) {
+          return t.trim();
+        })
+        .filter(function (t) {
+          return t.length > 0;
+        });
+      var slideUrl = (document.getElementById("mbSlideUrl").value || "").trim();
+      var resourceUrl = (
+        document.getElementById("mbResourceUrl").value || ""
+      ).trim();
+      var tips = (document.getElementById("mbTips").value || "").trim();
 
-console.log('[MEETUP BUILDER] Module loaded');
+      // Upload images
+      btn.textContent = "Uploading media...";
+      var imageUrls = [];
+      var storage = null;
+      try {
+        storage = firebase.storage();
+      } catch (e) {}
+      if (storage) {
+        for (var ii = 0; ii < 3; ii++) {
+          var imgInput = document.getElementById("mbImgFile" + ii);
+          if (imgInput && imgInput.files && imgInput.files[0]) {
+            var imgFile = imgInput.files[0];
+            if (imgFile.size > 5242880) continue; // skip >5MB
+            try {
+              var imgRef = storage.ref(
+                "meetup-builder/" +
+                  auth.currentUser.uid +
+                  "/" +
+                  Date.now() +
+                  "_img" +
+                  ii +
+                  "_" +
+                  imgFile.name.replace(/[^a-zA-Z0-9._-]/g, "_"),
+              );
+              var imgSnap = await imgRef.put(imgFile);
+              var imgUrl = await imgSnap.ref.getDownloadURL();
+              imageUrls.push(imgUrl);
+            } catch (e) {}
+          }
+        }
+      }
+
+      // Upload video
+      var videoUrl = "";
+      var vidInput = document.getElementById("mbVideoFile");
+      if (storage && vidInput && vidInput.files && vidInput.files[0]) {
+        var vidFile = vidInput.files[0];
+        if (vidFile.size <= 52428800) {
+          // 50MB max
+          try {
+            btn.textContent = "Uploading video...";
+            var vidRef = storage.ref(
+              "meetup-builder/" +
+                auth.currentUser.uid +
+                "/" +
+                Date.now() +
+                "_vid_" +
+                vidFile.name.replace(/[^a-zA-Z0-9._-]/g, "_"),
+            );
+            var vidSnap = await vidRef.put(vidFile);
+            videoUrl = await vidSnap.ref.getDownloadURL();
+          } catch (e) {}
+        }
+      }
+
+      btn.textContent = "Saving...";
+      var data = {
+        title: title.substring(0, 120),
+        description: desc.substring(0, 3000),
+        meetupName: (document.getElementById("mbMeetupName").value || "")
+          .trim()
+          .substring(0, 80),
+        location: (document.getElementById("mbLocation").value || "")
+          .trim()
+          .substring(0, 80),
+        attendeeRange: (document.getElementById("mbAttendees").value || "")
+          .trim()
+          .substring(0, 40),
+        authorId: auth.currentUser.uid,
+        authorName:
+          typeof currentUser !== "undefined" &&
+          currentUser &&
+          currentUser.username
+            ? currentUser.username
+            : auth.currentUser.displayName || "Anonymous",
+        topics: topics.slice(0, 10),
+        hasSlides: !!slideUrl,
+        hasWriteup: desc.length > 200,
+        views: 0,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      };
+      if (slideUrl) data.slideUrl = slideUrl.substring(0, 500);
+      if (resourceUrl) data.resourceUrl = resourceUrl.substring(0, 500);
+      if (tips) data.tips = tips.substring(0, 2000);
+      if (imageUrls.length > 0) data.images = imageUrls;
+      if (videoUrl) data.videoUrl = videoUrl;
+      data.emoji = videoUrl
+        ? "fa-video"
+        : imageUrls.length > 0
+          ? "fa-image"
+          : slideUrl
+            ? "fa-chart-bar"
+            : tips
+              ? "fa-lightbulb"
+              : "fa-clipboard";
+
+      await db.collection("meetup_builder").add(data);
+      document.getElementById("meetupBuilderSubmitOverlay").remove();
+      if (typeof showToast === "function")
+        showToast("✅ Meetup experience shared! Thank you!");
+      if (typeof awardPoints === "function")
+        awardPoints(25, "🏗️ Meetup Builder contribution");
+      loadMeetupBuilderPosts();
+    } catch (e) {
+      if (typeof showToast === "function")
+        showToast("Error: " + (e.message || "Unknown"));
+      btn.disabled = false;
+      btn.textContent = "📤 Share with Community";
+    }
+  };
+
+  console.log("[MEETUP BUILDER] Module loaded");
 })();

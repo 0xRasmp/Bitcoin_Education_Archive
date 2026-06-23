@@ -7,7 +7,7 @@
 
 var TEMPLATES = [
     {
-        emoji: '📘',
+        icon: 'fa-book',
         title: 'Your First Meetup',
         desc: 'Complete agenda for a 1-hour beginner-friendly Bitcoin meetup. Icebreakers, key talking points, and Q&A structure.',
         duration: '1 hour',
@@ -25,7 +25,7 @@ var TEMPLATES = [
         channels: ['one-stop-shop', 'money', 'problems-of-money', 'use-cases']
     },
     {
-        emoji: '⚡',
+        icon: 'fa-bolt',
         title: 'Lightning Workshop',
         desc: 'Hands-on workshop where attendees set up Lightning wallets and send their first payments.',
         duration: '1.5 hours',
@@ -44,7 +44,7 @@ var TEMPLATES = [
         channels: ['layer-2-lightning', 'self-custody', 'investment-strategy']
     },
     {
-        emoji: '🔐',
+        icon: 'fa-lock',
         title: 'Self-Custody Workshop',
         desc: 'Teach attendees how to take control of their Bitcoin with proper wallet setup and seed phrase security.',
         duration: '1.5 hours',
@@ -62,7 +62,7 @@ var TEMPLATES = [
         channels: ['self-custody', 'cryptography', 'public_key_vs_private_key']
     },
     {
-        emoji: '🌍',
+        icon: 'fa-globe',
         title: 'Bitcoin vs. The System',
         desc: 'Discussion-focused meetup about why Bitcoin exists: broken money, inflation, financial freedom.',
         duration: '1.5 hours',
@@ -80,7 +80,7 @@ var TEMPLATES = [
         channels: ['problems-of-money', 'decentralized', 'scarce', 'human_rights__social_justice_and_freedo']
     },
     {
-        emoji: '⛏️',
+        icon: 'fa-hammer',
         title: 'Mining & Energy Deep Dive',
         desc: 'Technical meetup exploring how Bitcoin mining works, energy usage facts, and home mining options.',
         duration: '1.5 hours',
@@ -108,7 +108,7 @@ function injectMeetupBox() {
     section.style.cssText = 'margin-top:30px;';
 
     var html = '<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">' +
-        '<span style="font-size:1.3rem;">📦</span>' +
+        '<div style="width:40px;height:40px;border-radius:10px;background:var(--accent-bg);border:1px solid var(--accent-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-box-open" style="color:var(--accent);font-size:0.95rem;"></i></div>' +
         '<div><div style="color:var(--heading);font-weight:800;font-size:1.05rem;">Meetup-in-a-Box</div>' +
         '<div style="color:var(--text-muted);font-size:0.78rem;">Ready-made agendas · Just pick a topic and go</div></div></div>';
 
@@ -118,7 +118,7 @@ function injectMeetupBox() {
             'onmouseover="this.style.borderColor=\'' + t.color + '\';this.style.transform=\'translateY(-2px)\'" ' +
             'onmouseout="this.style.borderColor=\'var(--border)\';this.style.transform=\'none\'">' +
             '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">' +
-                '<span style="font-size:1.3rem;">' + t.emoji + '</span>' +
+                '<div style="width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:' + t.color + '22;border:1px solid ' + t.color + '44;"><i class="fa-solid ' + t.icon + '" style="color:' + t.color + ';font-size:0.8rem;"></i></div>' +
                 '<div style="flex:1;"><div style="color:var(--heading);font-weight:700;font-size:0.9rem;">' + t.title + '</div>' +
                 '<div style="color:var(--text-faint);font-size:0.65rem;">' + t.duration + ' · ' + t.level + '</div></div>' +
             '</div>' +
@@ -148,25 +148,25 @@ window.showMeetupTemplate = function(idx) {
     // Header
     html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">' +
         '<div><div style="font-size:0.7rem;color:' + t.color + ';font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">MEETUP-IN-A-BOX</div>' +
-        '<h2 style="color:var(--heading);font-size:1.3rem;margin:0;line-height:1.3;">' + t.emoji + ' ' + esc(t.title) + '</h2>' +
+        '<h2 style="color:var(--heading);font-size:1.3rem;margin:0;line-height:1.3;">' + esc(t.title) + '</h2>' +
         '<div style="color:var(--text-faint);font-size:0.75rem;margin-top:4px;">' + t.duration + ' · ' + t.level + '</div></div>' +
         '<button onclick="document.getElementById(\'meetupTemplateOverlay\').remove()" style="background:none;border:none;color:var(--text-faint);font-size:1.3rem;cursor:pointer;padding:4px;">✕</button></div>';
 
     html += '<p style="color:var(--text-muted);font-size:0.85rem;line-height:1.5;margin-bottom:20px;">' + esc(t.desc) + '</p>';
 
     // Agenda
-    html += '<div style="font-size:0.72rem;color:' + t.color + ';font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">📋 AGENDA</div>';
+    html += '<div style="font-size:0.72rem;color:' + t.color + ';font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px;"><i class="fa-solid fa-list-check" style="font-size:0.68rem;"></i> AGENDA</div>';
     t.agenda.forEach(function(a) {
         html += '<div style="display:flex;gap:10px;margin-bottom:10px;padding:10px 12px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;">' +
             '<div style="color:' + t.color + ';font-weight:800;font-size:0.75rem;flex-shrink:0;min-width:35px;">' + a.time + '</div>' +
-            '<div><div style="color:var(--heading);font-weight:700;font-size:0.85rem;">' + a.item + '</div>' +
+            '<div><div style="color:var(--heading);font-weight:700;font-size:0.85rem;">' + a.item.replace(/[\u{1F300}-\u{1FAD6}\u{1F000}-\u{1F9FF}\u{2600}-\u{27BF}\u{FE00}-\u{FEFF}]\s*/gu, '').trim() + '</div>' +
             '<div style="color:var(--text-muted);font-size:0.78rem;line-height:1.5;margin-top:2px;">' + a.detail + '</div></div></div>';
     });
 
     // Tips
     if (t.tips) {
         html += '<div style="margin-top:16px;padding:14px;background:rgba(247,147,26,0.06);border:1px solid rgba(247,147,26,0.2);border-radius:12px;">' +
-            '<div style="font-size:0.72rem;color:var(--accent);font-weight:700;margin-bottom:6px;">💡 HOST TIPS</div>' +
+            '<div style="font-size:0.72rem;color:var(--accent);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px;"><i class="fa-solid fa-lightbulb" style="font-size:0.68rem;"></i> HOST TIPS</div>' +
             '<div style="color:var(--text);font-size:0.82rem;line-height:1.7;white-space:pre-wrap;">' + esc(t.tips) + '</div></div>';
     }
 
@@ -183,7 +183,7 @@ window.showMeetupTemplate = function(idx) {
     }
 
     html += '<div style="display:flex;gap:8px;margin-top:16px;">' +
-        '<button onclick="downloadMeetupTemplate(' + idx + ')" style="flex:1;padding:10px;background:linear-gradient(135deg,' + t.color + '22,' + t.color + '11);border:1px solid ' + t.color + ';border-radius:10px;color:' + t.color + ';cursor:pointer;font-family:inherit;font-weight:700;font-size:0.85rem;">⬇️ Download</button>' +
+        '<button onclick="downloadMeetupTemplate(' + idx + ')" style="flex:1;padding:10px;background:linear-gradient(135deg,' + t.color + '22,' + t.color + '11);border:1px solid ' + t.color + ';border-radius:10px;color:' + t.color + ';cursor:pointer;font-family:inherit;font-weight:700;font-size:0.85rem;display:flex;align-items:center;justify-content:center;gap:7px;"><i class="fa-solid fa-download" style="font-size:0.75rem;"></i> Download</button>' +
         '<button onclick="document.getElementById(\'meetupTemplateOverlay\').remove()" style="flex:1;padding:10px;background:none;border:1px solid var(--border);border-radius:10px;color:var(--text-faint);cursor:pointer;font-family:inherit;">Close</button>' +
     '</div>';
     html += '</div>';
@@ -246,7 +246,7 @@ window.downloadMeetupTemplate = function(idx) {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    if (typeof showToast === 'function') showToast('📦 Template downloaded!');
+    if (typeof showToast === 'function') showToast('Template downloaded!');
 };
 
 // Hook into meetup builder render
