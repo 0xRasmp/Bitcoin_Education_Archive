@@ -24,27 +24,67 @@ var MARKETPLACE_RULES = [
 ];
 
 function showMarketRules(force) {
-    var html = '<div style="position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;" onclick="if(event.target===this)this.remove()">' +
-        '<div style="background:rgba(15,23,42,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:24px;max-width:480px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.5);animation:fadeSlideIn 0.3s;-webkit-overflow-scrolling:touch;">' +
-            '<div style="text-align:center;margin-bottom:16px;">' +
-                '<div style="font-size:2rem;margin-bottom:6px;">⚡</div>' +
-                '<h2 style="color:var(--heading);font-size:1.2rem;font-weight:800;margin:0 0 4px;">LightningMart Rules</h2>' +
-                '<div style="color:var(--text-muted);font-size:0.8rem;">Read before buying or selling</div>' +
-            '</div>';
+    var RULE_ICONS = [
+        'fa-bolt',
+        'fa-ban',
+        'fa-shield-halved',
+        'fa-mask',
+        'fa-people-arrows',
+        'fa-money-bill-transfer',
+        'fa-list-check',
+        'fa-handshake',
+        'fa-chart-line',
+        'fa-scale-balanced',
+    ];
+    var html = '<div style="position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;" onclick="if(event.target===this)this.remove()">' +
+        '<div style="background:var(--bg-side);border:1px solid var(--border);border-radius:20px;max-width:480px;width:100%;box-shadow:var(--shadow-lg);animation:fadeSlideIn 0.3s;display:flex;flex-direction:column;max-height:88vh;">' +
+
+        /* ── Fixed header ── */
+        '<div style="padding:24px 24px 16px;border-bottom:1px solid var(--border);flex-shrink:0;">' +
+            '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">' +
+                '<div style="display:flex;align-items:center;gap:12px;">' +
+                    '<div style="width:40px;height:40px;border-radius:12px;background:var(--accent-bg);border:1px solid var(--accent-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;">' +
+                        '<i class="fa-solid fa-bolt" style="color:var(--accent);font-size:1rem;"></i>' +
+                    '</div>' +
+                    '<div>' +
+                        '<h2 style="color:var(--heading);font-size:1.1rem;font-weight:800;margin:0 0 2px;letter-spacing:-0.3px;">LightningMart Rules</h2>' +
+                        '<div style="color:var(--text-muted);font-size:0.75rem;">Read before buying or selling</div>' +
+                    '</div>' +
+                '</div>' +
+                '<button onclick="document.getElementById(\'marketRulesOverlay\').remove()" style="width:30px;height:30px;background:var(--secondary);border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text-muted)\'">' +
+                    '<i class="fa-solid fa-xmark"></i>' +
+                '</button>' +
+            '</div>' +
+        '</div>' +
+
+        /* ── Scrollable rules body ── */
+        '<div style="overflow-y:auto;padding:16px 24px;flex:1;scrollbar-width:thin;scrollbar-color:var(--border) transparent;">' +
+        '<style>#marketRulesOverlay .rules-scroll::-webkit-scrollbar{width:4px}#marketRulesOverlay .rules-scroll::-webkit-scrollbar-track{background:transparent}#marketRulesOverlay .rules-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}</style>';
 
     for (var i = 0; i < MARKETPLACE_RULES.length; i++) {
         var r = MARKETPLACE_RULES[i];
-        html += '<div style="display:flex;gap:10px;margin-bottom:12px;align-items:flex-start;">' +
-            '<span style="width:28px;flex-shrink:0;margin-top:2px;color:var(--accent);font-size:0.95rem;display:flex;align-items:center;justify-content:center;">' + r.emoji + '</span>' +
-            '<div>' +
-                '<div style="color:var(--heading);font-size:0.85rem;font-weight:700;margin-bottom:2px;">' + r.title + '</div>' +
-                '<div style="color:var(--text-muted);font-size:0.8rem;line-height:1.4;">' + r.desc + '</div>' +
+        var icon = RULE_ICONS[i] || 'fa-circle-info';
+        html += '<div style="display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;">' +
+            '<div style="width:32px;height:32px;border-radius:9px;background:var(--accent-bg);border:1px solid var(--accent-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">' +
+                '<i class="fa-solid ' + icon + '" style="color:var(--accent);font-size:0.72rem;"></i>' +
+            '</div>' +
+            '<div style="flex:1;padding-top:2px;">' +
+                '<div style="color:var(--heading);font-size:0.85rem;font-weight:700;margin-bottom:3px;line-height:1.3;">' + r.title + '</div>' +
+                '<div style="color:var(--text-muted);font-size:0.78rem;line-height:1.55;">' + r.desc + '</div>' +
             '</div>' +
         '</div>';
     }
 
-    html += '<button onclick="acceptMarketRules()" style="width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px;touch-action:manipulation;">I Understand — Let\'s Trade! ⚡</button>';
-    html += '</div></div>';
+    html += '</div>' +
+
+        /* ── Fixed footer ── */
+        '<div style="padding:16px 24px 20px;border-top:1px solid var(--border);flex-shrink:0;">' +
+            '<button onclick="acceptMarketRules()" style="width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:0.9rem;font-weight:800;cursor:pointer;font-family:inherit;touch-action:manipulation;display:flex;align-items:center;justify-content:center;gap:8px;transition:0.2s;letter-spacing:0.2px;" onmouseover="this.style.opacity=\'0.88\'" onmouseout="this.style.opacity=\'1\'">' +
+                '<i class="fa-solid fa-bolt" style="font-size:0.8rem;"></i> I Understand — Let\'s Trade!' +
+            '</button>' +
+        '</div>' +
+
+    '</div></div>';
 
     var div = document.createElement('div');
     div.id = 'marketRulesOverlay';
