@@ -18065,8 +18065,8 @@ function _renderFavorTab(body) {
         var remainingMin = Math.floor(remainingMs / 60000);
         var remainingSec = Math.floor((remainingMs % 60000) / 1000);
 
-        html += '<div style="background:linear-gradient(135deg,rgba(247,147,26,0.15),rgba(247,147,26,0.05));border:2px solid var(--accent);border-radius:12px;padding:16px;margin-bottom:16px;animation:favorPulse 2s ease-in-out infinite;">' +
-            '<div style="font-size:0.95rem;font-weight:800;color:var(--accent);margin-bottom:10px;letter-spacing:0.3px;"><i class="fa-solid fa-circle-check" style="margin-right:6px;"></i>SATOSHI\'S FAVOR IS ACTIVE!</div>' +
+        html += '<div style="background:linear-gradient(135deg,rgba(247,147,26,0.15),rgba(247,147,26,0.05));border:2px solid var(--accent);border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 4px 16px rgba(247,147,26,0.12);animation:favorPulse 2s ease-in-out infinite;">' +
+            '<div style="font-size:0.95rem;font-weight:800;color:var(--accent);margin-bottom:12px;letter-spacing:0.3px;"><i class="fa-solid fa-circle-check" style="margin-right:6px;"></i>SATOSHI\'S FAVOR IS ACTIVE!</div>' +
             '<div id="favorTabTimer" style="display:flex;align-items:baseline;justify-content:center;gap:8px;">' +
                 '<span style="display:flex;align-items:baseline;gap:3px;"><span style="font-size:1.25rem;font-weight:700;color:var(--heading);font-family:var(--display-font);">' + remainingMin + '</span><span style="font-size:0.58rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.4px;">min</span></span>' +
                 '<span style="display:flex;align-items:baseline;gap:3px;"><span style="font-size:1.25rem;font-weight:700;color:var(--heading);font-family:var(--display-font);">' + remainingSec + '</span><span style="font-size:0.58rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.4px;">sec</span></span>' +
@@ -18075,7 +18075,7 @@ function _renderFavorTab(body) {
             '</div>' +
             '<style>@keyframes favorPulse{0%,100%{box-shadow:0 0 0 0 rgba(247,147,26,0.4)}50%{box-shadow:0 0 0 10px rgba(247,147,26,0)}}</style>';
 
-        html += '<button onclick="window.closeQuestHubForFavor && window.closeQuestHubForFavor();window.openSatoshiFavorMiner && window.openSatoshiFavorMiner()" style="padding:8px 22px;background:linear-gradient(135deg,var(--accent),#e8720c);border:none;border-radius:9px;color:#fff;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:var(--display-font),inherit;margin-bottom:10px;letter-spacing:0.2px;"><i class="fa-solid fa-hammer" style="margin-right:6px;"></i>Start Mining</button>';
+        html += '<button onclick="window.closeQuestHubForFavor && window.closeQuestHubForFavor();window.openSatoshiFavorMiner && window.openSatoshiFavorMiner()" style="padding:12px 30px;background:linear-gradient(135deg,var(--accent),#e8720c);border:none;border-radius:14px;color:#fff;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:var(--display-font),inherit;margin-bottom:10px;letter-spacing:0.2px;box-shadow:0 4px 14px rgba(247,147,26,0.3);"><i class="fa-solid fa-hammer" style="margin-right:6px;"></i>Start Mining</button>';
     } else {
         html += '<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">' +
             '<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;">' +
@@ -18089,34 +18089,34 @@ function _renderFavorTab(body) {
     }
 
     // ── Faction Scoreboard (below progress bar) ──
-    html += '<div id="factionScoreboard" style="background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:18px;">' +
-        '<div style="font-size:0.7rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1.2px;font-weight:800;margin-bottom:4px;">⚔️ Faction SF Competition</div>' +
-        '<div style="font-size:0.72rem;color:var(--accent);font-weight:700;margin-bottom:2px;">Race to 1,000 points</div>' +
-        '<div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">🏆 Winning Faction receives a special prize!</div>' +
+    html += '<div id="factionScoreboard" style="background:linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.04);">' +
+        '<div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:4px;"><i class="fa-solid fa-khanda" style="color:var(--text-faint);font-size:0.7rem;"></i><span style="font-size:0.7rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1.2px;font-weight:800;">Faction SF Competition</span></div>' +
+        '<div style="text-align:center;font-size:0.72rem;color:var(--accent);font-weight:700;margin-bottom:2px;">Race to 1,000 points</div>' +
+        '<div style="display:flex;align-items:center;justify-content:center;gap:5px;text-align:center;font-size:0.68rem;color:var(--text-muted);margin-bottom:14px;"><i class="fa-solid fa-trophy" style="color:#facc15;font-size:0.65rem;"></i>Winning Faction receives a special prize!</div>' +
         '<div id="factionScoreboardInner" style="display:flex;gap:10px;align-items:stretch;">' +
-            '<div style="flex:1;background:rgba(247,147,26,0.07);border:2px solid rgba(247,147,26,0.3);border-radius:12px;padding:12px;text-align:center;">' +
-                '<div style="font-size:1.4rem;margin-bottom:4px;">🐝</div>' +
+            '<div style="flex:1;background:rgba(247,147,26,0.08);border:2px solid rgba(247,147,26,0.35);border-radius:14px;padding:14px 12px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.15);">' +
+                '<div style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:rgba(247,147,26,0.15);margin:0 auto 8px;"><i class="fa-solid fa-bug" style="color:#f7931a;font-size:1rem;"></i></div>' +
                 '<div style="font-size:0.78rem;font-weight:800;color:#f7931a;margin-bottom:6px;">Cyber Hornets</div>' +
                 '<div id="sfScoreHornets" style="font-size:1.6rem;font-weight:900;color:var(--heading);font-family:monospace;">0</div>' +
                 '<div style="font-size:0.62rem;color:var(--text-faint);margin-top:2px;">SF points</div>' +
             '</div>' +
             '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;flex-shrink:0;">' +
-                '<div style="font-size:0.9rem;font-weight:900;color:var(--text-faint);">VS</div>' +
+                '<div style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--bg);border:1px solid var(--border);font-size:0.72rem;font-weight:900;color:var(--text-faint);">VS</div>' +
                 '<div id="sfScoreLeader" style="display:none;"></div>' +
             '</div>' +
-            '<div style="flex:1;background:rgba(168,85,247,0.07);border:2px solid rgba(168,85,247,0.3);border-radius:12px;padding:12px;text-align:center;">' +
-                '<div style="font-size:1.4rem;margin-bottom:4px;">🦡</div>' +
+            '<div style="flex:1;background:rgba(168,85,247,0.08);border:2px solid rgba(168,85,247,0.35);border-radius:14px;padding:14px 12px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.15);">' +
+                '<div style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:rgba(168,85,247,0.15);margin:0 auto 8px;"><i class="fa-solid fa-paw" style="color:#a855f7;font-size:1rem;"></i></div>' +
                 '<div style="font-size:0.78rem;font-weight:800;color:#a855f7;margin-bottom:6px;">Honey Badgers</div>' +
                 '<div id="sfScoreBadgers" style="font-size:1.6rem;font-weight:900;color:var(--heading);font-family:monospace;">0</div>' +
                 '<div style="font-size:0.62rem;color:var(--text-faint);margin-top:2px;">SF points</div>' +
             '</div>' +
         '</div>' +
-        '<div id="sfScoreBar" style="margin-top:10px;height:6px;background:var(--border);border-radius:3px;overflow:hidden;display:none;">' +
+        '<div id="sfScoreBar" style="margin-top:12px;height:6px;background:var(--border);border-radius:3px;overflow:hidden;display:none;">' +
             '<div id="sfScoreBarFill" style="height:100%;background:linear-gradient(90deg,#f7931a,#f7931a 50%,#a855f7 50%,#a855f7);width:100%;border-radius:3px;transition:background 0.5s;"></div>' +
         '</div>' +
-        '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding:8px 10px;background:rgba(255,255,255,0.03);border-radius:8px;">' +
-            '<div style="display:flex;align-items:center;gap:6px;">' +
-                '<span style="font-size:0.82rem;">👤</span>' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding:10px 12px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;">' +
+            '<div style="display:flex;align-items:center;gap:8px;">' +
+                '<i class="fa-solid fa-user" style="color:var(--text-faint);font-size:0.78rem;"></i>' +
                 '<span style="font-size:0.72rem;color:var(--text-muted);">Unaffiliated - <span onclick=\"document.getElementById(\'questHubOverlay\').remove();setTimeout(function(){showSettingsPage(\'account\')},50)\" style=\"color:var(--accent);cursor:pointer;font-weight:700;text-decoration:underline;\">Choose a Faction!</span></span>' +
             '</div>' +
             '<div style="display:flex;align-items:center;gap:8px;">' +
@@ -18126,7 +18126,7 @@ function _renderFavorTab(body) {
         '</div>' +
         '<div id="sfNoFactionNote" style="display:none;"></div>' +
         '<div id="sfAdminBackfill" style="display:none;margin-top:8px;text-align:center;">' +
-            '<button onclick="window._runFactionBackfill()" style="padding:5px 12px;background:rgba(247,147,26,0.1);border:1px solid rgba(247,147,26,0.4);border-radius:7px;color:var(--accent);font-size:0.7rem;font-weight:700;cursor:pointer;font-family:inherit;">⚡ Backfill historical data (admin)</button>' +
+            '<button onclick="window._runFactionBackfill()" style="padding:6px 14px;background:rgba(247,147,26,0.1);border:1px solid rgba(247,147,26,0.4);border-radius:8px;color:var(--accent);font-size:0.7rem;font-weight:700;cursor:pointer;font-family:inherit;"><i class="fa-solid fa-bolt" style="margin-right:5px;"></i>Backfill historical data (admin)</button>' +
         '</div>' +
     '</div>';
     // -- end faction scoreboard --
@@ -18417,11 +18417,11 @@ window.showQuestHub = function() {
 
     var overlay = document.createElement('div');
     overlay.id = 'questHubOverlay';
-    overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:100000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(5px);padding:20px;animation:nachoPop 0.25s ease;';
+    overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:100000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(5px);padding:12px;animation:nachoPop 0.25s ease;';
     overlay.onclick = function(e) { if (e.target === overlay) { window._cleanupRaidBoss(); overlay.remove(); } };
 
     var modal = document.createElement('div');
-    modal.style.cssText = 'background:var(--bg-side,#141425);border:1px solid var(--border);width:100%;max-width:480px;max-height:82vh;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;position:relative;box-shadow:0 24px 56px rgba(0,0,0,0.5),0 8px 20px rgba(0,0,0,0.3);';
+    modal.style.cssText = 'background:var(--bg-side,#141425);border:1px solid var(--border);width:100%;max-width:480px;height:calc(100vh - 24px);max-height:calc(100vh - 24px);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;position:relative;box-shadow:0 24px 56px rgba(0,0,0,0.5),0 8px 20px rgba(0,0,0,0.3);';
 
     // Scrollbar styling only — desktop font-size boost removed (was inflating all text)
     var qhStyle = document.createElement('style');
