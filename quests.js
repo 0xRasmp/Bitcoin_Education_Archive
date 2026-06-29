@@ -2341,13 +2341,13 @@ function _renderFavorTab(body) {
     '</div>';
 
     // Top 10 lowest hashes + personal best sections
-    html += '<div style="margin-top:16px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:14px;">' +
-        '<div style="font-size:0.82rem;font-weight:800;color:var(--heading);margin-bottom:10px;">\uD83C\uDFC6 All-Time Lowest Hashes</div>' +
+    html += '<div style="margin-top:18px;background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:16px;">' +
+        '<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;"><i class="fa-solid fa-trophy" style="color:#facc15;font-size:0.85rem;"></i><span style="font-size:0.84rem;font-weight:700;color:var(--heading);letter-spacing:-0.1px;">All-Time Lowest Hashes</span></div>' +
         '<div id="favorTopHashes" style="font-size:0.8rem;color:var(--text-muted);">Loading...</div>' +
     '</div>';
 
-    html += '<div style="margin-top:10px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:14px;">' +
-        '<div style="font-size:0.82rem;font-weight:800;color:var(--heading);margin-bottom:8px;">\u2B50 Your Personal Best</div>' +
+    html += '<div style="margin-top:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:16px;">' +
+        '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><i class="fa-solid fa-star" style="color:var(--accent);font-size:0.8rem;"></i><span style="font-size:0.84rem;font-weight:700;color:var(--heading);letter-spacing:-0.1px;">Your Personal Best</span></div>' +
         '<div id="favorPersonalBest" style="font-size:0.8rem;color:var(--text-muted);">Loading...</div>' +
     '</div>';
 
@@ -2483,24 +2483,28 @@ function _renderTopHashesHTML(entries) {
     function renderEntry(e, i) {
         var isMe = myUsername && e.username === myUsername;
         var rank = i + 1;
-        var rankIcon = rank === 1 ? '\uD83E\uDD47' : (rank === 2 ? '\uD83E\uDD48' : (rank === 3 ? '\uD83E\uDD49' : rank + '.'));
+        var rankBadge = rank <= 3
+            ? '<span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;flex-shrink:0;background:' + (rank === 1 ? 'rgba(250,204,21,0.16)' : rank === 2 ? 'rgba(203,213,225,0.16)' : 'rgba(217,119,6,0.16)') + ';color:' + (rank === 1 ? '#facc15' : rank === 2 ? '#cbd5e1' : '#d97706') + ';font-size:0.68rem;"><i class="fa-solid fa-medal"></i></span>'
+            : '<span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;flex-shrink:0;background:rgba(255,255,255,0.04);color:var(--text-faint);font-size:0.7rem;font-weight:700;">' + rank + '</span>';
         var name = typeof escapeHtml === 'function' ? escapeHtml(e.username || 'Anon') : (e.username || 'Anon');
         var isWin = e.value < 1000;
         var tsMs = (e.timestamp && typeof e.timestamp.toMillis === 'function') ? e.timestamp.toMillis() : (e.timestamp ? Number(e.timestamp) : 0);
         var isNew = tsMs && (now - tsMs) < SEVENTY_TWO_HOURS;
-        var newBadge = isNew ? '<span style="margin-left:6px;padding:1px 5px;background:#f7931a;color:#fff;font-size:0.6rem;font-weight:900;border-radius:4px;letter-spacing:0.05em;vertical-align:middle;">NEW</span>' : '';
-        return '<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;margin-bottom:3px;' +
-            'background:' + (isWin ? 'rgba(34,197,94,0.12)' : (isMe ? 'rgba(247,147,26,0.1)' : 'transparent')) + ';' +
-            'border:1px solid ' + (isWin ? '#22c55e' : (isMe ? 'var(--accent)' : 'var(--border)')) + ';border-radius:8px;">' +
-            '<div style="display:flex;align-items:center;gap:6px;">' +
-                '<span style="font-size:0.78rem;min-width:22px;">' + rankIcon + '</span>' +
-                '<span style="font-size:0.8rem;font-weight:' + (isMe ? '800' : '600') + ';color:' + (isMe ? 'var(--accent)' : 'var(--text)') + ';">' + (isWin ? '\uD83C\uDFC6 ' : '') + name + (isMe ? ' (you)' : '') + newBadge + '</span>' +
+        var newBadge = isNew ? '<span style="margin-left:7px;padding:2px 6px;background:rgba(247,147,26,0.15);border:1px solid rgba(247,147,26,0.35);color:var(--accent);font-size:0.56rem;font-weight:800;border-radius:5px;letter-spacing:0.06em;vertical-align:middle;">NEW</span>' : '';
+        var winBadge = isWin ? '<span style="margin-left:7px;display:inline-flex;align-items:center;gap:3px;padding:2px 7px;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.35);color:#22c55e;font-size:0.58rem;font-weight:800;border-radius:5px;letter-spacing:0.03em;vertical-align:middle;"><i class="fa-solid fa-trophy" style="font-size:0.55rem;"></i> WIN</span>' : '';
+        return '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;margin-bottom:6px;' +
+            'background:' + (isWin ? 'rgba(34,197,94,0.06)' : (isMe ? 'rgba(247,147,26,0.07)' : 'rgba(255,255,255,0.02)')) + ';' +
+            'border:1px solid ' + (isWin ? 'rgba(34,197,94,0.3)' : (isMe ? 'rgba(247,147,26,0.3)' : 'var(--border)')) + ';border-radius:10px;">' +
+            '<div style="display:flex;align-items:center;gap:10px;min-width:0;">' +
+                rankBadge +
+                '<span style="font-size:0.82rem;font-weight:' + (isMe ? '700' : '500') + ';color:' + (isMe ? 'var(--heading)' : 'var(--text)') + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + name + (isMe ? ' <span style="color:var(--text-faint);font-weight:500;">(you)</span>' : '') + '</span>' +
+                winBadge + newBadge +
             '</div>' +
-            '<span style="font-family:monospace;font-size:0.82rem;font-weight:800;color:' + (isWin ? '#22c55e' : (e.value < 10000 ? 'var(--accent)' : 'var(--text-muted)')) + ';">' + e.value.toLocaleString() + '</span>' +
+            '<span style="flex-shrink:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.85rem;font-weight:700;letter-spacing:-0.2px;color:' + (isWin ? '#22c55e' : (e.value < 10000 ? 'var(--accent)' : 'var(--text-muted)')) + ';">' + e.value.toLocaleString() + '</span>' +
         '</div>';
     }
 
-        var top10 = entries.slice(0, 10);
+    var top10 = entries.slice(0, 10);
     var rest = entries.slice(10);
     for (var i = 0; i < top10.length; i++) html += renderEntry(top10[i], i);
 
@@ -2508,17 +2512,20 @@ function _renderTopHashesHTML(entries) {
         html += '<div id="favorHashesMore" style="display:none;">';
         for (var j = 0; j < rest.length; j++) html += renderEntry(rest[j], 10 + j);
         html += '</div>';
-        html += '<button onclick="(function(){var m=document.getElementById(\'favorHashesMore\');var b=document.getElementById(\'favorHashesMoreBtn\');if(!m||!b)return;var open=m.style.display!==\'none\';m.style.display=open?\'none\':\'block\';b.textContent=open?\'Show more \u25bc\':\'Show less \u25b2\';})()"' +
-            'id="favorHashesMoreBtn" style="width:100%;margin-top:6px;padding:6px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.75rem;font-weight:700;cursor:pointer;font-family:inherit;">Show more \u25bc</button>';
+        html += '<button onclick="(function(){var m=document.getElementById(\'favorHashesMore\');var b=document.getElementById(\'favorHashesMoreBtn\');if(!m||!b)return;var open=m.style.display!==\'none\';m.style.display=open?\'none\':\'block\';b.querySelector(\'span\').textContent=open?\'Show more\':\'Show less\';b.querySelector(\'i\').style.transform=open?\'rotate(0deg)\':\'rotate(180deg)\';})()"' +
+            'id="favorHashesMoreBtn" style="width:100%;margin-top:8px;padding:10px;display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;"><span>Show more</span><i class="fa-solid fa-chevron-down" style="font-size:0.65rem;transition:transform 0.2s ease;"></i></button>';
     }
 
     return html;
 }
 function _renderPBHTML(val) {
     var isWin = val < 1000;
-    return '<div style="text-align:center;padding:8px;">' +
-        '<div style="font-size:1.8rem;font-weight:900;font-family:monospace;color:' + (isWin ? '#22c55e' : (val < 10000 ? 'var(--accent)' : 'var(--heading)')) + ';">' + (isWin ? '\uD83C\uDFC6 ' : '') + val.toLocaleString() + '</div>' +
-        '<div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">Your all-time lowest hash</div>' +
+    return '<div style="text-align:center;padding:10px 4px;">' +
+        '<div style="display:flex;align-items:center;justify-content:center;gap:8px;">' +
+            (isWin ? '<i class="fa-solid fa-trophy" style="color:#22c55e;font-size:1.2rem;"></i>' : '') +
+            '<span style="font-size:1.7rem;font-weight:800;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-0.5px;color:' + (isWin ? '#22c55e' : (val < 10000 ? 'var(--accent)' : 'var(--heading)')) + ';">' + val.toLocaleString() + '</span>' +
+        '</div>' +
+        '<div style="font-size:0.74rem;color:var(--text-faint);margin-top:6px;">Your all-time lowest hash</div>' +
     '</div>';
 }
 

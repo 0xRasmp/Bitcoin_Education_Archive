@@ -18146,13 +18146,13 @@ function _renderFavorTab(body) {
     '</div>';
 
     // Top 10 lowest hashes + personal best sections
-    html += '<div style="margin-top:16px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:14px;">' +
-        '<div style="font-size:0.82rem;font-weight:800;color:var(--heading);margin-bottom:10px;">\uD83C\uDFC6 All-Time Lowest Hashes</div>' +
+    html += '<div style="margin-top:18px;background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:16px;">' +
+        '<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;"><i class="fa-solid fa-trophy" style="color:#facc15;font-size:0.85rem;"></i><span style="font-size:0.84rem;font-weight:700;color:var(--heading);letter-spacing:-0.1px;">All-Time Lowest Hashes</span></div>' +
         '<div id="favorTopHashes" style="font-size:0.8rem;color:var(--text-muted);">Loading...</div>' +
     '</div>';
 
-    html += '<div style="margin-top:10px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:14px;">' +
-        '<div style="font-size:0.82rem;font-weight:800;color:var(--heading);margin-bottom:8px;">\u2B50 Your Personal Best</div>' +
+    html += '<div style="margin-top:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:16px;">' +
+        '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><i class="fa-solid fa-star" style="color:var(--accent);font-size:0.8rem;"></i><span style="font-size:0.84rem;font-weight:700;color:var(--heading);letter-spacing:-0.1px;">Your Personal Best</span></div>' +
         '<div id="favorPersonalBest" style="font-size:0.8rem;color:var(--text-muted);">Loading...</div>' +
     '</div>';
 
@@ -18288,24 +18288,28 @@ function _renderTopHashesHTML(entries) {
     function renderEntry(e, i) {
         var isMe = myUsername && e.username === myUsername;
         var rank = i + 1;
-        var rankIcon = rank === 1 ? '\uD83E\uDD47' : (rank === 2 ? '\uD83E\uDD48' : (rank === 3 ? '\uD83E\uDD49' : rank + '.'));
+        var rankBadge = rank <= 3
+            ? '<span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;flex-shrink:0;background:' + (rank === 1 ? 'rgba(250,204,21,0.16)' : rank === 2 ? 'rgba(203,213,225,0.16)' : 'rgba(217,119,6,0.16)') + ';color:' + (rank === 1 ? '#facc15' : rank === 2 ? '#cbd5e1' : '#d97706') + ';font-size:0.68rem;"><i class="fa-solid fa-medal"></i></span>'
+            : '<span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;flex-shrink:0;background:rgba(255,255,255,0.04);color:var(--text-faint);font-size:0.7rem;font-weight:700;">' + rank + '</span>';
         var name = typeof escapeHtml === 'function' ? escapeHtml(e.username || 'Anon') : (e.username || 'Anon');
         var isWin = e.value < 1000;
         var tsMs = (e.timestamp && typeof e.timestamp.toMillis === 'function') ? e.timestamp.toMillis() : (e.timestamp ? Number(e.timestamp) : 0);
         var isNew = tsMs && (now - tsMs) < SEVENTY_TWO_HOURS;
-        var newBadge = isNew ? '<span style="margin-left:6px;padding:1px 5px;background:#f7931a;color:#fff;font-size:0.6rem;font-weight:900;border-radius:4px;letter-spacing:0.05em;vertical-align:middle;">NEW</span>' : '';
-        return '<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;margin-bottom:3px;' +
-            'background:' + (isWin ? 'rgba(34,197,94,0.12)' : (isMe ? 'rgba(247,147,26,0.1)' : 'transparent')) + ';' +
-            'border:1px solid ' + (isWin ? '#22c55e' : (isMe ? 'var(--accent)' : 'var(--border)')) + ';border-radius:8px;">' +
-            '<div style="display:flex;align-items:center;gap:6px;">' +
-                '<span style="font-size:0.78rem;min-width:22px;">' + rankIcon + '</span>' +
-                '<span style="font-size:0.8rem;font-weight:' + (isMe ? '800' : '600') + ';color:' + (isMe ? 'var(--accent)' : 'var(--text)') + ';">' + (isWin ? '\uD83C\uDFC6 ' : '') + name + (isMe ? ' (you)' : '') + newBadge + '</span>' +
+        var newBadge = isNew ? '<span style="margin-left:7px;padding:2px 6px;background:rgba(247,147,26,0.15);border:1px solid rgba(247,147,26,0.35);color:var(--accent);font-size:0.56rem;font-weight:800;border-radius:5px;letter-spacing:0.06em;vertical-align:middle;">NEW</span>' : '';
+        var winBadge = isWin ? '<span style="margin-left:7px;display:inline-flex;align-items:center;gap:3px;padding:2px 7px;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.35);color:#22c55e;font-size:0.58rem;font-weight:800;border-radius:5px;letter-spacing:0.03em;vertical-align:middle;"><i class="fa-solid fa-trophy" style="font-size:0.55rem;"></i> WIN</span>' : '';
+        return '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;margin-bottom:6px;' +
+            'background:' + (isWin ? 'rgba(34,197,94,0.06)' : (isMe ? 'rgba(247,147,26,0.07)' : 'rgba(255,255,255,0.02)')) + ';' +
+            'border:1px solid ' + (isWin ? 'rgba(34,197,94,0.3)' : (isMe ? 'rgba(247,147,26,0.3)' : 'var(--border)')) + ';border-radius:10px;">' +
+            '<div style="display:flex;align-items:center;gap:10px;min-width:0;">' +
+                rankBadge +
+                '<span style="font-size:0.82rem;font-weight:' + (isMe ? '700' : '500') + ';color:' + (isMe ? 'var(--heading)' : 'var(--text)') + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + name + (isMe ? ' <span style="color:var(--text-faint);font-weight:500;">(you)</span>' : '') + '</span>' +
+                winBadge + newBadge +
             '</div>' +
-            '<span style="font-family:monospace;font-size:0.82rem;font-weight:800;color:' + (isWin ? '#22c55e' : (e.value < 10000 ? 'var(--accent)' : 'var(--text-muted)')) + ';">' + e.value.toLocaleString() + '</span>' +
+            '<span style="flex-shrink:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.85rem;font-weight:700;letter-spacing:-0.2px;color:' + (isWin ? '#22c55e' : (e.value < 10000 ? 'var(--accent)' : 'var(--text-muted)')) + ';">' + e.value.toLocaleString() + '</span>' +
         '</div>';
     }
 
-        var top10 = entries.slice(0, 10);
+    var top10 = entries.slice(0, 10);
     var rest = entries.slice(10);
     for (var i = 0; i < top10.length; i++) html += renderEntry(top10[i], i);
 
@@ -18313,17 +18317,20 @@ function _renderTopHashesHTML(entries) {
         html += '<div id="favorHashesMore" style="display:none;">';
         for (var j = 0; j < rest.length; j++) html += renderEntry(rest[j], 10 + j);
         html += '</div>';
-        html += '<button onclick="(function(){var m=document.getElementById(\'favorHashesMore\');var b=document.getElementById(\'favorHashesMoreBtn\');if(!m||!b)return;var open=m.style.display!==\'none\';m.style.display=open?\'none\':\'block\';b.textContent=open?\'Show more \u25bc\':\'Show less \u25b2\';})()"' +
-            'id="favorHashesMoreBtn" style="width:100%;margin-top:6px;padding:6px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:0.75rem;font-weight:700;cursor:pointer;font-family:inherit;">Show more \u25bc</button>';
+        html += '<button onclick="(function(){var m=document.getElementById(\'favorHashesMore\');var b=document.getElementById(\'favorHashesMoreBtn\');if(!m||!b)return;var open=m.style.display!==\'none\';m.style.display=open?\'none\':\'block\';b.querySelector(\'span\').textContent=open?\'Show more\':\'Show less\';b.querySelector(\'i\').style.transform=open?\'rotate(0deg)\':\'rotate(180deg)\';})()"' +
+            'id="favorHashesMoreBtn" style="width:100%;margin-top:8px;padding:10px;display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;"><span>Show more</span><i class="fa-solid fa-chevron-down" style="font-size:0.65rem;transition:transform 0.2s ease;"></i></button>';
     }
 
     return html;
 }
 function _renderPBHTML(val) {
     var isWin = val < 1000;
-    return '<div style="text-align:center;padding:8px;">' +
-        '<div style="font-size:1.8rem;font-weight:900;font-family:monospace;color:' + (isWin ? '#22c55e' : (val < 10000 ? 'var(--accent)' : 'var(--heading)')) + ';">' + (isWin ? '\uD83C\uDFC6 ' : '') + val.toLocaleString() + '</div>' +
-        '<div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">Your all-time lowest hash</div>' +
+    return '<div style="text-align:center;padding:10px 4px;">' +
+        '<div style="display:flex;align-items:center;justify-content:center;gap:8px;">' +
+            (isWin ? '<i class="fa-solid fa-trophy" style="color:#22c55e;font-size:1.2rem;"></i>' : '') +
+            '<span style="font-size:1.7rem;font-weight:800;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-0.5px;color:' + (isWin ? '#22c55e' : (val < 10000 ? 'var(--accent)' : 'var(--heading)')) + ';">' + val.toLocaleString() + '</span>' +
+        '</div>' +
+        '<div style="font-size:0.74rem;color:var(--text-faint);margin-top:6px;">Your all-time lowest hash</div>' +
     '</div>';
 }
 
@@ -24553,29 +24560,29 @@ function isMarketAdmin() {
 }
 
 var MARKETPLACE_SECTIONS = [
-    { id: 'educational', name: 'Educational Products', emoji: '🎓', desc: 'Learn Bitcoin with the best tools' },
-    { id: 'general', name: 'Other Products', emoji: '🛒', desc: 'Buy & sell everything else' },
-    { id: 'merchants', name: 'More Bitcoin Merchants', emoji: '🏪', desc: 'Browse more Bitcoin merchants' },
-    { id: 'noderunners', name: 'Even More Merchants', emoji: '🌐', desc: 'Bitcoin shops via Node Runners' },
+    { id: 'educational', name: 'Educational Products', icon: 'fa-graduation-cap', desc: 'Learn Bitcoin with the best tools' },
+    { id: 'general', name: 'Other Products', icon: 'fa-store', desc: 'Buy & sell everything else' },
+    { id: 'merchants', name: 'More Bitcoin Merchants', icon: 'fa-shop', desc: 'Browse more Bitcoin merchants' },
+    { id: 'noderunners', name: 'Even More Merchants', icon: 'fa-globe', desc: 'Bitcoin shops via Node Runners' },
 ];
 
 var MARKETPLACE_CATEGORIES = [
     // Educational Products
-    { id: 'books', name: 'Books', emoji: '📚', section: 'educational' },
-    { id: 'courses', name: 'Courses & Workshops', emoji: '🎓', section: 'educational' },
-    { id: 'hardware_edu', name: 'Hardware Wallets', emoji: '🔐', section: 'educational' },
-    { id: 'nodes', name: 'Node Kits & Guides', emoji: '💻', section: 'educational' },
-    { id: 'kids', name: 'Kids & Family', emoji: '👨‍👩‍👧‍👦', section: 'educational' },
-    { id: 'tools', name: 'Learning Tools', emoji: '🧰', section: 'educational' },
-    { id: 'edu_other', name: 'Other Educational', emoji: '📦', section: 'educational' },
+    { id: 'books', name: 'Books', icon: 'fa-book', section: 'educational' },
+    { id: 'courses', name: 'Courses & Workshops', icon: 'fa-chalkboard-user', section: 'educational' },
+    { id: 'hardware_edu', name: 'Hardware Wallets', icon: 'fa-lock', section: 'educational' },
+    { id: 'nodes', name: 'Node Kits & Guides', icon: 'fa-server', section: 'educational' },
+    { id: 'kids', name: 'Kids & Family', icon: 'fa-children', section: 'educational' },
+    { id: 'tools', name: 'Learning Tools', icon: 'fa-toolbox', section: 'educational' },
+    { id: 'edu_other', name: 'Other Educational', icon: 'fa-box', section: 'educational' },
     // General Marketplace
-    { id: 'mining', name: 'Mining Equipment', emoji: '⛏️', section: 'general' },
-    { id: 'merch', name: 'Apparel & Merch', emoji: '👕', section: 'general' },
-    { id: 'art', name: 'Art & Collectibles', emoji: '🎨', section: 'general' },
-    { id: 'stickers', name: 'Stickers & Prints', emoji: '🖼️', section: 'general' },
-    { id: 'services', name: 'Services', emoji: '🛠️', section: 'general' },
-    { id: 'electronics', name: 'Electronics & Tech', emoji: '📱', section: 'general' },
-    { id: 'other', name: 'Other', emoji: '📦', section: 'general' },
+    { id: 'mining', name: 'Mining Equipment', icon: 'fa-hammer', section: 'general' },
+    { id: 'merch', name: 'Apparel & Merch', icon: 'fa-shirt', section: 'general' },
+    { id: 'art', name: 'Art & Collectibles', icon: 'fa-palette', section: 'general' },
+    { id: 'stickers', name: 'Stickers & Prints', icon: 'fa-image', section: 'general' },
+    { id: 'services', name: 'Services', icon: 'fa-screwdriver-wrench', section: 'general' },
+    { id: 'electronics', name: 'Electronics & Tech', icon: 'fa-microchip', section: 'general' },
+    { id: 'other', name: 'Other', icon: 'fa-box', section: 'general' },
 ];
 
 var CONDITIONS = [
@@ -24749,23 +24756,25 @@ function _actualRenderMarketplace(options) {
 
     // Top bar
     html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">' +
-        '<div style="display:flex;align-items:center;gap:10px;">' +
-            '<span style="font-size:1.5rem;">⚡</span>' +
+        '<div style="display:flex;align-items:center;gap:12px;">' +
+            '<div style="width:40px;height:40px;border-radius:12px;background:var(--accent-bg);border:1px solid var(--accent-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;">' +
+                '<i class="fa-solid fa-bolt" style="color:var(--accent);font-size:1rem;"></i>' +
+            '</div>' +
             '<div>' +
                 '<div style="font-size:1.1rem;font-weight:800;color:var(--heading);">Lightning Mart</div>' +
-                '<div style="font-size:0.7rem;color:var(--text-faint);">Buy & sell with Bitcoin ⚡</div>' +
+                '<div style="font-size:0.7rem;color:var(--text-faint);">Buy & sell with Bitcoin</div>' +
             '</div>' +
         '</div>' +
         '<div style="display:flex;gap:8px;">' +
-            '<button onclick="showMarketRulesBtn()" style="padding:8px 14px;background:none;border:1px solid var(--border);color:var(--text-faint);border-radius:10px;font-size:0.8rem;cursor:pointer;font-family:inherit;touch-action:manipulation;">📜 Rules</button>' +
-            '<button onclick="showMyListings()" style="padding:8px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.8rem;cursor:pointer;font-family:inherit;font-weight:600;">📋 My Listings</button>' +
+            '<button onclick="showMarketRulesBtn()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:none;border:1px solid var(--border);color:var(--text-faint);border-radius:10px;font-size:0.8rem;cursor:pointer;font-family:inherit;touch-action:manipulation;transition:0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text-faint)\'"><i class="fa-solid fa-scroll" style="font-size:0.72rem;"></i> Rules</button>' +
+            '<button onclick="showMyListings()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:0.8rem;cursor:pointer;font-family:inherit;font-weight:600;transition:0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text-muted)\'"><i class="fa-solid fa-list" style="font-size:0.72rem;"></i> My Listings</button>' +
             '<button onclick="showCreateListing()" style="padding:8px 14px;background:var(--accent);border:none;border-radius:10px;color:#fff;font-size:0.8rem;cursor:pointer;font-family:inherit;font-weight:700;">+ Sell</button>' +
         '</div>' +
     '</div>';
 
     // Search bar
     html += '<div style="margin-bottom:14px;">' +
-        '<input type="text" id="marketSearch" placeholder="🔍 Search listings..." value="' + (searchQuery || '') + '" ' +
+        '<input type="text" id="marketSearch" placeholder="Search listings..." value="' + (searchQuery || '') + '" ' +
         'oninput="clearTimeout(window._mktSearchTimer);window._mktSearchTimer=setTimeout(function(){renderMarketplace({search:document.getElementById(\'marketSearch\').value,category:\'' + activeCategory + '\',sort:\'' + sortBy + '\'})},400)" ' +
         'style="width:100%;padding:12px 16px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:0.9rem;font-family:inherit;box-sizing:border-box;">' +
     '</div>';
@@ -24779,12 +24788,12 @@ function _actualRenderMarketplace(options) {
 
     // Section tabs: All | Educational | General
     html += '<div style="display:flex;gap:0;margin-bottom:14px;border:1px solid var(--border);border-radius:12px;overflow:hidden;">';
-    var sectionTabs = [{ id: 'all', name: 'All', emoji: '🛒' }].concat(MARKETPLACE_SECTIONS);
+    var sectionTabs = [{ id: 'all', name: 'All', icon: 'fa-store' }].concat(MARKETPLACE_SECTIONS);
     for (var si = 0; si < sectionTabs.length; si++) {
         var sec = sectionTabs[si];
         var secActive = activeSection === sec.id;
         html += '<button onclick="renderMarketplace({section:\'' + sec.id + '\',category:\'all\',search:\'' + searchQuery + '\',sort:\'' + sortBy + '\'})" ' +
-            'style="flex:1;padding:10px 8px;background:' + (secActive ? 'var(--accent)' : 'var(--card-bg)') + ';color:' + (secActive ? '#fff' : 'var(--text-muted)') + ';border:none;font-size:0.8rem;font-weight:' + (secActive ? '700' : '500') + ';cursor:pointer;font-family:inherit;transition:0.2s;">' + sec.emoji + ' ' + sec.name + '</button>';
+            'style="flex:1;padding:10px 8px;background:' + (secActive ? 'var(--accent)' : 'var(--card-bg)') + ';color:' + (secActive ? '#fff' : 'var(--text-muted)') + ';border:none;font-size:0.78rem;font-weight:' + (secActive ? '700' : '500') + ';cursor:pointer;font-family:inherit;transition:0.2s;display:inline-flex;align-items:center;justify-content:center;gap:6px;"><i class="fa-solid ' + sec.icon + '" style="font-size:0.68rem;opacity:0.85;"></i>' + sec.name + '</button>';
     }
     html += '</div>';
 
@@ -24819,7 +24828,7 @@ function _actualRenderMarketplace(options) {
         var cat = visibleCats[c];
         var isActive = activeCategory === cat.id;
         html += '<button onclick="renderMarketplace({section:\'' + activeSection + '\',category:\'' + cat.id + '\',search:\'' + searchQuery + '\',sort:\'' + sortBy + '\'})" ' +
-            'style="padding:6px 14px;border-radius:20px;border:1px solid ' + (isActive ? 'var(--accent)' : 'var(--border)') + ';background:' + (isActive ? 'var(--accent)' : 'var(--card-bg)') + ';color:' + (isActive ? '#fff' : 'var(--text-muted)') + ';font-size:0.75rem;cursor:pointer;font-family:inherit;white-space:nowrap;font-weight:600;">' + cat.emoji + ' ' + cat.name + '</button>';
+            'style="padding:6px 14px;border-radius:20px;border:1px solid ' + (isActive ? 'var(--accent)' : 'var(--border)') + ';background:' + (isActive ? 'var(--accent)' : 'var(--card-bg)') + ';color:' + (isActive ? '#fff' : 'var(--text-muted)') + ';font-size:0.75rem;cursor:pointer;font-family:inherit;white-space:nowrap;font-weight:600;display:inline-flex;align-items:center;gap:5px;"><i class="fa-solid ' + cat.icon + '" style="font-size:0.65rem;opacity:0.8;"></i>' + cat.name + '</button>';
     }
     html += '</div>';
 
@@ -24828,7 +24837,7 @@ function _actualRenderMarketplace(options) {
         html += '<div id="plebShopCard" style="margin-bottom:16px;background:linear-gradient(135deg,rgba(247,147,26,0.1),rgba(234,88,12,0.05));border:1px solid rgba(247,147,26,0.3);border-radius:14px;overflow:hidden;">' +
             '<div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">' +
                 '<div style="display:flex;align-items:center;gap:10px;">' +
-                    '<span style="font-size:1.5rem;">\uD83D\uDED2</span>' +
+                    '<div style="width:36px;height:36px;border-radius:9px;background:var(--accent-bg);border:1px solid var(--accent-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-cart-shopping" style="color:var(--accent);font-size:0.85rem;"></i></div>' +
                     '<div>' +
                         '<div style="font-size:0.9rem;font-weight:800;color:var(--heading);">603BTC Pleb Shop</div>' +
                         '<div style="font-size:0.72rem;color:var(--text-muted);">Bitcoin educational products, merch & gear</div>' +
@@ -24920,7 +24929,7 @@ function loadMarketListings(category, search, sort, section) {
 
         if (listings.length === 0) {
             grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;">' +
-                '<div style="font-size:2rem;margin-bottom:8px;">🏜️</div>' +
+                '<div style="margin-bottom:12px;"><i class="fa-solid fa-store-slash" style="font-size:2rem;color:var(--accent);opacity:0.35;"></i></div>' +
                 '<div style="color:var(--text-muted);font-size:0.9rem;">No listings yet</div>' +
                 '<button onclick="showCreateListing()" style="margin-top:12px;padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;">Be the first to sell something!</button>' +
             '</div>';
@@ -24935,7 +24944,7 @@ function loadMarketListings(category, search, sort, section) {
             var condColor = cond ? cond.color : 'var(--text-faint)';
             var condLabel = cond ? cond.label : '';
             var catObj = MARKETPLACE_CATEGORIES.find(function(c) { return c.id === l.category; });
-            var catEmoji = catObj ? catObj.emoji : '📦';
+            var catIcon = catObj ? catObj.icon : 'fa-box';
 
             // Format price
             var priceDisplay = '';
@@ -24947,15 +24956,15 @@ function loadMarketListings(category, search, sort, section) {
                 // Image or placeholder
                 (l.imageUrl
                     ? '<div style="width:100%;aspect-ratio:1;background:url(\'' + (l.imageUrl && /^(https:\/\/|data:image\/)/.test(l.imageUrl) ? l.imageUrl.replace(/['"\\()<>]/g, '') : '') + '\') center/cover;border-bottom:1px solid var(--border);"></div>'
-                    : '<div style="width:100%;aspect-ratio:1;background:var(--bg-side);display:flex;align-items:center;justify-content:center;font-size:2.5rem;border-bottom:1px solid var(--border);">' + catEmoji + '</div>'
+                    : '<div style="width:100%;aspect-ratio:1;background:var(--bg-side);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);"><i class="fa-solid ' + catIcon + '" style="font-size:2rem;color:var(--accent);opacity:0.25;"></i></div>'
                 ) +
                 '<div style="padding:10px;">' +
                     '<div style="font-size:0.8rem;font-weight:700;color:var(--heading);line-height:1.3;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">' + escapeHtml(l.title) + '</div>' +
-                    '<div style="font-size:0.85rem;font-weight:800;color:var(--accent);">⚡ ' + priceDisplay + '</div>' +
+                    '<div style="font-size:0.85rem;font-weight:800;color:var(--accent);display:flex;align-items:center;gap:4px;"><i class="fa-solid fa-bolt" style="font-size:0.72rem;"></i>' + priceDisplay + '</div>' +
                     (satsToUSD(l.priceSats) ? '<div style="font-size:0.65rem;color:var(--text-faint);margin-bottom:4px;">' + satsToUSD(l.priceSats) + '</div>' : '<div style="margin-bottom:4px;"></div>') +
                     '<div style="display:flex;justify-content:space-between;align-items:center;">' +
                         '<span style="font-size:0.65rem;color:' + condColor + ';font-weight:600;">' + condLabel + '</span>' +
-                        '<span onclick="event.stopPropagation();toggleMarketSave(\'' + l.id + '\')"  style="font-size:0.9rem;cursor:pointer;">' + (isSaved ? '❤️' : '🤍') + '</span>' +
+                        '<button onclick="event.stopPropagation();toggleMarketSave(\'' + l.id + '\')" style="background:none;border:none;cursor:pointer;padding:2px 4px;display:flex;align-items:center;"><i class="fa-' + (isSaved ? 'solid' : 'regular') + ' fa-heart" style="font-size:0.85rem;color:' + (isSaved ? '#ef4444' : 'var(--text-faint)') + ';"></i></button>' +
                     '</div>' +
                 '</div>' +
             '</div>';
@@ -24973,7 +24982,7 @@ function loadMarketListings(category, search, sort, section) {
                         grid.innerHTML = fallbackListings.map(function(l) {
                             return '<div onclick="renderMarketplace({listingId:\'' + l.id + '\'})" style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:12px;cursor:pointer;transition:0.2s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">' +
                                 '<div style="font-size:0.9rem;font-weight:700;color:var(--heading);margin-bottom:4px;">' + escapeHtml(l.title || 'Untitled') + '</div>' +
-                                '<div style="font-size:0.8rem;color:var(--accent);font-weight:800;">⚡ ' + (l.priceSats || 0).toLocaleString() + ' sats</div>' +
+                                '<div style="font-size:0.8rem;color:var(--accent);font-weight:800;display:flex;align-items:center;gap:4px;"><i class="fa-solid fa-bolt" style="font-size:0.68rem;"></i>' + (l.priceSats || 0).toLocaleString() + ' sats</div>' +
                                 '</div>';
                         }).join('');
                         if (countEl) countEl.textContent = fallbackListings.length + ' listing' + (fallbackListings.length !== 1 ? 's' : '');
@@ -25001,7 +25010,7 @@ function renderListingDetail(container, listingId) {
 
     db.collection('marketplace').doc(listingId).get().then(function(doc) {
         if (!doc.exists) {
-            container.innerHTML = '<div style="max-width:600px;margin:0 auto;padding:16px;text-align:center;"><div style="font-size:2rem;margin-bottom:8px;">😕</div><div style="color:var(--text-muted);">Listing not found</div><button onclick="history.back()" style="margin-top:12px;padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:10px;cursor:pointer;font-family:inherit;font-weight:700;">← Back to LightningMart</button></div>';
+            container.innerHTML = '<div style="max-width:600px;margin:0 auto;padding:16px;text-align:center;"><div style="margin-bottom:12px;"><i class="fa-solid fa-circle-exclamation" style="font-size:2rem;color:var(--accent);opacity:0.5;"></i></div><div style="color:var(--text-muted);">Listing not found</div><button onclick="history.back()" style="margin-top:12px;padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:10px;cursor:pointer;font-family:inherit;font-weight:700;">← Back to LightningMart</button></div>';
             return;
         }
         var l = { id: doc.id, ...doc.data() };
@@ -25009,7 +25018,7 @@ function renderListingDetail(container, listingId) {
         var condLabel = cond ? cond.label : '';
         var condColor = cond ? cond.color : 'var(--text-faint)';
         var catObj = MARKETPLACE_CATEGORIES.find(function(c) { return c.id === l.category; });
-        var catName = catObj ? catObj.emoji + ' ' + catObj.name : '📦 Other';
+        var catName = catObj ? catObj.name : 'Other';
         var savedItems = safeJSON('btc_market_saved', []);
         var isSaved = savedItems.indexOf(l.id) !== -1;
         var isOwner = (typeof auth !== 'undefined' && auth.currentUser && auth.currentUser.uid === l.sellerUid);
@@ -25047,16 +25056,16 @@ function renderListingDetail(container, listingId) {
         // Title & price
         html += '<div style="margin-bottom:16px;">' +
             '<div style="font-size:1.2rem;font-weight:800;color:var(--heading);line-height:1.3;margin-bottom:6px;">' + escapeHtml(l.title) + '</div>' +
-            '<div style="font-size:1.3rem;font-weight:900;color:var(--accent);">⚡ ' + priceDisplay + usdDisplay + '</div>' +
+            '<div style="font-size:1.3rem;font-weight:900;color:var(--accent);display:flex;align-items:center;gap:6px;"><i class="fa-solid fa-bolt" style="font-size:1rem;"></i>' + priceDisplay + usdDisplay + '</div>' +
         '</div>';
 
         // Meta row
         html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">' +
             '<span style="padding:4px 10px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;font-size:0.7rem;color:' + condColor + ';font-weight:600;">' + condLabel + '</span>' +
             '<span style="padding:4px 10px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;font-size:0.7rem;color:var(--text-muted);">' + catName + '</span>' +
-            '<span style="padding:4px 10px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;font-size:0.7rem;color:var(--text-faint);">🕐 ' + timeAgo + '</span>' +
-            (l.shipping ? '<span style="padding:4px 10px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;font-size:0.7rem;color:var(--text-muted);">📦 Ships</span>' : '') +
-            (l.localPickup ? '<span style="padding:4px 10px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;font-size:0.7rem;color:var(--text-muted);">📍 Local pickup</span>' : '') +
+            '<span style="padding:4px 10px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;font-size:0.7rem;color:var(--text-faint);display:inline-flex;align-items:center;gap:4px;"><i class="fa-regular fa-clock" style="font-size:0.65rem;"></i>' + timeAgo + '</span>' +
+            (l.shipping ? '<span style="padding:4px 10px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;font-size:0.7rem;color:var(--text-muted);display:inline-flex;align-items:center;gap:4px;"><i class="fa-solid fa-box" style="font-size:0.65rem;"></i>Ships</span>' : '') +
+            (l.localPickup ? '<span style="padding:4px 10px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;font-size:0.7rem;color:var(--text-muted);display:inline-flex;align-items:center;gap:4px;"><i class="fa-solid fa-location-dot" style="font-size:0.65rem;"></i>Local pickup</span>' : '') +
         '</div>';
 
         // Description
@@ -25074,31 +25083,31 @@ function renderListingDetail(container, listingId) {
                     '<div style="font-weight:700;color:var(--heading);font-size:0.9rem;">' + escapeHtml(l.sellerName || 'Anonymous') + '</div>' +
                     (l.sellerRank ? '<div style="font-size:0.7rem;color:var(--text-muted);">' + escapeHtml(l.sellerRank) + '</div>' : '') +
                 '</div>' +
-                '<div style="color:var(--text-faint);font-size:0.8rem;">👤</div>' +
+                '<i class="fa-solid fa-chevron-right" style="color:var(--text-faint);font-size:0.72rem;"></i>' +
             '</div>' +
         '</div>';
 
         // Action buttons
         if (!isOwner) {
             html += '<div style="display:flex;gap:10px;margin-bottom:16px;">' +
-                '<button onclick="contactSeller(\'' + l.id + '\',\'' + escapeHtml(l.sellerName || '') + '\')"  style="flex:1;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:inherit;">⚡ Contact Seller</button>' +
-                '<button onclick="toggleMarketSave(\'' + l.id + '\')"  style="padding:14px 18px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;font-size:1.1rem;cursor:pointer;">' + (isSaved ? '❤️' : '🤍') + '</button>' +
-                '<button onclick="if(typeof reportUser===\'function\')reportUser(\'' + (l.sellerUid || '') + '\',\'' + escapeHtml(l.sellerName || '').replace(/[\\'"]/g, "") + '\')"  style="padding:14px 18px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;font-size:0.8rem;cursor:pointer;color:var(--text-faint);" title="Report listing">🚩</button>' +
-                (isAdmin ? '<button onclick="deleteListing(\'' + l.id + '\')"  style="padding:14px 18px;background:var(--card-bg);border:1px solid #ef4444;border-radius:12px;color:#ef4444;font-size:0.8rem;cursor:pointer;font-family:inherit;font-weight:600;" title="Admin: Delete listing">🗑️</button>' : '') +
+                '<button onclick="contactSeller(\'' + l.id + '\',\'' + escapeHtml(l.sellerName || '') + '\')" style="flex:1;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px;"><i class="fa-solid fa-bolt" style="font-size:0.78rem;"></i>Contact Seller</button>' +
+                '<button onclick="toggleMarketSave(\'' + l.id + '\')" style="padding:14px 16px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;"><i class="fa-' + (isSaved ? 'solid' : 'regular') + ' fa-heart" style="font-size:1rem;color:' + (isSaved ? '#ef4444' : 'var(--text-faint)') + ';"></i></button>' +
+                '<button onclick="if(typeof reportUser===\'function\')reportUser(\'' + (l.sellerUid || '') + '\',\'' + escapeHtml(l.sellerName || '').replace(/[\\'"]/g, "") + '\')" style="padding:14px 16px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;" title="Report listing"><i class="fa-solid fa-flag" style="font-size:0.85rem;color:var(--text-faint);"></i></button>' +
+                (isAdmin ? '<button onclick="deleteListing(\'' + l.id + '\')" style="padding:14px 16px;background:var(--card-bg);border:1px solid #ef4444;border-radius:12px;color:#ef4444;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;" title="Admin: Delete listing"><i class="fa-solid fa-trash" style="font-size:0.85rem;"></i></button>' : '') +
             '</div>';
             // Safety notice
             html += '<div style="background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.2);border-radius:10px;padding:10px 12px;margin-bottom:12px;">' +
-                '<div style="font-size:0.7rem;color:#eab308;line-height:1.5;">🛡️ <strong>Safety Tips:</strong> Use escrow when possible. Never send payment before receiving the item. Meet in public if trading locally. Report suspicious listings.</div></div>';
+                '<div style="font-size:0.7rem;color:#eab308;line-height:1.5;display:flex;align-items:flex-start;gap:6px;"><i class="fa-solid fa-shield-halved" style="font-size:0.75rem;margin-top:1px;flex-shrink:0;"></i><span><strong>Safety Tips:</strong> Use escrow when possible. Never send payment before receiving the item. Meet in public if trading locally. Report suspicious listings.</span></div></div>';
             // Lightning payment hint
             if (l.lightningAddress) {
                 html += '<div style="background:rgba(247,147,26,0.1);border:1px solid rgba(247,147,26,0.3);border-radius:12px;padding:12px;text-align:center;margin-bottom:16px;">' +
-                    '<div style="font-size:0.8rem;color:var(--accent);font-weight:600;">⚡ This seller accepts Lightning payments</div>' +
+                    '<div style="font-size:0.8rem;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:6px;"><i class="fa-solid fa-bolt" style="font-size:0.72rem;"></i>This seller accepts Lightning payments</div>' +
                 '</div>';
             }
         } else {
             html += '<div style="display:flex;gap:10px;margin-bottom:16px;">' +
-                '<button onclick="editListing(\'' + l.id + '\')"  style="flex:1;padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:0.9rem;font-weight:600;cursor:pointer;font-family:inherit;">✏️ Edit</button>' +
-                '<button onclick="deleteListing(\'' + l.id + '\')"  style="padding:14px 18px;background:var(--card-bg);border:1px solid #ef4444;border-radius:12px;color:#ef4444;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:inherit;">🗑️ Delete</button>' +
+                '<button onclick="editListing(\'' + l.id + '\')" style="flex:1;padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:0.9rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px;"><i class="fa-solid fa-pen" style="font-size:0.78rem;"></i>Edit</button>' +
+                '<button onclick="deleteListing(\'' + l.id + '\')" style="padding:14px 16px;background:var(--card-bg);border:1px solid #ef4444;border-radius:12px;color:#ef4444;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px;"><i class="fa-solid fa-trash" style="font-size:0.78rem;"></i>Delete</button>' +
             '</div>';
         }
 
@@ -25118,14 +25127,14 @@ function renderListingDetail(container, listingId) {
 // ---- Create Listing ----
 window.showCreateListing = function() {
     if (!auth || !auth.currentUser || auth.currentUser.isAnonymous) {
-        if (typeof showToast === 'function') showToast('🔒 Sign in to create a listing!');
+        if (typeof showToast === 'function') showToast('Sign in to create a listing!');
         if (typeof showUsernamePrompt === 'function') showUsernamePrompt();
         return;
     }
 
     var html = '<div id="createListingOverlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto;" onclick="if(event.target===this)this.remove()">' +
         '<div style="background:var(--bg-side);border:2px solid var(--accent);border-radius:20px;padding:24px;max-width:450px;width:100%;max-height:90vh;overflow-y:auto;">' +
-        '<div style="font-size:1.2rem;font-weight:800;color:var(--heading);margin-bottom:16px;">📝 Create Listing</div>' +
+        '<div style="font-size:1.1rem;font-weight:800;color:var(--heading);margin-bottom:16px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-tag" style="color:var(--accent);font-size:0.9rem;"></i>Create Listing</div>' +
 
         // Title
         '<label style="display:block;font-size:0.75rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Title *</label>' +
@@ -25160,7 +25169,7 @@ window.showCreateListing = function() {
         '<div style="display:flex;gap:8px;margin-bottom:4px;">' +
             '<label style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;background:var(--card-bg);border:2px dashed var(--border);border-radius:10px;cursor:pointer;color:var(--text-muted);font-size:0.85rem;font-family:inherit;transition:0.2s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">' +
                 '<input type="file" id="mktImageFile" accept="image/*" onchange="handleMktImageUpload(this)" style="display:none;">' +
-                '📷 Upload Photo' +
+                '<i class="fa-solid fa-camera" style="font-size:0.85rem;"></i> Upload Photo' +
             '</label>' +
         '</div>' +
         '<div id="mktImagePreview" style="margin-bottom:8px;display:none;text-align:center;"><img id="mktImagePreviewImg" style="max-width:100%;max-height:200px;border-radius:10px;border:1px solid var(--border);" /><button onclick="clearMktImage()" style="display:block;margin:6px auto 0;padding:4px 12px;background:none;border:1px solid var(--border);border-radius:6px;color:var(--text-faint);font-size:0.7rem;cursor:pointer;font-family:inherit;">✕ Remove</button></div>' +
@@ -25178,7 +25187,7 @@ window.showCreateListing = function() {
         '</div>' +
 
         // Submit
-        '<button onclick="submitListing()" style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;">⚡ Post Listing</button>' +
+        '<button onclick="submitListing()" style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;"><i class="fa-solid fa-bolt" style="font-size:0.85rem;"></i>Post Listing</button>' +
         '<button onclick="document.getElementById(\'createListingOverlay\').remove()" style="width:100%;padding:10px;background:none;border:none;color:var(--text-faint);font-size:0.85rem;cursor:pointer;font-family:inherit;margin-top:8px;">Cancel</button>' +
         '</div></div>';
 
@@ -25195,7 +25204,7 @@ window.submitListing = function() {
     // [AUDIT FIX M2] Rate limit: 60s between listings
     var _mktNow = Date.now();
     if (_mktNow - _lastMktListingTime < 60000) {
-        if (typeof showToast === 'function') showToast('⏳ Wait 60 seconds between listings');
+        if (typeof showToast === 'function') showToast('Wait 60 seconds between listings');
         return;
     }
     _lastMktListingTime = _mktNow;
