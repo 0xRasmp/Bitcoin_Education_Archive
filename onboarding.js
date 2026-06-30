@@ -1193,25 +1193,25 @@
     if (level === "beginner") {
       // Beginners: First Purchase + Trails — always shown
       shtml +=
-        '<div onclick="go(\'first-purchase\')" style="padding:14px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:12px;cursor:pointer;text-align:center;">' +
-        '<div style="font-size:1.3rem;">🛒</div><div style="font-weight:700;font-size:0.78rem;color:#22c55e;margin-top:4px;">Buy Your First Bitcoin</div></div>';
+        '<div onclick="go(\'first-purchase\')" style="padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;text-align:center;transition:border-color 0.15s,color 0.15s;color:var(--text-muted);" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text-muted)\'">' +
+        '<i class="fa-solid fa-cart-shopping" style="font-size:1.1rem;"></i><div style="font-weight:700;font-size:0.73rem;margin-top:6px;line-height:1.3;">Buy Your First Bitcoin</div></div>';
       shtml +=
-        '<div onclick="go(\'trails\')" style="padding:14px;background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.2);border-radius:12px;cursor:pointer;text-align:center;">' +
-        '<div style="font-size:1.3rem;">🦌</div><div style="font-weight:700;font-size:0.78rem;color:var(--accent);margin-top:4px;">Nacho\'s Trails</div></div>';
+        '<div onclick="go(\'trails\')" style="padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;text-align:center;transition:border-color 0.15s,color 0.15s;color:var(--text-muted);" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text-muted)\'">' +
+        '<i class="fa-solid fa-map" style="font-size:1.1rem;"></i><div style="font-weight:700;font-size:0.73rem;margin-top:6px;line-height:1.3;">Nacho\'s Trails</div></div>';
     } else if (level === "intermediate") {
       // Intermediate: Trails + First Purchase + Dashboard + Nacho
       shtml +=
-        '<div onclick="go(\'trails\')" style="padding:14px;background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.2);border-radius:12px;cursor:pointer;text-align:center;">' +
-        '<div style="font-size:1.3rem;">🦌</div><div style="font-weight:700;font-size:0.78rem;color:var(--accent);margin-top:4px;">Nacho\'s Trails</div></div>';
+        '<div onclick="go(\'trails\')" style="padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;text-align:center;transition:border-color 0.15s,color 0.15s;color:var(--text-muted);" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text-muted)\'">' +
+        '<i class="fa-solid fa-map" style="font-size:1.1rem;"></i><div style="font-weight:700;font-size:0.73rem;margin-top:6px;line-height:1.3;">Nacho\'s Trails</div></div>';
       shtml +=
-        '<div onclick="go(\'first-purchase\')" style="padding:14px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:12px;cursor:pointer;text-align:center;">' +
-        '<div style="font-size:1.3rem;">🛒</div><div style="font-weight:700;font-size:0.78rem;color:#22c55e;margin-top:4px;">Buy Bitcoin Guide</div></div>';
+        '<div onclick="go(\'first-purchase\')" style="padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;text-align:center;transition:border-color 0.15s,color 0.15s;color:var(--text-muted);" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text-muted)\'">' +
+        '<i class="fa-solid fa-cart-shopping" style="font-size:1.1rem;"></i><div style="font-weight:700;font-size:0.73rem;margin-top:6px;line-height:1.3;">Buy Bitcoin Guide</div></div>';
       shtml +=
-        '<div onclick="if(typeof toggleDashboard===\'function\')toggleDashboard()" style="padding:14px;background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.2);border-radius:12px;cursor:pointer;text-align:center;">' +
-        '<div style="font-size:1.3rem;">📊</div><div style="font-weight:700;font-size:0.78rem;color:#6366f1;margin-top:4px;">Bitcoin Network Metrics</div></div>';
+        '<div onclick="if(typeof toggleDashboard===\'function\')toggleDashboard()" style="padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;text-align:center;transition:border-color 0.15s,color 0.15s;color:var(--text-muted);" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text-muted)\'">' +
+        '<i class="fa-solid fa-chart-line" style="font-size:1.1rem;"></i><div style="font-weight:700;font-size:0.73rem;margin-top:6px;line-height:1.3;">Bitcoin Network Metrics</div></div>';
       shtml +=
-        '<div onclick="if(typeof enterNachoMode===\'function\')enterNachoMode()" style="padding:14px;background:rgba(249,115,22,0.04);border:1px dashed rgba(249,115,22,0.2);border-radius:12px;cursor:pointer;text-align:center;">' +
-        '<div style="font-size:1.3rem;">🦌</div><div style="font-weight:700;font-size:0.78rem;color:var(--accent);margin-top:4px;">Ask Nacho</div></div>';
+        '<div onclick="if(typeof enterNachoMode===\'function\')enterNachoMode()" style="padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;text-align:center;transition:border-color 0.15s,color 0.15s;color:var(--text-muted);" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text-muted)\'">' +
+        '<i class="fa-solid fa-comment" style="font-size:1.1rem;"></i><div style="font-weight:700;font-size:0.73rem;margin-top:6px;line-height:1.3;">Ask Nacho</div></div>';
     } else {
       // Advanced: Dashboard + Global Chat + Scholar Cert + IRL Meetups
       // Wrap auth-required actions to prompt sign-in
@@ -1220,25 +1220,25 @@
       var _obElseSignIn =
         "}else{if(typeof showToast==='function')showToast('🔐 Sign in to access this feature');if(typeof showUsernamePrompt==='function')setTimeout(showUsernamePrompt,300);}";
       shtml +=
-        '<div onclick="if(typeof toggleDashboard===\'function\')toggleDashboard()" style="padding:14px;background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.2);border-radius:12px;cursor:pointer;text-align:center;">' +
-        '<div style="font-size:1.3rem;">📊</div><div style="font-weight:700;font-size:0.78rem;color:#6366f1;margin-top:4px;">Bitcoin Network Metrics</div></div>';
+        '<div onclick="if(typeof toggleDashboard===\'function\')toggleDashboard()" style="padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;text-align:center;transition:border-color 0.15s,color 0.15s;color:var(--text-muted);" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text-muted)\'">' +
+        '<i class="fa-solid fa-chart-line" style="font-size:1.1rem;"></i><div style="font-weight:700;font-size:0.73rem;margin-top:6px;line-height:1.3;">Bitcoin Network Metrics</div></div>';
       shtml +=
         '<div onclick="' +
         _obNeedAuth +
         "if(typeof toggleChatOverlay==='function'){var p=document.getElementById('chatOverlay');if(!p||p.style.transform==='translateY(100%)')toggleChatOverlay();}else if(typeof renderChatHub==='function')renderChatHub('global');" +
         _obElseSignIn +
-        '" style="padding:14px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:12px;cursor:pointer;text-align:center;">' +
-        '<div style="font-size:1.3rem;">🌍</div><div style="font-weight:700;font-size:0.78rem;color:#22c55e;margin-top:4px;">Global Chat</div></div>';
+        '" style="padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;text-align:center;transition:border-color 0.15s,color 0.15s;color:var(--text-muted);" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text-muted)\'">' +
+        '<i class="fa-solid fa-globe" style="font-size:1.1rem;"></i><div style="font-weight:700;font-size:0.73rem;margin-top:6px;line-height:1.3;">Global Chat</div></div>';
       shtml +=
         '<div onclick="' +
         _obNeedAuth +
         "showSettings();setTimeout(function(){showSettingsPage('scholar')},100);" +
         _obElseSignIn +
-        '" style="padding:14px;background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.2);border-radius:12px;cursor:pointer;text-align:center;">' +
-        '<div style="font-size:1.3rem;">🎓</div><div style="font-weight:700;font-size:0.78rem;color:#a855f7;margin-top:4px;">Scholar Cert</div></div>';
+        '" style="padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;text-align:center;transition:border-color 0.15s,color 0.15s;color:var(--text-muted);" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text-muted)\'">' +
+        '<i class="fa-solid fa-graduation-cap" style="font-size:1.1rem;"></i><div style="font-weight:700;font-size:0.73rem;margin-top:6px;line-height:1.3;">Scholar Cert</div></div>';
       shtml +=
-        '<div onclick="go(\'irl-sync\')" style="padding:14px;background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.2);border-radius:12px;cursor:pointer;text-align:center;">' +
-        '<div style="font-size:1.3rem;">🤝</div><div style="font-weight:700;font-size:0.78rem;color:var(--accent);margin-top:4px;">IRL Meetups</div></div>';
+        '<div onclick="go(\'irl-sync\')" style="padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;text-align:center;transition:border-color 0.15s,color 0.15s;color:var(--text-muted);" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.color=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text-muted)\'">' +
+        '<i class="fa-solid fa-handshake" style="font-size:1.1rem;"></i><div style="font-weight:700;font-size:0.73rem;margin-top:6px;line-height:1.3;">IRL Meetups</div></div>';
     }
     shtml += "</div>";
 
