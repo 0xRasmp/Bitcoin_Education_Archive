@@ -1377,12 +1377,10 @@
     bc.innerHTML =
       "<div onclick=\"go('" +
       next.id +
-      '\')" style="display:flex;align-items:center;gap:14px;padding:14px 18px;background:linear-gradient(135deg,rgba(249,115,22,0.06),rgba(249,115,22,0.02));border:1px solid rgba(249,115,22,0.2);border-radius:14px;transition:0.2s;">' +
-      '<span style="font-size:1.4rem;width:44px;height:44px;border-radius:12px;background:rgba(249,115,22,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">' +
-      emoji +
-      "</span>" +
+      '\')" style="display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--card-bg);border:1px solid var(--border);border-left:2px solid var(--accent);border-radius:12px;transition:border-color 0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.borderLeftColor=\'var(--accent)\'">' +
+      '<span style="width:36px;height:36px;border-radius:10px;background:var(--accent-bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--accent);"><i class="fa-solid fa-book-open" style="font-size:0.85rem;"></i></span>' +
       '<div style="flex:1;min-width:0;">' +
-      '<div style="font-size:0.65rem;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:1px;">📍 Up next for you</div>' +
+      '<div style="font-size:0.58rem;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:1.4px;">Up next for you</div>' +
       '<div style="font-weight:700;font-size:0.95rem;color:var(--heading);margin-top:2px;">' +
       name +
       "</div>" +
@@ -1392,8 +1390,8 @@
       "</div>" +
       '<span style="color:var(--text-faint);font-size:1rem;flex-shrink:0;">→</span>' +
       "</div>" +
-      '<div style="margin-top:8px;display:flex;align-items:center;gap:6px;">' +
-      '<div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;">' +
+      '<div style="margin-top:6px;display:flex;align-items:center;gap:6px;">' +
+      '<div style="flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden;">' +
       '<div style="height:100%;background:var(--accent);width:' +
       Math.round((done / starters.length) * 100) +
       '%;border-radius:2px;transition:0.3s;"></div>' +

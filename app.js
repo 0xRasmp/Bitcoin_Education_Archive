@@ -3878,16 +3878,20 @@
       const meta = CHANNELS[lastCh];
       el.style.display = "block";
       el.innerHTML =
-        '<div style="background:var(--card-bg);border:1px solid var(--accent-glow);border-radius:16px;padding:16px 20px;cursor:pointer;transition:0.2s;" onclick="go(\'' +
+        '<div style="display:flex;align-items:center;gap:14px;background:var(--card-bg);border:1px solid var(--border);border-left:2px solid var(--accent);border-radius:12px;padding:14px 18px;cursor:pointer;transition:border-color 0.15s;" onclick="go(\'' +
         lastCh +
-        "')\" onmouseover=\"this.style.borderColor='var(--accent)';this.style.boxShadow='0 4px 20px var(--accent-glow)'\" onmouseout=\"this.style.borderColor='var(--accent-glow)';this.style.boxShadow='none'\">" +
-        '<div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);font-weight:800;margin-bottom:6px;">📖 Continue Reading</div>' +
-        '<div style="color:var(--heading);font-size:1.05rem;font-weight:700;margin-bottom:2px;">' +
+        "')\" onmouseover=\"this.style.borderColor='var(--accent)'\" onmouseout=\"this.style.borderColor='var(--border)';this.style.borderLeftColor='var(--accent)'\">" +
+        '<i class="fa-solid fa-book-open" style="color:var(--accent);font-size:1rem;flex-shrink:0;"></i>' +
+        '<div style="flex:1;min-width:0;">' +
+        '<div style="font-size:0.58rem;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent);font-weight:800;margin-bottom:3px;">Continue Reading</div>' +
+        '<div style="color:var(--heading);font-size:0.9rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' +
         meta.title +
         "</div>" +
-        '<div style="color:var(--text-muted);font-size:0.8rem;">' +
+        '<div style="color:var(--text-faint);font-size:0.72rem;margin-top:1px;">' +
         meta.cat +
-        "</div></div>";
+        "</div></div>" +
+        '<i class="fa-solid fa-chevron-right" style="color:var(--text-faint);font-size:0.7rem;flex-shrink:0;"></i>' +
+        "</div>";
     } else {
       el.style.display = "none";
     }
@@ -6468,11 +6472,11 @@
     if (ch) {
       const el = document.getElementById("dailyChannel");
       el.innerHTML =
-        '<div style="display:flex;align-items:center;gap:6px;font-size:0.62rem;color:var(--accent);text-transform:uppercase;letter-spacing:1.2px;font-weight:800;margin-bottom:8px;"><i class="fa-solid fa-calendar-day" style="font-size:0.7rem;"></i> Channel of the Day</div>' +
-        '<div style="font-size:0.95rem;font-weight:700;color:var(--heading);margin-bottom:4px;line-height:1.3;">' +
+        '<div style="font-size:0.58rem;color:var(--accent);text-transform:uppercase;letter-spacing:1.4px;font-weight:800;margin-bottom:6px;">Channel of the Day</div>' +
+        '<div style="font-size:0.88rem;font-weight:700;color:var(--heading);margin-bottom:3px;line-height:1.3;">' +
         ch.title +
         "</div>" +
-        '<div style="font-size:0.82rem;color:var(--text-muted);line-height:1.5;">' +
+        '<div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">' +
         ch.desc +
         "</div>";
       el.onclick = () => go(dailyKey);

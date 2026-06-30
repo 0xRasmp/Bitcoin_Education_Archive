@@ -240,19 +240,21 @@ function renderDailyChallenge() {
     if (!el) return;
 
     if (completed) {
-        el.style.borderColor = '#22c55e';
-        el.style.background = 'rgba(34,197,94,0.05)';
+        el.style.borderColor = 'var(--border)';
+        el.style.borderLeft = '2px solid #22c55e';
+        el.style.background = 'var(--card-bg)';
         el.innerHTML = '<div style="display:flex;align-items:center;gap:12px;">' +
-            '<span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9px;background:rgba(34,197,94,0.12);flex-shrink:0;"><i class="fa-solid fa-circle-check" style="color:#22c55e;font-size:1rem;"></i></span>' +
-            '<div><div style="color:#22c55e;font-size:0.62rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:2px;">Today\'s Challenge</div>' +
+            '<span style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:rgba(34,197,94,0.08);flex-shrink:0;"><i class="fa-solid fa-circle-check" style="color:#22c55e;font-size:0.85rem;"></i></span>' +
+            '<div><div style="color:#22c55e;font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;margin-bottom:2px;">Today\'s Challenge</div>' +
             '<div style="color:var(--text-faint);font-size:0.8rem;font-weight:500;"><s>' + challenge.text + '</s> — Done! +100 XP</div></div></div>';
     } else {
         el.style.borderColor = 'var(--border)';
+        el.style.borderLeft = '2px solid var(--accent)';
         el.style.background = 'var(--card-bg)';
         el.innerHTML = '<div style="display:flex;align-items:center;gap:12px;">' +
-            '<span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9px;background:var(--accent-bg);flex-shrink:0;"><i class="fa-solid fa-bullseye" style="color:var(--accent);font-size:1rem;"></i></span>' +
-            '<div><div style="color:var(--accent);font-size:0.62rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:2px;">Today\'s Challenge</div>' +
-            '<div style="color:var(--text);font-size:0.84rem;font-weight:600;line-height:1.4;">' + challenge.text + '</div></div></div>';
+            '<span style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:var(--accent-bg);flex-shrink:0;"><i class="fa-solid fa-bullseye" style="color:var(--accent);font-size:0.85rem;"></i></span>' +
+            '<div><div style="color:var(--accent);font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;margin-bottom:2px;">Today\'s Challenge</div>' +
+            '<div style="color:var(--text);font-size:0.82rem;font-weight:600;line-height:1.4;">' + challenge.text + '</div></div></div>';
     }
 }
 
@@ -357,7 +359,7 @@ function _renderRaidHomeCard(el, activeBoss, upcomingBoss, defeatedBoss) {
         // Client-side image fallback
         if (!bossImg) { var _imgMap = {'Channel-Crawler':'channel-crawler','Quiz-Crusader':'quiz-crusader','TV-Titan':'tv-titan','Beats-Baron':'beats-baron','Flash-Flash':'flash-flash','XP-Hoarder':'xp-hoarder','Poll-Patroller':'poll-patroller','Chat-Charger':'chat-charger','Badge-Builder':'badge-builder','Streak-Sage':'streak-sage','Topic-Explorer':'topic-explorer','Lightning-Lancer':'lightning-lancer','Forum-Forge':'forum-forge','Trivia-Tactician':'trivia-tactician','Content-Conqueror':'content-conqueror'}; if (_imgMap[activeBoss.name]) bossImg = 'images/raid-bosses/' + _imgMap[activeBoss.name] + '.png'; }
 
-        html += '<div onclick="' + openQH + '" style="background:linear-gradient(135deg,rgba(139,92,246,0.1),rgba(109,40,217,0.04));border:1px solid #8b5cf6;border-radius:12px;padding:12px 16px;cursor:pointer;">' +
+        html += '<div onclick="' + openQH + '" style="background:var(--card-bg);border:1px solid var(--border);border-left:2px solid #8b5cf6;border-radius:12px;padding:12px 16px;cursor:pointer;">' +
             '<div style="display:flex;align-items:center;gap:10px;">' +
                 (bossImg ? '<img src="' + bossImg + '" style="width:48px;height:48px;border-radius:10px;object-fit:cover;border:1px solid rgba(139,92,246,0.3);flex-shrink:0;">' : '<span style="font-size:1.3rem;">\u2694\uFE0F</span>') +
                 '<div style="flex:1;min-width:0;">' +
@@ -379,7 +381,7 @@ function _renderRaidHomeCard(el, activeBoss, upcomingBoss, defeatedBoss) {
         var startMs2 = upcomingBoss.startTime && upcomingBoss.startTime.toDate ? upcomingBoss.startTime.toDate().getTime() : 0;
         var dateStr = new Date(startMs2).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 
-        html += '<div onclick="' + openQH + '" style="' + (activeBoss ? 'margin-top:8px;' : '') + 'background:rgba(139,92,246,0.04);border:1px solid rgba(139,92,246,0.2);border-radius:10px;padding:8px 14px;cursor:pointer;">' +
+        html += '<div onclick="' + openQH + '" style="' + (activeBoss ? 'margin-top:8px;' : '') + 'background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:8px 14px;cursor:pointer;">' +
             '<div style="display:flex;align-items:center;gap:8px;">' +
                 '<span style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:rgba(139,92,246,0.1);flex-shrink:0;"><i class="fa-solid fa-sword" style="color:#8b5cf6;font-size:0.85rem;"></i></span>' +
                 '<div style="flex:1;"><div style="color:var(--text-muted);font-size:0.62rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:2px;">Next Boss</div>' +
@@ -394,7 +396,7 @@ function _renderRaidHomeCard(el, activeBoss, upcomingBoss, defeatedBoss) {
     // Defeated boss victory banner on home card
     if (defeatedBoss && !activeBoss) {
         var dName = typeof escapeHtml === 'function' ? escapeHtml(defeatedBoss.name || 'Raid Boss') : (defeatedBoss.name || 'Raid Boss');
-        html = '<div onclick="' + openQH + '" style="background:linear-gradient(135deg,rgba(34,197,94,0.1),rgba(34,197,94,0.04));border:1px solid #22c55e;border-radius:12px;padding:12px 16px;cursor:pointer;' + (upcomingBoss ? 'margin-bottom:8px;' : '') + '">' +
+        html = '<div onclick="' + openQH + '" style="background:var(--card-bg);border:1px solid var(--border);border-left:2px solid #22c55e;border-radius:12px;padding:12px 16px;cursor:pointer;' + (upcomingBoss? 'margin-bottom:8px;' : '') + '">' +
             '<div style="display:flex;align-items:center;gap:10px;">' +
                 '<span style="font-size:1.5rem;">\uD83D\uDC80</span>' +
                 '<div style="flex:1;min-width:0;">' +
