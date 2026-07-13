@@ -3878,9 +3878,9 @@
       const meta = CHANNELS[lastCh];
       el.style.display = "block";
       el.innerHTML =
-        '<div style="display:flex;align-items:center;gap:14px;background:var(--card-bg);border:1px solid var(--border);border-left:2px solid var(--accent);border-radius:12px;padding:14px 18px;cursor:pointer;transition:border-color 0.15s;" onclick="go(\'' +
+        '<div style="display:flex;align-items:center;gap:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:14px 18px;cursor:pointer;transition:border-color 0.15s;" onclick="go(\'' +
         lastCh +
-        "')\" onmouseover=\"this.style.borderColor='var(--accent)'\" onmouseout=\"this.style.borderColor='var(--border)';this.style.borderLeftColor='var(--accent)'\">" +
+        "')\" onmouseover=\"this.style.borderColor='var(--accent)'\" onmouseout=\"this.style.borderColor='var(--border)'\">" +
         '<i class="fa-solid fa-book-open" style="color:var(--accent);font-size:1rem;flex-shrink:0;"></i>' +
         '<div style="flex:1;min-width:0;">' +
         '<div style="font-size:0.58rem;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent);font-weight:800;margin-bottom:3px;">Continue Reading</div>' +
