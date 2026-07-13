@@ -553,7 +553,7 @@
         el.id = 'progressBreadcrumb';
         el.style.cssText = 'max-width:480px;margin:0 auto 20px;cursor:pointer;';
         el.innerHTML =
-            '<div onclick="go(\'' + nextRec.id + '\')" style="display:flex;align-items:center;gap:14px;padding:14px 18px;background:linear-gradient(135deg,rgba(249,115,22,0.06),rgba(249,115,22,0.02));border:1px solid rgba(249,115,22,0.2);border-radius:14px;transition:0.2s;" onmouseover="this.style.borderColor=\'rgba(249,115,22,0.5)\'" onmouseout="this.style.borderColor=\'rgba(249,115,22,0.2)\'">' +
+            '<div onclick="go(\'' + nextRec.id + '\')" style="display:flex;align-items:center;gap:14px;padding:14px 18px;background:linear-gradient(135deg,rgba(249,115,22,0.06),rgba(249,115,22,0.02));border-radius:14px;transition:0.2s;">' +
                 '<span style="font-size:1.4rem;width:44px;height:44px;border-radius:12px;background:rgba(249,115,22,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + emoji + '</span>' +
                 '<div style="flex:1;min-width:0;">' +
                     '<div style="font-size:0.58rem;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:1.4px;">Up next for you</div>' +
