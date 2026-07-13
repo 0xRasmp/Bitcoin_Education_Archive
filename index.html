@@ -5326,64 +5326,48 @@
 
               <!-- Daily tools -->
               <div class="rc-label">Daily</div>
-              <div class="home-daily-grid">
+              <div class="home-daily-grid" style="display:flex;flex-direction:column;gap:10px;">
             <button
               onclick="if (typeof showSpinWheel === 'function') showSpinWheel();"
-              class="home-daily-btn"
+              style="display:flex;align-items:center;gap:12px;padding:11px 14px;width:100%;box-sizing:border-box;background:var(--card-bg);border:1px solid var(--border);color:var(--text);border-radius:12px;font-size:0.84rem;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;transition:border-color 0.2s,color 0.2s;"
+              onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)';"
+              onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)';"
             >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 6v6l4 2" /></svg
-              >Daily Spin
+              <span style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;background:var(--accent-bg);color:var(--accent);flex-shrink:0;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 6v6l4 2" />
+                </svg>
+              </span>
+              <span style="flex:1;">Daily Spin</span>
             </button>
             <button
               onclick="if (typeof showPricePrediction === 'function') showPricePrediction();"
-              class="home-daily-btn"
+              style="display:flex;align-items:center;gap:12px;padding:11px 14px;width:100%;box-sizing:border-box;background:var(--card-bg);border:1px solid var(--border);color:var(--text);border-radius:12px;font-size:0.84rem;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;transition:border-color 0.2s,color 0.2s;"
+              onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)';"
+              onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)';"
             >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-              >
-                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                <polyline points="17 6 23 6 23 12" /></svg
-              >Predict Price<span
-                id="predAccuracyLabel"
-                style="
-                  display: none;
-                "
-              ></span>
+              <span style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;background:var(--accent-bg);color:var(--accent);flex-shrink:0;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                  <polyline points="17 6 23 6 23 12" />
+                </svg>
+              </span>
+              <span style="flex:1;">Predict Price<span id="predAccuracyLabel" style="display: none;"></span></span>
             </button>
             <button
               onclick="if (typeof showNachoStory === 'function') showNachoStory();"
-              class="home-daily-btn"
+              style="display:flex;align-items:center;gap:12px;padding:11px 14px;width:100%;box-sizing:border-box;background:var(--card-bg);border:1px solid var(--border);color:var(--text);border-radius:12px;font-size:0.84rem;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;transition:border-color 0.2s,color 0.2s;"
+              onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)';"
+              onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)';"
             >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-              >
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                <path
-                  d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
-                /></svg
-              >Nacho's Story
+              <span style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;background:var(--accent-bg);color:var(--accent);flex-shrink:0;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                </svg>
+              </span>
+              <span style="flex:1;">Nacho's Story</span>
             </button>
           </div>
 
